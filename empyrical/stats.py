@@ -654,7 +654,7 @@ def sharpe_ratio(returns,
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     risk_free : int, float
-        Constant risk-free return throughout the period.
+        Constant daily risk-free return throughout the period.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
