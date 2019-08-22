@@ -1,5 +1,5 @@
 #
-# Copyright 2016 Quantopian, Inc.
+# Copyright 2018 Quantopian, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,8 +23,22 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 import pandas as pd
 from pandas.tseries.offsets import BDay
-from pandas_datareader import data as web
+try:
+    from pandas_datareader import data as web
+except ImportError:
+    msg = ("Unable to import pandas_datareader. Suppressing import error and "
+           "continuing. All data reading functionality will raise errors; but "
+           "has been deprecated and will be removed in a later version.")
+    warnings.warn(msg)
+from .deprecate import deprecated
 
+DATAREADER_DEPRECATION_WARNING = \
+        ("Yahoo and Google Finance have suffered large API breaks with no "
+         "stable replacement. As a result, any data reading functionality "
+         "in empyrical has been deprecated and will be removed in a future "
+         "version. See README.md for more details: "
+         "\n\n"
+         "\thttps://github.com/quantopian/pyfolio/blob/master/README.md")
 try:
     # fast versions
     import bottleneck as bn
@@ -175,6 +189,7 @@ def _roll_pandas(func, window, *args, **kwargs):
     return pd.Series(data, index=type(args[0].index)(index_values))
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def cache_dir(environ=environ):
     try:
         return environ['EMPYRICAL_CACHE_DIR']
@@ -189,10 +204,12 @@ def cache_dir(environ=environ):
         )
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def data_path(name):
     return join(cache_dir(), name)
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def ensure_directory(path):
     """
     Ensure that a directory named "path" exists.
@@ -209,10 +226,12 @@ def get_utc_timestamp(dt):
     """
     Returns the Timestamp/DatetimeIndex
     with either localized or converted to UTC.
+
     Parameters
     ----------
     dt : Timestamp/DatetimeIndex
         the date(s) to be converted
+
     Returns
     -------
     same type as input
@@ -234,6 +253,7 @@ def _1_bday_ago():
     return pd.Timestamp.now().normalize() - _1_bday
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_fama_french():
     """
     Retrieve Fama-French factors via pandas-datareader
@@ -257,6 +277,7 @@ def get_fama_french():
     return five_factors
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     """
     Get returns from a cached file if the cache is recent enough,
@@ -324,6 +345,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     return returns
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     """
     Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
@@ -353,6 +375,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     return five_factors.loc[start:end]
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_treasury_yield(start=None, end=None, period='3MO'):
     """
     Load treasury yields from FRED.
@@ -386,6 +409,7 @@ def get_treasury_yield(start=None, end=None, period='3MO'):
     return treasury
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     """
     Wrapper for pandas.io.data.get_data_yahoo().
@@ -424,6 +448,7 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     return rets
 
 
+@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def default_returns_func(symbol, start=None, end=None):
     """
     Gets returns for a symbol.

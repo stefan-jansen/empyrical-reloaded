@@ -43,12 +43,15 @@ class PerfAttribTestCase(unittest.TestCase):
         expected_index = dts.set_names(['date'])
         expected_perf_attrib_output = pd.DataFrame(
             index=expected_index,
-            columns=['risk_factor1', 'risk_factor2', 'common_returns',
-                     'specific_returns', 'total_returns'],
+            columns=['risk_factor1', 'risk_factor2', 'total_returns',
+                     'common_returns', 'specific_returns',
+                     'tilt_returns', 'timing_returns'],
             data={'risk_factor1': [0.025, 0.025],
                   'risk_factor2': [0.025, 0.025],
                   'common_returns': [0.05, 0.05],
                   'specific_returns': [0.05, 0.05],
+                  'tilt_returns': [0.05, 0.05],
+                  'timing_returns': [0.0, 0.0],
                   'total_returns': returns}
         )
 
@@ -80,12 +83,15 @@ class PerfAttribTestCase(unittest.TestCase):
 
         expected_perf_attrib_output = pd.DataFrame(
             index=expected_index,
-            columns=['risk_factor1', 'risk_factor2', 'common_returns',
-                     'specific_returns', 'total_returns'],
+            columns=['risk_factor1', 'risk_factor2', 'total_returns',
+                     'common_returns', 'specific_returns',
+                     'tilt_returns', 'timing_returns'],
             data={'risk_factor1': [0.0, 0.0],
                   'risk_factor2': [0.0, 0.0],
                   'common_returns': [0.0, 0.0],
                   'specific_returns': [0.1, 0.1],
+                  'tilt_returns': [0.0, 0.0],
+                  'timing_returns': [0.0, 0.0],
                   'total_returns': returns}
         )
 
@@ -94,6 +100,41 @@ class PerfAttribTestCase(unittest.TestCase):
             columns=['risk_factor1', 'risk_factor2'],
             data={'risk_factor1': [0.0, 0.0],
                   'risk_factor2': [0.0, 0.0]}
+        )
+
+        pd.util.testing.assert_frame_equal(expected_perf_attrib_output,
+                                           perf_attrib_output)
+
+        pd.util.testing.assert_frame_equal(expected_exposures_portfolio,
+                                           exposures_portfolio)
+
+        # test long and short positions with tilt exposure
+        positions = pd.Series([1.0, -0.5, 1.0, -0.5], index=index)
+
+        exposures_portfolio, perf_attrib_output = perf_attrib(returns,
+                                                              positions,
+                                                              factor_returns,
+                                                              factor_loadings)
+
+        expected_perf_attrib_output = pd.DataFrame(
+            index=dts,
+            columns=['risk_factor1', 'risk_factor2', 'total_returns',
+                     'common_returns', 'specific_returns',
+                     'tilt_returns', 'timing_returns'],
+            data={'risk_factor1': [0.0125, 0.0125],
+                  'risk_factor2': [0.0125, 0.0125],
+                  'common_returns': [0.025, 0.025],
+                  'specific_returns': [0.075, 0.075],
+                  'tilt_returns': [0.025, 0.025],
+                  'timing_returns': [0.0, 0.0],
+                  'total_returns': returns}
+        )
+
+        expected_exposures_portfolio = pd.DataFrame(
+            index=dts,
+            columns=['risk_factor1', 'risk_factor2'],
+            data={'risk_factor1': [0.125, 0.125],
+                  'risk_factor2': [0.125, 0.125]}
         )
 
         pd.util.testing.assert_frame_equal(expected_perf_attrib_output,

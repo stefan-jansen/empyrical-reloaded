@@ -15,6 +15,7 @@
 
 from __future__ import division
 
+import math
 import pandas as pd
 import numpy as np
 from scipy import stats
@@ -22,7 +23,7 @@ from six import iteritems
 
 from .utils import nanmean, nanstd, nanmin, up, down, roll, rolling_window
 from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
-from .periods import DAILY, WEEKLY, MONTHLY, YEARLY
+from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
 
 
 def _create_unary_vectorized_roll_function(function):
@@ -183,6 +184,32 @@ def annualization_factor(period, annualization):
     return factor
 
 
+def simple_returns(prices):
+    """
+    Compute simple returns from a timeseries of prices.
+
+    Parameters
+    ----------
+    prices : pd.Series, pd.DataFrame or np.ndarray
+        Prices of assets in wide-format, with assets as columns,
+        and indexed by datetimes.
+
+    Returns
+    -------
+    returns : array-like
+        Returns of assets in wide-format, with assets as columns,
+        and index coerced to be tz-aware.
+    """
+    if isinstance(prices, (pd.DataFrame, pd.Series)):
+        out = prices.pct_change().iloc[1:]
+    else:
+        # Assume np.ndarray
+        out = np.diff(prices, axis=0)
+        np.divide(out, prices[:-1], out=out)
+
+    return out
+
+
 def cum_returns(returns, starting_value=0, out=None):
     """
     Compute cumulative returns from simple returns.
@@ -250,32 +277,34 @@ def cum_returns_final(returns, starting_value=0):
 
     Parameters
     ----------
-    returns : pd.Series or np.ndarray
-       Returns of the strategy as a percentage, noncumulative.
-         - Time series with decimal returns.
-         - Example:
-            2015-07-16    -0.012143
-            2015-07-17    0.045350
-            2015-07-20    0.030957
-            2015-07-21    0.004902.
+    returns : pd.DataFrame, pd.Series, or np.ndarray
+       Noncumulative simple returns of one or more timeseries.
     starting_value : float, optional
        The starting returns.
 
     Returns
     -------
-    total_returns : float
-    """
+    total_returns : pd.Series, np.ndarray, or float
+        If input is 1-dimensional (a Series or 1D numpy array), the result is a
+        scalar.
 
+        If input is 2-dimensional (a DataFrame or 2D numpy array), the result
+        is a 1D array containing cumulative returns for each column of input.
+    """
     if len(returns) == 0:
         return np.nan
 
-    returns = np.nanprod(returns + 1)
-    if starting_value == 0:
-        returns -= 1
+    if isinstance(returns, pd.DataFrame):
+        result = (returns + 1).prod()
     else:
-        returns *= starting_value
+        result = np.nanprod(returns + 1, axis=0)
 
-    return returns
+    if starting_value == 0:
+        result -= 1
+    else:
+        result *= starting_value
+
+    return result
 
 
 def aggregate_returns(returns, convert_to):
@@ -302,6 +331,8 @@ def aggregate_returns(returns, convert_to):
         grouping = [lambda x: x.year, lambda x: x.isocalendar()[1]]
     elif convert_to == MONTHLY:
         grouping = [lambda x: x.year, lambda x: x.month]
+    elif convert_to == QUARTERLY:
+        grouping = [lambda x: x.year, lambda x: int(math.ceil(x.month/3.))]
     elif convert_to == YEARLY:
         grouping = [lambda x: x.year]
     else:
@@ -626,7 +657,7 @@ def sharpe_ratio(returns,
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     risk_free : int, float
-        Constant risk-free return throughout the period.
+        Constant daily risk-free return throughout the period.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
@@ -906,6 +937,32 @@ def excess_sharpe(returns, factor_returns, out=None):
 roll_excess_sharpe = _create_binary_vectorized_roll_function(excess_sharpe)
 
 
+def _to_pandas(ob):
+    """Convert an array-like to a pandas object.
+
+    Parameters
+    ----------
+    ob : array-like
+        The object to convert.
+
+    Returns
+    -------
+    pandas_structure : pd.Series or pd.DataFrame
+        The correct structure based on the dimensionality of the data.
+    """
+    if isinstance(ob, (pd.Series, pd.DataFrame)):
+        return ob
+
+    if ob.ndim == 1:
+        return pd.Series(ob)
+    elif ob.ndim == 2:
+        return pd.DataFrame(ob)
+    else:
+        raise ValueError(
+            'cannot convert array of dim > 2 to a pandas structure',
+        )
+
+
 def _aligned_series(*many_series):
     """
     Return a new list of series containing the data in the input series, but
@@ -934,7 +991,7 @@ def _aligned_series(*many_series):
     # dataframe has no ``itervalues``
     return (
         v
-        for _, v in iteritems(pd.concat(map(pd.Series, many_series), axis=1))
+        for _, v in iteritems(pd.concat(map(_to_pandas, many_series), axis=1))
     )
 
 
