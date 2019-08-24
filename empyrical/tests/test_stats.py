@@ -733,7 +733,7 @@ class TestStats(BaseTestCase):
     @parameterized.expand([
         (empty_returns, simple_benchmark, (np.nan, np.nan)),
         (one_return, one_return, (np.nan, np.nan)),
-        (mixed_returns, negative_returns[1:], (-8.306666666666668,
+        (mixed_returns, negative_returns[1:], (-0.99978538348850043,
                                                -0.71296296296296313)),
         (mixed_returns, mixed_returns, (0.0, 1.0)),
         (mixed_returns, -mixed_returns, (0.0, -1.0)),
@@ -814,11 +814,13 @@ class TestStats(BaseTestCase):
         # Alpha should change proportionally to how much returns were
         # translated.
         assert_almost_equal(
-            (alpha_standard - alpha_depressed)/252,
+            ((alpha_standard + 1) ** (1/252)) -
+            ((alpha_depressed + 1) ** (1/252)),
             translation,
             DECIMAL_PLACES)
         assert_almost_equal(
-            (alpha_raised - alpha_standard)/252,
+            ((alpha_raised + 1) ** (1/252)) -
+            ((alpha_standard + 1) ** (1/252)),
             translation,
             DECIMAL_PLACES)
         # Beta remains constant.
@@ -1108,8 +1110,8 @@ class TestStats(BaseTestCase):
          [(np.nan, np.nan)] * len(simple_benchmark)),
         (one_return, one_return, 1, [(np.nan, np.nan)]),
         (mixed_returns, negative_returns,
-         6, [(-3.81286957, -0.7826087), (-4.03558719, -0.76156584),
-             (-2.66915888, -0.61682243), (-7.8987541, -0.41311475)]),
+         6, [(-0.97854954, -0.7826087), (-0.9828927, -0.76156584),
+             (-0.93166924, -0.61682243), (-0.99967288, -0.41311475)]),
         (mixed_returns, mixed_returns,
          6, [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)]),
         (mixed_returns, -mixed_returns,
@@ -1209,7 +1211,7 @@ class TestStats(BaseTestCase):
         (empty_returns, simple_benchmark, (np.nan, np.nan)),
         (one_return, one_return, (np.nan, np.nan)),
         (mixed_returns[1:], negative_returns[1:],
-         (-8.306666666666668, -0.71296296296296313)),
+         (-0.99978538348850043, -0.71296296296296313)),
         (mixed_returns, mixed_returns, (0.0, 1.0)),
         (mixed_returns, -mixed_returns, (0.0, -1.0))
     ])
@@ -1231,7 +1233,7 @@ class TestStats(BaseTestCase):
         (empty_returns, simple_benchmark, (np.nan, np.nan)),
         (one_return, one_return, (np.nan, np.nan)),
         (mixed_returns[1:], positive_returns[1:],
-         (0.3599999999999995, 0.4285714285)),
+         (0.432961242076658, 0.4285714285)),
         (mixed_returns, mixed_returns, (0.0, 1.0)),
         (mixed_returns, -mixed_returns, (0.0, -1.0))
     ])
