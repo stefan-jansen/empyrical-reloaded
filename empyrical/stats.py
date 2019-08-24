@@ -1283,11 +1283,9 @@ def alpha_aligned(returns,
     adj_factor_returns = _adjust_returns(factor_returns, risk_free)
     alpha_series = adj_returns - (_beta * adj_factor_returns)
 
-    #import pdb;pdb.set_trace()
-    #print("TEST")
     out = np.subtract(
         np.power(
-            nanmean(alpha_series, axis=0, out=out)+1,
+            np.add(nanmean(alpha_series, axis=0, out=out), 1, out=out),
             ann_factor,
             out=out,
         ), 1, out=out
