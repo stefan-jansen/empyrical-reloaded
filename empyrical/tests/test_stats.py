@@ -16,7 +16,7 @@ try:
     from pandas.testing import assert_index_equal
 except ImportError:
     # This moved in pandas 0.20.
-    from pandas.util.testing import assert_index_equal
+    frompandas.testingimport assert_index_equal
 
 import empyrical
 import empyrical.utils as emutils
