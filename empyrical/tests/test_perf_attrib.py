@@ -8,16 +8,15 @@ from empyrical.perf_attrib import perf_attrib
 class PerfAttribTestCase(unittest.TestCase):
 
     def test_perf_attrib_simple(self):
-
         start_date = '2017-01-01'
         periods = 2
-        dts = pd.date_range(start_date, periods=periods)
-        dts.name = 'dt'
+        dts = pd.date_range(start_date, periods=periods, name='dt')
 
         tickers = ['stock1', 'stock2']
         styles = ['risk_factor1', 'risk_factor2']
 
-        returns = pd.Series(data=[0.1, 0.1], index=dts)
+        returns = pd.Series(data=[0.1, 0.1],
+                            index=dts)
 
         factor_returns = pd.DataFrame(
             columns=styles,
@@ -27,7 +26,8 @@ class PerfAttribTestCase(unittest.TestCase):
         )
 
         index = pd.MultiIndex.from_product(
-            [dts, tickers], names=['dt', 'ticker'])
+            [dts, tickers],
+            names=['dt', 'ticker'])
 
         positions = pd.Series([0.2857142857142857, 0.7142857142857143,
                                0.2857142857142857, 0.7142857142857143],
@@ -143,7 +143,6 @@ class PerfAttribTestCase(unittest.TestCase):
                                            exposures_portfolio)
 
     def test_perf_attrib_regression(self):
-
         positions = pd.read_csv('empyrical/tests/test_data/positions.csv',
                                 index_col=0, parse_dates=True)
 

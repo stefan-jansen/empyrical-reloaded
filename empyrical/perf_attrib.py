@@ -83,6 +83,9 @@ def perf_attrib(returns,
     See https://en.wikipedia.org/wiki/Performance_attribution for more details.
     """
 
+    # track freq info to reassign to return values
+    freq = returns.index.freq
+
     # Make risk data match time range of returns
     start = returns.index[0]
     end = returns.index[-1]
@@ -96,6 +99,8 @@ def perf_attrib(returns,
 
     risk_exposures_portfolio = compute_exposures(positions,
                                                  factor_loadings)
+    if freq is not None:
+        risk_exposures_portfolio = risk_exposures_portfolio.asfreq(freq)
 
     perf_attrib_by_factor = risk_exposures_portfolio.multiply(factor_returns)
     common_returns = perf_attrib_by_factor.sum(axis='columns')
@@ -111,7 +116,7 @@ def perf_attrib(returns,
         ('specific_returns', specific_returns),
         ('tilt_returns', tilt_returns),
         ('timing_returns', timing_returns)
-        ]))
+    ]))
 
     return (risk_exposures_portfolio,
             pd.concat([perf_attrib_by_factor, returns_df], axis='columns'))
