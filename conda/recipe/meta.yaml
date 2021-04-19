@@ -33,6 +33,6 @@ test:
 
 about:
   home: https://empyrical.ml4trading.io
-  summary: 'Common financial risk metrids'
+  summary: 'Common financial risk metrics'
   license: Apache-2.0
   license_file: LICENSE
