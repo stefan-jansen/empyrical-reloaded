@@ -1,22 +1,21 @@
-[![Build Status](https://travis-ci.org/quantopian/empyrical.svg?branch=master)](https://travis-ci.org/quantopian/empyrical)
-
-[![PyPI](https://img.shields.io/pypi/v/empyrical?color=%234ec726&style=flat-square)](https://pypi.org/project/empyrical/)
+[![PyPI Wheels](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml)
+[![CI Tests](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml)
 
 # empyrical
 
 Common financial risk metrics.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Support](#support)
-- [Contributing](#contributing)
-- [Testing](#testing)
-
 ## Installation
+
+empyrical requires Python 3.7+. You can install it using `pip`:
+
+```bash
+pip install empyrical-reloaded
 ```
-pip install empyrical
+
+or `conda`:
+```bash
+conda install -c ml4t empyrical-reloaded
 ```
 
 ## Usage
@@ -65,7 +64,7 @@ roll_up_capture(returns, window=60)
 
 ## Support
 
-Please [open an issue](https://github.com/quantopian/empyrical/issues/new) for support.
+Please [open an issue](https://github.com/stefan-jansen/empyrical-reloaded/issues/new) for support.
 
 ### Deprecated: Data Reading via `pandas-datareader`
 
@@ -98,13 +97,13 @@ patches to the Yahoo or Google Finance API:
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/quantopian/empyrical/compare/).
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/stefan-jansen/empyrical-reloaded/compare/).
 
 ## Testing
 - install requirements
   - "nose>=1.3.7",
   - "parameterized>=0.6.1"
 
-```
-./runtests.py
+```bash
+nosetests empyrical.tests
 ```
