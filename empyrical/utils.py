@@ -23,22 +23,26 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 import pandas as pd
 from pandas.tseries.offsets import BDay
+
 try:
     from pandas_datareader import data as web
 except ImportError:
-    msg = ("Unable to import pandas_datareader. Suppressing import error and "
-           "continuing. All data reading functionality will raise errors; but "
-           "has been deprecated and will be removed in a later version.")
+    msg = (
+        "Unable to import pandas_datareader. Suppressing import error and "
+        "continuing. All data reading functionality will raise errors; but "
+        "has been deprecated and will be removed in a later version."
+    )
     warnings.warn(msg)
 from .deprecate import deprecated
 
-DATAREADER_DEPRECATION_WARNING = \
-        ("Yahoo and Google Finance have suffered large API breaks with no "
-         "stable replacement. As a result, any data reading functionality "
-         "in empyrical has been deprecated and will be removed in a future "
-         "version. See README.md for more details: "
-         "\n\n"
-         "\thttps://github.com/quantopian/pyfolio/blob/master/README.md")
+DATAREADER_DEPRECATION_WARNING = (
+    "Yahoo and Google Finance have suffered large API breaks with no "
+    "stable replacement. As a result, any data reading functionality "
+    "in empyrical has been deprecated and will be removed in a future "
+    "version. See README.md for more details: "
+    "\n\n"
+    "\thttps://github.com/quantopian/pyfolio/blob/master/README.md"
+)
 try:
     # fast versions
     import bottleneck as bn
@@ -46,7 +50,7 @@ try:
     def _wrap_function(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
-            out = kwargs.pop('out', None)
+            out = kwargs.pop("out", None)
             data = f(*args, **kwargs)
             if out is None:
                 out = data
@@ -104,8 +108,8 @@ def roll(*args, **kwargs):
         window.
 
     """
-    func = kwargs.pop('function')
-    window = kwargs.pop('window')
+    func = kwargs.pop("function")
+    window = kwargs.pop("window")
     if len(args) > 2:
         raise ValueError("Cannot pass more than 2 return sets")
 
@@ -138,7 +142,7 @@ def up(returns, factor_returns, **kwargs):
     -------
     Same as the return of the function
     """
-    func = kwargs.pop('function')
+    func = kwargs.pop("function")
     returns = returns[factor_returns > 0]
     factor_returns = factor_returns[factor_returns > 0]
     return func(returns, factor_returns, **kwargs)
@@ -164,7 +168,7 @@ def down(returns, factor_returns, **kwargs):
     -------
     Same as the return of the 'function'
     """
-    func = kwargs.pop('function')
+    func = kwargs.pop("function")
     returns = returns[factor_returns < 0]
     factor_returns = factor_returns[factor_returns < 0]
     return func(returns, factor_returns, **kwargs)
@@ -173,7 +177,7 @@ def down(returns, factor_returns, **kwargs):
 def _roll_ndarray(func, window, *args, **kwargs):
     data = []
     for i in range(window, len(args[0]) + 1):
-        rets = [s[i-window:i] for s in args]
+        rets = [s[i - window : i] for s in args]
         data.append(func(*rets, **kwargs))
     return np.array(data)
 
@@ -182,7 +186,7 @@ def _roll_pandas(func, window, *args, **kwargs):
     data = {}
     index_values = []
     for i in range(window, len(args[0]) + 1):
-        rets = [s.iloc[i-window:i] for s in args]
+        rets = [s.iloc[i - window : i] for s in args]
         index_value = args[0].index[i - 1]
         index_values.append(index_value)
         data[index_value] = func(*rets, **kwargs)
@@ -192,15 +196,14 @@ def _roll_pandas(func, window, *args, **kwargs):
 @deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def cache_dir(environ=environ):
     try:
-        return environ['EMPYRICAL_CACHE_DIR']
+        return environ["EMPYRICAL_CACHE_DIR"]
     except KeyError:
         return join(
-
             environ.get(
-                'XDG_CACHE_HOME',
-                expanduser('~/.cache/'),
+                "XDG_CACHE_HOME",
+                expanduser("~/.cache/"),
             ),
-            'empyrical',
+            "empyrical",
         )
 
 
@@ -240,9 +243,9 @@ def get_utc_timestamp(dt):
 
     dt = pd.to_datetime(dt)
     try:
-        dt = dt.tz_localize('UTC')
+        dt = dt.tz_localize("UTC")
     except TypeError:
-        dt = dt.tz_convert('UTC')
+        dt = dt.tz_convert("UTC")
     return dt
 
 
@@ -263,14 +266,16 @@ def get_fama_french():
         Percent change of Fama-French factors
     """
 
-    start = '1/1/1970'
-    research_factors = web.DataReader('F-F_Research_Data_Factors_daily',
-                                      'famafrench', start=start)[0]
-    momentum_factor = web.DataReader('F-F_Momentum_Factor_daily',
-                                     'famafrench', start=start)[0]
+    start = "1/1/1970"
+    research_factors = web.DataReader(
+        "F-F_Research_Data_Factors_daily", "famafrench", start=start
+    )[0]
+    momentum_factor = web.DataReader(
+        "F-F_Momentum_Factor_daily", "famafrench", start=start
+    )[0]
     five_factors = research_factors.join(momentum_factor).dropna()
-    five_factors /= 100.
-    five_factors.index = five_factors.index.tz_localize('utc')
+    five_factors /= 100.0
+    five_factors.index = five_factors.index.tz_localize("utc")
 
     five_factors.columns = five_factors.columns.str.strip()
 
@@ -309,10 +314,10 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
         update_cache = True
     else:
 
-        file_dt = pd.Timestamp(mtime, unit='s')
+        file_dt = pd.Timestamp(mtime, unit="s")
 
         if latest_dt.tzinfo:
-            file_dt = file_dt.tz_localize('utc')
+            file_dt = file_dt.tz_localize("utc")
 
         if file_dt < latest_dt:
             update_cache = True
@@ -326,8 +331,10 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
             ensure_directory(cache_dir())
         except OSError as e:
             warnings.warn(
-                'could not update cache: {}. {}: {}'.format(
-                    filepath, type(e).__name__, e,
+                "could not update cache: {}. {}: {}".format(
+                    filepath,
+                    type(e).__name__,
+                    e,
                 ),
                 UserWarning,
             )
@@ -336,8 +343,10 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
             returns.to_csv(filepath)
         except OSError as e:
             warnings.warn(
-                'could not update cache {}. {}: {}'.format(
-                    filepath, type(e).__name__, e,
+                "could not update cache {}. {}: {}".format(
+                    filepath,
+                    type(e).__name__,
+                    e,
                 ),
                 UserWarning,
             )
@@ -358,7 +367,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     """
 
     if start is None:
-        start = '1/1/1970'
+        start = "1/1/1970"
     if end is None:
         end = _1_bday_ago()
 
@@ -366,7 +375,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     end = get_utc_timestamp(end)
 
     if filepath_prefix is None:
-        filepath = data_path('factors.csv')
+        filepath = data_path("factors.csv")
     else:
         filepath = filepath_prefix
 
@@ -376,7 +385,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
 
 
 @deprecated(msg=DATAREADER_DEPRECATION_WARNING)
-def get_treasury_yield(start=None, end=None, period='3MO'):
+def get_treasury_yield(start=None, end=None, period="3MO"):
     """
     Load treasury yields from FRED.
 
@@ -397,12 +406,11 @@ def get_treasury_yield(start=None, end=None, period='3MO'):
     """
 
     if start is None:
-        start = '1/1/1970'
+        start = "1/1/1970"
     if end is None:
         end = _1_bday_ago()
 
-    treasury = web.DataReader("DGS3{}".format(period), "fred",
-                              start, end)
+    treasury = web.DataReader("DGS3{}".format(period), "fred", start, end)
 
     treasury = treasury.ffill()
 
@@ -433,15 +441,16 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
 
     try:
         px = web.get_data_yahoo(symbol, start=start, end=end)
-        px['date'] = pd.to_datetime(px['date'])
-        px.set_index('date', drop=False, inplace=True)
-        rets = px[['adjclose']].pct_change().dropna()
+        px["date"] = pd.to_datetime(px["date"])
+        px.set_index("date", drop=False, inplace=True)
+        rets = px[["adjclose"]].pct_change().dropna()
     except Exception as e:
         warnings.warn(
-            'Yahoo Finance read failed: {}, falling back to Google'.format(e),
-            UserWarning)
+            "Yahoo Finance read failed: {}, falling back to Google".format(e),
+            UserWarning,
+        )
         px = web.get_data_google(symbol, start=start, end=end)
-        rets = px[['Close']].pct_change().dropna()
+        rets = px[["Close"]].pct_change().dropna()
 
     rets.index = rets.index.tz_localize("UTC")
     rets.columns = [symbol]
@@ -473,21 +482,23 @@ def default_returns_func(symbol, start=None, end=None):
     """
 
     if start is None:
-        start = '1/1/1970'
+        start = "1/1/1970"
     if end is None:
         end = _1_bday_ago()
 
     start = get_utc_timestamp(start)
     end = get_utc_timestamp(end)
 
-    if symbol == 'SPY':
-        filepath = data_path('spy.csv')
-        rets = get_returns_cached(filepath,
-                                  get_symbol_returns_from_yahoo,
-                                  end,
-                                  symbol='SPY',
-                                  start='1/1/1970',
-                                  end=datetime.now())
+    if symbol == "SPY":
+        filepath = data_path("spy.csv")
+        rets = get_returns_cached(
+            filepath,
+            get_symbol_returns_from_yahoo,
+            end,
+            symbol="SPY",
+            start="1/1/1970",
+            end=datetime.now(),
+        )
         rets = rets[start:end]
     else:
         rets = get_symbol_returns_from_yahoo(symbol, start=start, end=end)
@@ -565,7 +576,7 @@ def rolling_window(array, length, mutable=False):
             )
         )
 
-    num_windows = (orig_shape[0] - length + 1)
+    num_windows = orig_shape[0] - length + 1
     new_shape = (num_windows, length) + orig_shape[1:]
 
     new_strides = (array.strides[0],) + array.strides

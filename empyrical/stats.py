@@ -13,14 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import division
-
 import math
 import pandas as pd
 import numpy as np
 from math import pow
 from scipy import stats, optimize
-from six import iteritems
 from sys import float_info
 
 from .utils import nanmean, nanstd, nanmin, up, down, roll, rolling_window
@@ -56,10 +53,10 @@ def _create_unary_vectorized_roll_function(function):
             out = function(
                 rolling_window(_flatten(arr), min(len(arr), window)).T,
                 out=out,
-                **kwargs
+                **kwargs,
             )
         else:
-            out = np.empty(0, dtype='float64')
+            out = np.empty(0, dtype="float64")
 
         if allocated_output and isinstance(arr, pd.Series):
             out = pd.Series(out, index=arr.index[-len(out):])
@@ -68,7 +65,7 @@ def _create_unary_vectorized_roll_function(function):
 
     unary_vectorized_roll.__doc__ = unary_vectorized_roll.__doc__.format(
         name=function.__name__,
-        human_readable=function.__name__.replace('_', ' '),
+        human_readable=function.__name__.replace("_", " "),
     )
 
     return unary_vectorized_roll
@@ -105,10 +102,10 @@ def _create_binary_vectorized_roll_function(function):
                 rolling_window(_flatten(lhs), min(len(lhs), window)).T,
                 rolling_window(_flatten(rhs), min(len(rhs), window)).T,
                 out=out,
-                **kwargs
+                **kwargs,
             )
         elif allocated_output:
-            out = np.empty(0, dtype='float64')
+            out = np.empty(0, dtype="float64")
         else:
             out[()] = np.nan
 
@@ -121,7 +118,7 @@ def _create_binary_vectorized_roll_function(function):
 
     binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
         name=function.__name__,
-        human_readable=function.__name__.replace('_', ' '),
+        human_readable=function.__name__.replace("_", " "),
     )
 
     return binary_vectorized_roll
@@ -271,7 +268,9 @@ def cum_returns(returns, starting_value=0, out=None):
             out = pd.Series(out, index=returns.index)
         elif isinstance(returns, pd.DataFrame):
             out = pd.DataFrame(
-                out, index=returns.index, columns=returns.columns,
+                out,
+                index=returns.index,
+                columns=returns.columns,
             )
 
     return out
@@ -338,12 +337,12 @@ def aggregate_returns(returns, convert_to):
     elif convert_to == MONTHLY:
         grouping = [lambda x: x.year, lambda x: x.month]
     elif convert_to == QUARTERLY:
-        grouping = [lambda x: x.year, lambda x: int(math.ceil(x.month/3.))]
+        grouping = [lambda x: x.year, lambda x: int(math.ceil(x.month / 3.0))]
     elif convert_to == YEARLY:
         grouping = [lambda x: x.year]
     else:
         raise ValueError(
-            'convert_to must be {}, {} or {}'.format(WEEKLY, MONTHLY, YEARLY)
+            "convert_to must be {}, {} or {}".format(WEEKLY, MONTHLY, YEARLY)
         )
 
     return returns.groupby(grouping).apply(cumulate_returns)
@@ -386,7 +385,7 @@ def max_drawdown(returns, out=None):
 
     cumulative = np.empty(
         (returns.shape[0] + 1,) + returns.shape[1:],
-        dtype='float64',
+        dtype="float64",
     )
     cumulative[0] = start = 100
     cum_returns(returns_array, starting_value=start, out=cumulative[1:])
@@ -484,11 +483,9 @@ def cagr(returns, period=DAILY, annualization=None):
 roll_cagr = _create_unary_vectorized_roll_function(cagr)
 
 
-def annual_volatility(returns,
-                      period=DAILY,
-                      alpha=2.0,
-                      annualization=None,
-                      out=None):
+def annual_volatility(
+        returns, period=DAILY, alpha=2.0, annualization=None, out=None
+):
     """
     Determines the annual volatility of a strategy.
 
@@ -583,9 +580,7 @@ def calmar_ratio(returns, period=DAILY, annualization=None):
     max_dd = max_drawdown(returns=returns)
     if max_dd < 0:
         temp = annual_return(
-            returns=returns,
-            period=period,
-            annualization=annualization
+            returns=returns, period=period, annualization=annualization
         ) / abs(max_dd)
     else:
         return np.nan
@@ -596,8 +591,12 @@ def calmar_ratio(returns, period=DAILY, annualization=None):
     return temp
 
 
-def omega_ratio(returns, risk_free=0.0, required_return=0.0,
-                annualization=APPROX_BDAYS_PER_YEAR):
+def omega_ratio(
+        returns,
+        risk_free=0.0,
+        required_return=0.0,
+        annualization=APPROX_BDAYS_PER_YEAR,
+):
     """Determines the Omega ratio of a strategy.
 
     Parameters
@@ -635,8 +634,7 @@ def omega_ratio(returns, risk_free=0.0, required_return=0.0,
     elif required_return <= -1:
         return np.nan
     else:
-        return_threshold = (1 + required_return) ** \
-            (1. / annualization) - 1
+        return_threshold = (1 + required_return) ** (1.0 / annualization) - 1
 
     returns_less_thresh = returns - risk_free - return_threshold
 
@@ -649,11 +647,9 @@ def omega_ratio(returns, risk_free=0.0, required_return=0.0,
         return np.nan
 
 
-def sharpe_ratio(returns,
-                 risk_free=0,
-                 period=DAILY,
-                 annualization=None,
-                 out=None):
+def sharpe_ratio(
+        returns, risk_free=0, period=DAILY, annualization=None, out=None
+):
     """
     Determines the Sharpe ratio of a strategy.
 
@@ -724,12 +720,14 @@ def sharpe_ratio(returns,
 roll_sharpe_ratio = _create_unary_vectorized_roll_function(sharpe_ratio)
 
 
-def sortino_ratio(returns,
-                  required_return=0,
-                  period=DAILY,
-                  annualization=None,
-                  out=None,
-                  _downside_risk=None):
+def sortino_ratio(
+        returns,
+        required_return=0,
+        period=DAILY,
+        annualization=None,
+        out=None,
+        _downside_risk=None,
+):
     """
     Determines the Sortino ratio of a strategy.
 
@@ -793,8 +791,8 @@ def sortino_ratio(returns,
     average_annual_return = nanmean(adj_returns, axis=0) * ann_factor
     annualized_downside_risk = (
         _downside_risk
-        if _downside_risk is not None else
-        downside_risk(returns, required_return, period, annualization)
+        if _downside_risk is not None
+        else downside_risk(returns, required_return, period, annualization)
     )
     np.divide(average_annual_return, annualized_downside_risk, out=out)
     if return_1d:
@@ -808,11 +806,9 @@ def sortino_ratio(returns,
 roll_sortino_ratio = _create_unary_vectorized_roll_function(sortino_ratio)
 
 
-def downside_risk(returns,
-                  required_return=0,
-                  period=DAILY,
-                  annualization=None,
-                  out=None):
+def downside_risk(
+        returns, required_return=0, period=DAILY, annualization=None, out=None
+):
     """
     Determines the downside deviation below a threshold
 
@@ -965,7 +961,7 @@ def _to_pandas(ob):
         return pd.DataFrame(ob)
     else:
         raise ValueError(
-            'cannot convert array of dim > 2 to a pandas structure',
+            "cannot convert array of dim > 2 to a pandas structure",
         )
 
 
@@ -989,24 +985,27 @@ def _aligned_series(*many_series):
     head = many_series[0]
     tail = many_series[1:]
     n = len(head)
-    if (isinstance(head, np.ndarray) and
-            all(len(s) == n and isinstance(s, np.ndarray) for s in tail)):
+    if isinstance(head, np.ndarray) and all(
+            len(s) == n and isinstance(s, np.ndarray) for s in tail
+    ):
         # optimization: ndarrays of the same length are already aligned
         return many_series
 
     # dataframe has no ``itervalues``
     return (
         v
-        for _, v in iteritems(pd.concat(map(_to_pandas, many_series), axis=1))
+        for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
     )
 
 
-def alpha_beta(returns,
-               factor_returns,
-               risk_free=0.0,
-               period=DAILY,
-               annualization=None,
-               out=None):
+def alpha_beta(
+        returns,
+        factor_returns,
+        risk_free=0.0,
+        period=DAILY,
+        annualization=None,
+        out=None,
+):
     """Calculates annualized alpha and beta.
 
     Parameters
@@ -1076,19 +1075,18 @@ def roll_alpha_beta(returns, factor_returns, window=10, **kwargs):
     returns, factor_returns = _aligned_series(returns, factor_returns)
 
     return roll_alpha_beta_aligned(
-        returns,
-        factor_returns,
-        window=window,
-        **kwargs
+        returns, factor_returns, window=window, **kwargs
     )
 
 
-def alpha_beta_aligned(returns,
-                       factor_returns,
-                       risk_free=0.0,
-                       period=DAILY,
-                       annualization=None,
-                       out=None):
+def alpha_beta_aligned(
+        returns,
+        factor_returns,
+        risk_free=0.0,
+        period=DAILY,
+        annualization=None,
+        out=None,
+):
     """Calculates annualized alpha and beta.
 
     If they are pd.Series, expects returns and factor_returns have already
@@ -1130,7 +1128,7 @@ def alpha_beta_aligned(returns,
     beta : float
     """
     if out is None:
-        out = np.empty(returns.shape[1:] + (2,), dtype='float64')
+        out = np.empty(returns.shape[1:] + (2,), dtype="float64")
 
     b = beta_aligned(returns, factor_returns, risk_free, out=out[..., 1])
     alpha_aligned(
@@ -1151,13 +1149,15 @@ roll_alpha_beta_aligned = _create_binary_vectorized_roll_function(
 )
 
 
-def alpha(returns,
-          factor_returns,
-          risk_free=0.0,
-          period=DAILY,
-          annualization=None,
-          out=None,
-          _beta=None):
+def alpha(
+        returns,
+        factor_returns,
+        risk_free=0.0,
+        period=DAILY,
+        annualization=None,
+        out=None,
+        _beta=None,
+):
     """Calculates annualized alpha.
 
     Parameters
@@ -1198,8 +1198,10 @@ def alpha(returns,
     float
         Alpha.
     """
-    if not (isinstance(returns, np.ndarray) and
-            isinstance(factor_returns, np.ndarray)):
+    if not (
+            isinstance(returns, np.ndarray)
+            and isinstance(factor_returns, np.ndarray)
+    ):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
     return alpha_aligned(
@@ -1209,20 +1211,22 @@ def alpha(returns,
         period=period,
         annualization=annualization,
         out=out,
-        _beta=_beta
+        _beta=_beta,
     )
 
 
 roll_alpha = _create_binary_vectorized_roll_function(alpha)
 
 
-def alpha_aligned(returns,
-                  factor_returns,
-                  risk_free=0.0,
-                  period=DAILY,
-                  annualization=None,
-                  out=None,
-                  _beta=None):
+def alpha_aligned(
+        returns,
+        factor_returns,
+        risk_free=0.0,
+        period=DAILY,
+        annualization=None,
+        out=None,
+        _beta=None,
+):
     """Calculates annualized alpha.
 
     If they are pd.Series, expects returns and factor_returns have already
@@ -1268,7 +1272,7 @@ def alpha_aligned(returns,
     """
     allocated_output = out is None
     if allocated_output:
-        out = np.empty(returns.shape[1:], dtype='float64')
+        out = np.empty(returns.shape[1:], dtype="float64")
 
     if len(returns) < 2:
         out[()] = np.nan
@@ -1287,16 +1291,12 @@ def alpha_aligned(returns,
 
     out = np.subtract(
         np.power(
-            np.add(
-                nanmean(alpha_series, axis=0, out=out),
-                1,
-                out=out
-            ),
+            np.add(nanmean(alpha_series, axis=0, out=out), 1, out=out),
             ann_factor,
-            out=out
+            out=out,
         ),
         1,
-        out=out
+        out=out,
     )
 
     if allocated_output and isinstance(returns, pd.DataFrame):
@@ -1334,8 +1334,10 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     -------
     beta : float
     """
-    if not (isinstance(returns, np.ndarray) and
-            isinstance(factor_returns, np.ndarray)):
+    if not (
+            isinstance(returns, np.ndarray)
+            and isinstance(factor_returns, np.ndarray)
+    ):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
     return beta_aligned(
@@ -1492,8 +1494,9 @@ def stability_of_timeseries(returns):
     returns = returns[~np.isnan(returns)]
 
     cum_log_returns = np.log1p(returns).cumsum()
-    rhat = stats.linregress(np.arange(len(cum_log_returns)),
-                            cum_log_returns)[2]
+    rhat = stats.linregress(np.arange(len(cum_log_returns)), cum_log_returns)[
+        2
+    ]
 
     return rhat ** 2
 
@@ -1524,8 +1527,9 @@ def tail_ratio(returns):
     if len(returns) < 1:
         return np.nan
 
-    return np.abs(np.percentile(returns, 95)) / \
-        np.abs(np.percentile(returns, 5))
+    return np.abs(np.percentile(returns, 95)) / np.abs(
+        np.percentile(returns, 5)
+    )
 
 
 def capture(returns, factor_returns, period=DAILY):
@@ -1558,75 +1562,77 @@ def capture(returns, factor_returns, period=DAILY):
     See http://www.investopedia.com/terms/u/up-market-capture-ratio.asp for
     details.
     """
-    return (annual_return(returns, period=period) /
-            annual_return(factor_returns, period=period))
+    return annual_return(returns, period=period) / annual_return(
+        factor_returns, period=period
+    )
 
 
 def beta_fragility_heuristic(returns, factor_returns):
     """Estimate fragility to drops in beta.
 
-    Parameters
-    ----------
-    returns : pd.Series or np.ndarray
-        Daily returns of the strategy, noncumulative.
-        - See full explanation in :func:`~empyrical.stats.cum_returns`.
-    factor_returns : pd.Series or np.ndarray
-         Daily noncumulative returns of the factor to which beta is
-         computed. Usually a benchmark such as the market.
-         - This is in the same style as returns.
+        Parameters
+        ----------
+        returns : pd.Series or np.ndarray
+            Daily returns of the strategy, noncumulative.
+            - See full explanation in :func:`~empyrical.stats.cum_returns`.
+        factor_returns : pd.Series or np.ndarray
+             Daily noncumulative returns of the factor to which beta is
+             computed. Usually a benchmark such as the market.
+             - This is in the same style as returns.
 
-    Returns
-    -------
-    float, np.nan
-        The beta fragility of the strategy.
+        Returns
+        -------
+        float, np.nan
+            The beta fragility of the strategy.
 
-    Note
-    ----
-    A negative return value indicates potential losses
-    could follow volatility in beta.
-    The magnitude of the negative value indicates the size of
-    the potential loss.
-    seealso::
-    `A New Heuristic Measure of Fragility and
-Tail Risks: Application to Stress Testing`
-        https://www.imf.org/external/pubs/ft/wp/2012/wp12216.pdf
-        An IMF Working Paper describing the heuristic
+        Note
+        ----
+        A negative return value indicates potential losses
+        could follow volatility in beta.
+        The magnitude of the negative value indicates the size of
+        the potential loss.
+        seealso::
+        `A New Heuristic Measure of Fragility and
+    Tail Risks: Application to Stress Testing`
+            https://www.imf.org/external/pubs/ft/wp/2012/wp12216.pdf
+            An IMF Working Paper describing the heuristic
     """
     if len(returns) < 3 or len(factor_returns) < 3:
         return np.nan
 
     return beta_fragility_heuristic_aligned(
-        *_aligned_series(returns, factor_returns))
+        *_aligned_series(returns, factor_returns)
+    )
 
 
 def beta_fragility_heuristic_aligned(returns, factor_returns):
     """Estimate fragility to drops in beta
 
-    Parameters
-    ----------
-    returns : pd.Series or np.ndarray
-        Daily returns of the strategy, noncumulative.
-        - See full explanation in :func:`~empyrical.stats.cum_returns`.
-    factor_returns : pd.Series or np.ndarray
-         Daily noncumulative returns of the factor to which beta is
-         computed. Usually a benchmark such as the market.
-         - This is in the same style as returns.
+        Parameters
+        ----------
+        returns : pd.Series or np.ndarray
+            Daily returns of the strategy, noncumulative.
+            - See full explanation in :func:`~empyrical.stats.cum_returns`.
+        factor_returns : pd.Series or np.ndarray
+             Daily noncumulative returns of the factor to which beta is
+             computed. Usually a benchmark such as the market.
+             - This is in the same style as returns.
 
-    Returns
-    -------
-    float, np.nan
-        The beta fragility of the strategy.
+        Returns
+        -------
+        float, np.nan
+            The beta fragility of the strategy.
 
-    Note
-    ----
-    If they are pd.Series, expects returns and factor_returns have already
-    been aligned on their labels.  If np.ndarray, these arguments should have
-    the same shape.
-    seealso::
-    `A New Heuristic Measure of Fragility and
-Tail Risks: Application to Stress Testing`
-        https://www.imf.org/external/pubs/ft/wp/2012/wp12216.pdf
-        An IMF Working Paper describing the heuristic
+        Note
+        ----
+        If they are pd.Series, expects returns and factor_returns have already
+        been aligned on their labels.  If np.ndarray, these arguments should
+        have the same shape.
+        seealso::
+        `A New Heuristic Measure of Fragility and
+    Tail Risks: Application to Stress Testing`
+            https://www.imf.org/external/pubs/ft/wp/2012/wp12216.pdf
+            An IMF Working Paper describing the heuristic
     """
     if len(returns) < 3 or len(factor_returns) < 3:
         return np.nan
@@ -1635,12 +1641,12 @@ Tail Risks: Application to Stress Testing`
     returns_series = pd.Series(returns)
     factor_returns_series = pd.Series(factor_returns)
     pairs = pd.concat([returns_series, factor_returns_series], axis=1)
-    pairs.columns = ['returns', 'factor_returns']
+    pairs.columns = ["returns", "factor_returns"]
 
     # exclude any rows where returns are nan
     pairs = pairs.dropna()
     # sort by beta
-    pairs = pairs.sort_values(by='factor_returns')
+    pairs = pairs.sort_values(by="factor_returns")
 
     # find the three vectors, using median of 3
     start_index = 0
@@ -1651,23 +1657,26 @@ Tail Risks: Application to Stress Testing`
     (mid_returns, mid_factor_returns) = pairs.iloc[mid_index]
     (end_returns, end_factor_returns) = pairs.iloc[end_index]
 
-    factor_returns_range = (end_factor_returns - start_factor_returns)
+    factor_returns_range = end_factor_returns - start_factor_returns
     start_returns_weight = 0.5
     end_returns_weight = 0.5
 
     # find weights for the start and end returns
     # using a convex combination
     if not factor_returns_range == 0:
-        start_returns_weight = \
-            (mid_factor_returns - start_factor_returns) / \
-            factor_returns_range
-        end_returns_weight = \
-            (end_factor_returns - mid_factor_returns) / \
-            factor_returns_range
+        start_returns_weight = (
+                                       mid_factor_returns - start_factor_returns
+                               ) / factor_returns_range
+        end_returns_weight = (
+                                     end_factor_returns - mid_factor_returns
+                             ) / factor_returns_range
 
     # calculate fragility heuristic
-    heuristic = (start_returns_weight*start_returns) + \
-        (end_returns_weight*end_returns) - mid_returns
+    heuristic = (
+            (start_returns_weight * start_returns)
+            + (end_returns_weight * end_returns)
+            - mid_returns
+    )
 
     return heuristic
 
@@ -1690,16 +1699,16 @@ def gpd_risk_estimates(returns, var_p=0.01):
         threshold - the threshold use to cut off exception tail losses
         scale_param - a parameter (often denoted by sigma, capturing the
             scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape or
-            type of the distribution)
+        shape_param - a parameter (often denoted by xi, capturing the shape
+         or type of the distribution)
         var_estimate - an estimate for the VaR for the given percentile
         es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
-    seealso::
-    `An Application of Extreme Value Theory for
-Measuring Risk <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
+    see also::
+    `An Application of Extreme Value Theory for Measuring Risk
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
         A paper describing how to use the Generalized Pareto
         Distribution to estimate VaR and ES.
     """
@@ -1729,16 +1738,16 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         threshold - the threshold use to cut off exception tail losses
         scale_param - a parameter (often denoted by sigma, capturing the
             scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape or
-            type of the distribution)
+        shape_param - a parameter (often denoted by xi, capturing the shape
+        or type of the distribution)
         var_estimate - an estimate for the VaR for the given percentile
         es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
     seealso::
-    `An Application of Extreme Value Theory for
-Measuring Risk <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
+    `An Application of Extreme Value Theory for Measuring Risk
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
         A paper describing how to use the Generalized Pareto
         Distribution to estimate VaR and ES.
     """
@@ -1761,55 +1770,68 @@ Measuring Risk <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
         scale_param = 0
         shape_param = 0
         while not finished and threshold > MINIMUM_THRESHOLD:
-            losses_beyond_threshold = \
-                losses[losses >= threshold]
-            param_result = \
-                gpd_loglikelihood_minimizer_aligned(losses_beyond_threshold)
-            if (param_result[0] is not False and
-                    param_result[1] is not False):
+            losses_beyond_threshold = losses[losses >= threshold]
+            param_result = gpd_loglikelihood_minimizer_aligned(
+                losses_beyond_threshold
+            )
+            if param_result[0] is not False and param_result[1] is not False:
                 scale_param = param_result[0]
                 shape_param = param_result[1]
-                var_estimate = gpd_var_calculator(threshold, scale_param,
-                                                  shape_param, var_p,
-                                                  len(losses),
-                                                  len(losses_beyond_threshold))
+                var_estimate = gpd_var_calculator(
+                    threshold,
+                    scale_param,
+                    shape_param,
+                    var_p,
+                    len(losses),
+                    len(losses_beyond_threshold),
+                )
                 # non-negative shape parameter is required for fat tails
                 # non-negative VaR estimate is required for loss of some kind
-                if (shape_param > 0 and var_estimate > 0):
+                if shape_param > 0 and var_estimate > 0:
                     finished = True
-            if (not finished):
+            if not finished:
                 threshold = threshold / 2
-        if (finished):
-            es_estimate = gpd_es_calculator(var_estimate, threshold,
-                                            scale_param, shape_param)
-            result = np.array([threshold, scale_param, shape_param,
-                               var_estimate, es_estimate])
+        if finished:
+            es_estimate = gpd_es_calculator(
+                var_estimate, threshold, scale_param, shape_param
+            )
+            result = np.array(
+                [
+                    threshold,
+                    scale_param,
+                    shape_param,
+                    var_estimate,
+                    es_estimate,
+                ]
+            )
     if isinstance(returns, pd.Series):
         result = pd.Series(result)
     return result
 
 
-def gpd_es_calculator(var_estimate, threshold, scale_param,
-                      shape_param):
+def gpd_es_calculator(var_estimate, threshold, scale_param, shape_param):
     result = 0
-    if ((1 - shape_param) != 0):
+    if (1 - shape_param) != 0:
         # this formula is from Gilli and Kellezi pg. 8
-        var_ratio = (var_estimate/(1 - shape_param))
-        param_ratio = ((scale_param - (shape_param * threshold)) /
-                       (1 - shape_param))
+        var_ratio = var_estimate / (1 - shape_param)
+        param_ratio = (scale_param - (shape_param * threshold)) / (
+                1 - shape_param
+        )
         result = var_ratio + param_ratio
     return result
 
 
-def gpd_var_calculator(threshold, scale_param, shape_param,
-                       probability, total_n, exceedance_n):
+def gpd_var_calculator(
+        threshold, scale_param, shape_param, probability, total_n, exceedance_n
+):
     result = 0
-    if (exceedance_n > 0 and shape_param > 0):
+    if exceedance_n > 0 and shape_param > 0:
         # this formula is from Gilli and Kellezi pg. 12
         param_ratio = scale_param / shape_param
-        prob_ratio = (total_n/exceedance_n) * probability
-        result = threshold + (param_ratio *
-                              (pow(prob_ratio, -shape_param) - 1))
+        prob_ratio = (total_n / exceedance_n) * probability
+        result = threshold + (
+                param_ratio * (pow(prob_ratio, -shape_param) - 1)
+        )
     return result
 
 
@@ -1817,14 +1839,13 @@ def gpd_loglikelihood_minimizer_aligned(price_data):
     result = [False, False]
     DEFAULT_SCALE_PARAM = 1
     DEFAULT_SHAPE_PARAM = 1
-    if (len(price_data) > 0):
-        gpd_loglikelihood_lambda = \
-            gpd_loglikelihood_factory(price_data)
-        optimization_results = \
-            optimize.minimize(gpd_loglikelihood_lambda,
-                              [DEFAULT_SCALE_PARAM,
-                               DEFAULT_SHAPE_PARAM],
-                              method='Nelder-Mead')
+    if len(price_data) > 0:
+        gpd_loglikelihood_lambda = gpd_loglikelihood_factory(price_data)
+        optimization_results = optimize.minimize(
+            gpd_loglikelihood_lambda,
+            [DEFAULT_SCALE_PARAM, DEFAULT_SHAPE_PARAM],
+            method="Nelder-Mead",
+        )
         if optimization_results.success:
             resulting_params = optimization_results.x
             if len(resulting_params) == 2:
@@ -1838,10 +1859,10 @@ def gpd_loglikelihood_factory(price_data):
 
 
 def gpd_loglikelihood(params, price_data):
-    if (params[1] != 0):
-        return -gpd_loglikelihood_scale_and_shape(params[0],
-                                                  params[1],
-                                                  price_data)
+    if params[1] != 0:
+        return -gpd_loglikelihood_scale_and_shape(
+            params[0], params[1], price_data
+        )
     else:
         return -gpd_loglikelihood_scale_only(params[0], price_data)
 
@@ -1851,36 +1872,35 @@ def gpd_loglikelihood_scale_and_shape_factory(price_data):
     # we are expecting the lambda below to be called as follows:
     # parameters = [scale, shape]
     # the final outer negative is added because scipy only minimizes
-    return lambda params: \
-        -gpd_loglikelihood_scale_and_shape(params[0],
-                                           params[1],
-                                           price_data)
+    return lambda params: -gpd_loglikelihood_scale_and_shape(
+        params[0], params[1], price_data
+    )
 
 
 def gpd_loglikelihood_scale_and_shape(scale, shape, price_data):
     n = len(price_data)
     result = -1 * float_info.max
-    if (scale != 0):
+    if scale != 0:
         param_factor = shape / scale
-        if (shape != 0 and param_factor >= 0 and scale >= 0):
-            result = ((-n * np.log(scale)) -
-                      (((1 / shape) + 1) *
-                       (np.log((shape / scale * price_data) + 1)).sum()))
+        if shape != 0 and param_factor >= 0 and scale >= 0:
+            result = (-n * np.log(scale)) - (
+                    ((1 / shape) + 1)
+                    * (np.log((shape / scale * price_data) + 1)).sum()
+            )
     return result
 
 
 def gpd_loglikelihood_scale_only_factory(price_data):
     # the negative is added because scipy only minimizes
-    return lambda scale: \
-        -gpd_loglikelihood_scale_only(scale, price_data)
+    return lambda scale: -gpd_loglikelihood_scale_only(scale, price_data)
 
 
 def gpd_loglikelihood_scale_only(scale, price_data):
     n = len(price_data)
     data_sum = price_data.sum()
     result = -1 * float_info.max
-    if (scale >= 0):
-        result = ((-n*np.log(scale)) - (data_sum/scale))
+    if scale >= 0:
+        result = (-n * np.log(scale)) - (data_sum / scale)
     return result
 
 
@@ -1979,8 +1999,9 @@ def up_down_capture(returns, factor_returns, **kwargs):
     up_down_capture : float
         the updown capture ratio
     """
-    return (up_capture(returns, factor_returns, **kwargs) /
-            down_capture(returns, factor_returns, **kwargs))
+    return up_capture(returns, factor_returns, **kwargs) / down_capture(
+        returns, factor_returns, **kwargs
+    )
 
 
 def up_alpha_beta(returns, factor_returns, **kwargs):
@@ -2038,8 +2059,9 @@ def roll_up_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
-    return roll(returns, factor_returns, window=window, function=up_capture,
-                **kwargs)
+    return roll(
+        returns, factor_returns, window=window, function=up_capture, **kwargs
+    )
 
 
 def roll_down_capture(returns, factor_returns, window=10, **kwargs):
@@ -2063,8 +2085,9 @@ def roll_down_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
-    return roll(returns, factor_returns, window=window, function=down_capture,
-                **kwargs)
+    return roll(
+        returns, factor_returns, window=window, function=down_capture, **kwargs
+    )
 
 
 def roll_up_down_capture(returns, factor_returns, window=10, **kwargs):
@@ -2088,8 +2111,13 @@ def roll_up_down_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
-    return roll(returns, factor_returns, window=window,
-                function=up_down_capture, **kwargs)
+    return roll(
+        returns,
+        factor_returns,
+        window=window,
+        function=up_down_capture,
+        **kwargs,
+    )
 
 
 def value_at_risk(returns, cutoff=0.05):
@@ -2138,7 +2166,7 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     # index manually and partition out the lowest returns values. The value at
     # the cutoff index should be included in the partition.
     cutoff_index = int((len(returns) - 1) * cutoff)
-    return np.mean(np.partition(returns, cutoff_index)[:cutoff_index + 1])
+    return np.mean(np.partition(returns, cutoff_index)[: cutoff_index + 1])
 
 
 SIMPLE_STAT_FUNCS = [
@@ -2167,5 +2195,5 @@ FACTOR_STAT_FUNCS = [
     gpd_risk_estimates,
     capture,
     up_capture,
-    down_capture
+    down_capture,
 ]

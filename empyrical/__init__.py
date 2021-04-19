@@ -15,7 +15,8 @@
 # flake8: noqa
 
 from ._version import get_versions
-__version__ = get_versions()['version']
+
+__version__ = get_versions()["version"]
 del get_versions
 
 from .stats import (
@@ -69,13 +70,7 @@ from .stats import (
     value_at_risk,
 )
 
-from .periods import (
-    DAILY,
-    WEEKLY,
-    MONTHLY,
-    QUARTERLY,
-    YEARLY
-)
+from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
 
 
 from .perf_attrib import (

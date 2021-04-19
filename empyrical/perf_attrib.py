@@ -2,10 +2,7 @@ from collections import OrderedDict
 import pandas as pd
 
 
-def perf_attrib(returns,
-                positions,
-                factor_returns,
-                factor_loadings):
+def perf_attrib(returns, positions, factor_returns, factor_loadings):
     """
     Attributes the performance of a returns stream to a set of risk factors.
 
@@ -92,34 +89,39 @@ def perf_attrib(returns,
     factor_returns = factor_returns.loc[start:end]
     factor_loadings = factor_loadings.loc[start:end]
 
-    factor_loadings.index = factor_loadings.index.set_names(['dt', 'ticker'])
+    factor_loadings.index = factor_loadings.index.set_names(["dt", "ticker"])
 
     positions = positions.copy()
-    positions.index = positions.index.set_names(['dt', 'ticker'])
+    positions.index = positions.index.set_names(["dt", "ticker"])
 
-    risk_exposures_portfolio = compute_exposures(positions,
-                                                 factor_loadings)
+    risk_exposures_portfolio = compute_exposures(positions, factor_loadings)
     if freq is not None:
         risk_exposures_portfolio = risk_exposures_portfolio.asfreq(freq)
 
     perf_attrib_by_factor = risk_exposures_portfolio.multiply(factor_returns)
-    common_returns = perf_attrib_by_factor.sum(axis='columns')
+    common_returns = perf_attrib_by_factor.sum(axis="columns")
 
     tilt_exposure = risk_exposures_portfolio.mean()
-    tilt_returns = factor_returns.multiply(tilt_exposure).sum(axis='columns')
+    tilt_returns = factor_returns.multiply(tilt_exposure).sum(axis="columns")
     timing_returns = common_returns - tilt_returns
     specific_returns = returns - common_returns
 
-    returns_df = pd.DataFrame(OrderedDict([
-        ('total_returns', returns),
-        ('common_returns', common_returns),
-        ('specific_returns', specific_returns),
-        ('tilt_returns', tilt_returns),
-        ('timing_returns', timing_returns)
-    ]))
+    returns_df = pd.DataFrame(
+        OrderedDict(
+            [
+                ("total_returns", returns),
+                ("common_returns", common_returns),
+                ("specific_returns", specific_returns),
+                ("tilt_returns", tilt_returns),
+                ("timing_returns", timing_returns),
+            ]
+        )
+    )
 
-    return (risk_exposures_portfolio,
-            pd.concat([perf_attrib_by_factor, returns_df], axis='columns'))
+    return (
+        risk_exposures_portfolio,
+        pd.concat([perf_attrib_by_factor, returns_df], axis="columns"),
+    )
 
 
 def compute_exposures(positions, factor_loadings):
@@ -162,5 +164,5 @@ def compute_exposures(positions, factor_loadings):
             2017-01-01 -0.238655  0.077123
             2017-01-02  0.821872  1.520515
     """
-    risk_exposures = factor_loadings.multiply(positions, axis='rows')
-    return risk_exposures.groupby(level='dt').sum()
+    risk_exposures = factor_loadings.multiply(positions, axis="rows")
+    return risk_exposures.groupby(level="dt").sum()
