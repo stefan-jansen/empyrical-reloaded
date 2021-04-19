@@ -1,4 +1,4 @@
-name: LogBook conda distribution
+name: Empyrical conda distribution
 
 on: [ push ]
 
@@ -15,13 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        os: [ macos-latest, windows-latest, ubuntu-latest ]
-        os: [ ubuntu-latest ]
-#        python: [ '3.7', '3.8', '3.9' ]
-        python: [ '3.9' ]
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+#        os: [ ubuntu-latest ]
+        python: [ '3.7', '3.8', '3.9' ]
+#        python: [ '3.9' ]
 
     steps:
-      - name: Checkout zipline-reloaded
+      - name: Checkout empyrical-reloaded
         uses: actions/checkout@v2
 
       - name: Setup miniconda3
@@ -37,7 +37,7 @@ jobs:
         run: |
           conda activate recipe
           conda install -n recipe conda-build conda-verify anaconda-client
-          conda-build --output-folder . --python ${{ matrix.python }} conda/logbook/
+          conda-build --output-folder . --python ${{ matrix.python }} conda/recipe/
 
       - name: store macos result
         uses: actions/upload-artifact@v2

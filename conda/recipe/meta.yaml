@@ -1,14 +1,13 @@
-{% set name = "empyrical" %}
-{% set version = "1.5.3" %}
+{% set name = "empyrical-reloaded" %}
+{% set version = "0.5.6" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: Logbook-1.5.3.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  md5: 719970ea22dd274797bb4328161d700f
+  md5: 45b550445a23de07d508e54f686df2e8
 
 
 build:
@@ -26,9 +25,9 @@ requirements:
 
 test:
   imports:
-    - logbook
+    - empyrical
 
 about:
-  home: https://logbook.readthedocs.io/en/stable/
+  home: https://empyrical.ml4trading.io
   license: BSD
-  summary: 'A logging replacement for Python'
+  summary: 'Common financial risk metrids'
