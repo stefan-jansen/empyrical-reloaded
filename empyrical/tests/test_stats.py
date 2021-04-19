@@ -38,7 +38,7 @@ class BaseTestCase(TestCase):
         assert_index_equal(result.index, expected.index)
 
         if isinstance(result, pd.DataFrame) and isinstance(
-                expected, pd.DataFrame
+            expected, pd.DataFrame
         ):
             assert_index_equal(result.columns, expected.columns)
 
@@ -212,49 +212,49 @@ class TestStats(BaseTestCase):
         [
             (empty_returns, 0, []),
             (
-                    mixed_returns,
-                    0,
-                    [
-                        0.0,
-                        0.01,
-                        0.111,
-                        0.066559,
-                        0.08789,
-                        0.12052,
-                        0.14293,
-                        0.15436,
-                        0.03893,
-                    ],
+                mixed_returns,
+                0,
+                [
+                    0.0,
+                    0.01,
+                    0.111,
+                    0.066559,
+                    0.08789,
+                    0.12052,
+                    0.14293,
+                    0.15436,
+                    0.03893,
+                ],
             ),
             (
-                    mixed_returns,
-                    100,
-                    [
-                        100.0,
-                        101.0,
-                        111.1,
-                        106.65599,
-                        108.78912,
-                        112.05279,
-                        114.29384,
-                        115.43678,
-                        103.89310,
-                    ],
+                mixed_returns,
+                100,
+                [
+                    100.0,
+                    101.0,
+                    111.1,
+                    106.65599,
+                    108.78912,
+                    112.05279,
+                    114.29384,
+                    115.43678,
+                    103.89310,
+                ],
             ),
             (
-                    negative_returns,
-                    0,
-                    [
-                        0.0,
-                        -0.06,
-                        -0.1258,
-                        -0.13454,
-                        -0.21243,
-                        -0.22818,
-                        -0.27449,
-                        -0.33253,
-                        -0.36590,
-                    ],
+                negative_returns,
+                0,
+                [
+                    0.0,
+                    -0.06,
+                    -0.1258,
+                    -0.13454,
+                    -0.21243,
+                    -0.22818,
+                    -0.27449,
+                    -0.33253,
+                    -0.36590,
+                ],
             ),
         ]
     )
@@ -287,36 +287,36 @@ class TestStats(BaseTestCase):
     @parameterized.expand(
         [
             (
-                    simple_benchmark,
-                    empyrical.WEEKLY,
-                    [0.0, 0.040604010000000024, 0.0],
+                simple_benchmark,
+                empyrical.WEEKLY,
+                [0.0, 0.040604010000000024, 0.0],
             ),
             (simple_benchmark, empyrical.MONTHLY, [0.01, 0.03030099999999991]),
             (simple_benchmark, empyrical.QUARTERLY, [0.04060401]),
             (simple_benchmark, empyrical.YEARLY, [0.040604010000000024]),
             (
-                    weekly_returns,
-                    empyrical.MONTHLY,
-                    [0.0, 0.087891200000000058, -0.04500459999999995],
+                weekly_returns,
+                empyrical.MONTHLY,
+                [0.0, 0.087891200000000058, -0.04500459999999995],
             ),
             (weekly_returns, empyrical.YEARLY, [0.038931091700480147]),
             (monthly_returns, empyrical.YEARLY, [0.038931091700480147]),
             (
-                    monthly_returns,
-                    empyrical.QUARTERLY,
-                    [
-                        0.11100000000000021,
-                        0.008575999999999917,
-                        -0.072819999999999996,
-                    ],
+                monthly_returns,
+                empyrical.QUARTERLY,
+                [
+                    0.11100000000000021,
+                    0.008575999999999917,
+                    -0.072819999999999996,
+                ],
             ),
         ]
     )
     def test_aggregate_returns(self, returns, convert_to, expected):
         returns = (
             self.empyrical(pandas_only=True)
-                .aggregate_returns(returns, convert_to)
-                .values.tolist()
+            .aggregate_returns(returns, convert_to)
+            .values.tolist()
         )
         for i, v in enumerate(returns):
             assert_almost_equal(v, expected[i], DECIMAL_PLACES)
@@ -331,15 +331,15 @@ class TestStats(BaseTestCase):
             # negative returns means the drawdown is just the returns
             (negative_returns, empyrical.cum_returns_final(negative_returns)),
             (
-                    all_negative_returns,
-                    empyrical.cum_returns_final(all_negative_returns),
+                all_negative_returns,
+                empyrical.cum_returns_final(all_negative_returns),
             ),
             (
-                    pd.Series(
-                        np.array([10, -10, 10]) / 100,
-                        index=pd.date_range("2000-1-30", periods=3, freq="D"),
-                    ),
-                    -0.10,
+                pd.Series(
+                    np.array([10, -10, 10]) / 100,
+                    index=pd.date_range("2000-1-30", periods=3, freq="D"),
+                ),
+                -0.10,
             ),
         ]
     )
@@ -448,7 +448,7 @@ class TestStats(BaseTestCase):
         ]
     )
     def test_omega_returns(
-            self, returns, required_return_less, required_return_more
+        self, returns, required_return_less, required_return_more
     ):
         assert self.empyrical.omega_ratio(
             returns, required_return_less
@@ -480,7 +480,7 @@ class TestStats(BaseTestCase):
         [(noise_uniform, 0, 0.005), (noise_uniform, 0.005, 0.005)]
     )
     def test_sharpe_translation_same(
-            self, returns, required_return, translation
+        self, returns, required_return, translation
     ):
         sr = self.empyrical.sharpe_ratio(returns, required_return)
         sr_depressed = self.empyrical.sharpe_ratio(
@@ -501,11 +501,11 @@ class TestStats(BaseTestCase):
         ]
     )
     def test_sharpe_translation_diff(
-            self,
-            returns,
-            required_return,
-            translation_returns,
-            translation_required,
+        self,
+        returns,
+        required_return,
+        translation_returns,
+        translation_required,
     ):
         sr = self.empyrical.sharpe_ratio(returns, required_return)
         sr_depressed = self.empyrical.sharpe_ratio(
@@ -562,31 +562,31 @@ class TestStats(BaseTestCase):
             (monthly_returns, 0.0, empyrical.MONTHLY, 0.1243650540411842),
             (monthly_returns, 0.1, empyrical.MONTHLY, 0.37148351242013422),
             (
-                    df_simple,
-                    0.0,
-                    empyrical.DAILY,
-                    pd.Series(
-                        [0.20671788246185202, 0.083495680595704475],
-                        index=["one", "two"],
-                    ),
+                df_simple,
+                0.0,
+                empyrical.DAILY,
+                pd.Series(
+                    [0.20671788246185202, 0.083495680595704475],
+                    index=["one", "two"],
+                ),
             ),
             (
-                    df_week,
-                    0.0,
-                    empyrical.WEEKLY,
-                    pd.Series(
-                        [0.093902996054410062, 0.037928477556776516],
-                        index=["one", "two"],
-                    ),
+                df_week,
+                0.0,
+                empyrical.WEEKLY,
+                pd.Series(
+                    [0.093902996054410062, 0.037928477556776516],
+                    index=["one", "two"],
+                ),
             ),
             (
-                    df_month,
-                    0.0,
-                    empyrical.MONTHLY,
-                    pd.Series(
-                        [0.045109540184877193, 0.018220251263412916],
-                        index=["one", "two"],
-                    ),
+                df_month,
+                0.0,
+                empyrical.MONTHLY,
+                pd.Series(
+                    [0.045109540184877193, 0.018220251263412916],
+                    index=["one", "two"],
+                ),
             ),
         ]
     )
@@ -662,31 +662,31 @@ class TestStats(BaseTestCase):
             (weekly_returns, 0.0, empyrical.WEEKLY, 1.1158901056866439),
             (monthly_returns, 0.0, empyrical.MONTHLY, 0.53605626741889756),
             (
-                    df_simple,
-                    0.0,
-                    empyrical.DAILY,
-                    pd.Series(
-                        [3.0639640966566306, 38.090963117002495],
-                        index=["one", "two"],
-                    ),
+                df_simple,
+                0.0,
+                empyrical.DAILY,
+                pd.Series(
+                    [3.0639640966566306, 38.090963117002495],
+                    index=["one", "two"],
+                ),
             ),
             (
-                    df_week,
-                    0.0,
-                    empyrical.WEEKLY,
-                    pd.Series(
-                        [1.3918264112070571, 17.303077589064618],
-                        index=["one", "two"],
-                    ),
+                df_week,
+                0.0,
+                empyrical.WEEKLY,
+                pd.Series(
+                    [1.3918264112070571, 17.303077589064618],
+                    index=["one", "two"],
+                ),
             ),
             (
-                    df_month,
-                    0.0,
-                    empyrical.MONTHLY,
-                    pd.Series(
-                        [0.6686117809312383, 8.3121296084492844],
-                        index=["one", "two"],
-                    ),
+                df_month,
+                0.0,
+                empyrical.MONTHLY,
+                pd.Series(
+                    [0.6686117809312383, 8.3121296084492844],
+                    index=["one", "two"],
+                ),
             ),
         ]
     )
@@ -748,7 +748,7 @@ class TestStats(BaseTestCase):
         [(noise_uniform, 0, 0.005), (noise_uniform, 0.005, 0.005)]
     )
     def test_sortino_translation_same(
-            self, returns, required_return, translation
+        self, returns, required_return, translation
     ):
         sr = self.empyrical.sortino_ratio(returns, required_return)
         sr_depressed = self.empyrical.sortino_ratio(
@@ -766,11 +766,11 @@ class TestStats(BaseTestCase):
         [(noise_uniform, 0, 0, 0.001), (noise_uniform, 0.005, 0.001, 0)]
     )
     def test_sortino_translation_diff(
-            self,
-            returns,
-            required_return,
-            translation_returns,
-            translation_required,
+        self,
+        returns,
+        required_return,
+        translation_returns,
+        translation_required,
     ):
         sr = self.empyrical.sortino_ratio(returns, required_return)
         sr_depressed = self.empyrical.sortino_ratio(
@@ -846,9 +846,9 @@ class TestStats(BaseTestCase):
             (empty_returns, simple_benchmark, (np.nan, np.nan)),
             (one_return, one_return, (np.nan, np.nan)),
             (
-                    mixed_returns,
-                    negative_returns[1:],
-                    (-0.9997853834885004, -0.71296296296296313),
+                mixed_returns,
+                negative_returns[1:],
+                (-0.9997853834885004, -0.71296296296296313),
             ),
             (mixed_returns, mixed_returns, (0.0, 1.0)),
             (mixed_returns, -mixed_returns, (0.0, -1.0)),
@@ -1006,16 +1006,16 @@ class TestStats(BaseTestCase):
             (2 * noise, inv_noise, -2.0),
             (sparse_noise * flat_line_1_tz, sparse_flat_line_1_tz, np.nan),
             (
-                    simple_benchmark
-                    + rand.normal(0, 0.001, len(simple_benchmark)),
-                    pd.DataFrame({"returns": simple_benchmark}),
-                    1.0,
-                    2,
+                simple_benchmark
+                + rand.normal(0, 0.001, len(simple_benchmark)),
+                pd.DataFrame({"returns": simple_benchmark}),
+                1.0,
+                2,
             ),
         ]
     )
     def test_beta(
-            self, returns, benchmark, expected, decimal_places=DECIMAL_PLACES
+        self, returns, benchmark, expected, decimal_places=DECIMAL_PLACES
     ):
         observed = self.empyrical.beta(returns, benchmark)
         assert_almost_equal(
@@ -1107,12 +1107,12 @@ class TestStats(BaseTestCase):
             (mixed_returns, empyrical.DAILY, 1.9135925373194231),
             (flat_line_1_tz, empyrical.DAILY, 11.274002099240256),
             (
-                    pd.Series(
-                        np.array([3.0, 3.0, 3.0]) / 100,
-                        index=pd.date_range("2000-1-30", periods=3, freq="A"),
-                    ),
-                    "yearly",
-                    0.03,
+                pd.Series(
+                    np.array([3.0, 3.0, 3.0]) / 100,
+                    index=pd.date_range("2000-1-30", periods=3, freq="A"),
+                ),
+                "yearly",
+                0.03,
             ),
         ]
     )
@@ -1213,20 +1213,20 @@ class TestStats(BaseTestCase):
         test = self.empyrical.roll_max_drawdown(returns, window=window)
         assert_almost_equal(np.asarray(test), np.asarray(expected), 4)
 
-        self.assert_indexes_match(test, returns[-len(expected):])
+        self.assert_indexes_match(test, returns[-len(expected) :])
 
     @parameterized.expand(
         [
             (empty_returns, 6, []),
             (
-                    negative_returns,
-                    6,
-                    [-18.09162052, -26.79897486, -26.69138263, -25.72298838],
+                negative_returns,
+                6,
+                [-18.09162052, -26.79897486, -26.69138263, -25.72298838],
             ),
             (
-                    mixed_returns,
-                    6,
-                    [7.57445259, 8.22784105, 8.22784105, -3.1374751],
+                mixed_returns,
+                6,
+                [7.57445259, 8.22784105, 8.22784105, -3.1374751],
             ),
         ]
     )
@@ -1236,7 +1236,7 @@ class TestStats(BaseTestCase):
             np.asarray(test), np.asarray(expected), DECIMAL_PLACES
         )
 
-        self.assert_indexes_match(test, returns[-len(expected):])
+        self.assert_indexes_match(test, returns[-len(expected) :])
 
     @parameterized.expand(
         [
@@ -1272,34 +1272,34 @@ class TestStats(BaseTestCase):
     @parameterized.expand(
         [
             (
-                    empty_returns,
-                    simple_benchmark,
-                    1,
-                    [(np.nan, np.nan)] * len(simple_benchmark),
+                empty_returns,
+                simple_benchmark,
+                1,
+                [(np.nan, np.nan)] * len(simple_benchmark),
             ),
             (one_return, one_return, 1, [(np.nan, np.nan)]),
             (
-                    mixed_returns,
-                    negative_returns,
-                    6,
-                    [
-                        (-0.97854954, -0.7826087),
-                        (-0.9828927, -0.76156584),
-                        (-0.93166924, -0.61682243),
-                        (-0.99967288, -0.41311475),
-                    ],
+                mixed_returns,
+                negative_returns,
+                6,
+                [
+                    (-0.97854954, -0.7826087),
+                    (-0.9828927, -0.76156584),
+                    (-0.93166924, -0.61682243),
+                    (-0.99967288, -0.41311475),
+                ],
             ),
             (
-                    mixed_returns,
-                    mixed_returns,
-                    6,
-                    [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)],
+                mixed_returns,
+                mixed_returns,
+                6,
+                [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)],
             ),
             (
-                    mixed_returns,
-                    -mixed_returns,
-                    6,
-                    [(0.0, -1.0), (0.0, -1.0), (0.0, -1.0), (0.0, -1.0)],
+                mixed_returns,
+                -mixed_returns,
+                6,
+                [(0.0, -1.0), (0.0, -1.0), (0.0, -1.0), (0.0, -1.0)],
             ),
         ]
     )
@@ -1312,7 +1312,7 @@ class TestStats(BaseTestCase):
             window,
         )
         if isinstance(test, pd.DataFrame):
-            self.assert_indexes_match(test, benchmark[-len(expected):])
+            self.assert_indexes_match(test, benchmark[-len(expected) :])
             test = test.values
 
         alpha_test = [t[0] for t in test]
@@ -1339,26 +1339,26 @@ class TestStats(BaseTestCase):
             (one_return, one_return, 1, np.nan),
             (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                    positive_returns,
-                    mixed_returns,
-                    6,
-                    [-0.00011389, -0.00025861, -0.00015211, -0.00689239],
+                positive_returns,
+                mixed_returns,
+                6,
+                [-0.00011389, -0.00025861, -0.00015211, -0.00689239],
             ),
             (
-                    all_negative_returns,
-                    mixed_returns,
-                    6,
-                    [
-                        -6.38880246e-05,
-                        -1.65241701e-04,
-                        -1.65241719e-04,
-                        -6.89541957e-03,
-                    ],
+                all_negative_returns,
+                mixed_returns,
+                6,
+                [
+                    -6.38880246e-05,
+                    -1.65241701e-04,
+                    -1.65241719e-04,
+                    -6.89541957e-03,
+                ],
             ),
         ]
     )
     def test_roll_up_down_capture(
-            self, returns, factor_returns, window, expected
+        self, returns, factor_returns, window, expected
     ):
         test = self.empyrical.roll_up_down_capture(
             returns, factor_returns, window=window
@@ -1373,21 +1373,21 @@ class TestStats(BaseTestCase):
             (one_return, one_return, 1, [np.nan]),
             (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                    positive_returns,
-                    mixed_returns,
-                    6,
-                    [-11.2743862, -11.2743862, -11.2743862, -11.27400221],
+                positive_returns,
+                mixed_returns,
+                6,
+                [-11.2743862, -11.2743862, -11.2743862, -11.27400221],
             ),
             (
-                    all_negative_returns,
-                    mixed_returns,
-                    6,
-                    [0.92058591, 0.92058591, 0.92058591, 0.99956026],
+                all_negative_returns,
+                mixed_returns,
+                6,
+                [0.92058591, 0.92058591, 0.92058591, 0.99956026],
             ),
         ]
     )
     def test_roll_down_capture(
-            self, returns, factor_returns, window, expected
+        self, returns, factor_returns, window, expected
     ):
         test = self.empyrical.roll_down_capture(
             returns, factor_returns, window=window
@@ -1396,7 +1396,7 @@ class TestStats(BaseTestCase):
             np.asarray(test), np.asarray(expected), DECIMAL_PLACES
         )
 
-        self.assert_indexes_match(test, returns[-len(expected):])
+        self.assert_indexes_match(test, returns[-len(expected) :])
 
     @parameterized.expand(
         [
@@ -1404,21 +1404,21 @@ class TestStats(BaseTestCase):
             (one_return, one_return, 1, [1.0]),
             (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                    positive_returns,
-                    mixed_returns,
-                    6,
-                    [0.00128406, 0.00291564, 0.00171499, 0.0777048],
+                positive_returns,
+                mixed_returns,
+                6,
+                [0.00128406, 0.00291564, 0.00171499, 0.0777048],
             ),
             (
-                    all_negative_returns,
-                    mixed_returns,
-                    6,
-                    [
-                        -5.88144154e-05,
-                        -1.52119182e-04,
-                        -1.52119198e-04,
-                        -6.89238735e-03,
-                    ],
+                all_negative_returns,
+                mixed_returns,
+                6,
+                [
+                    -5.88144154e-05,
+                    -1.52119182e-04,
+                    -1.52119198e-04,
+                    -6.89238735e-03,
+                ],
             ),
         ]
     )
@@ -1430,16 +1430,16 @@ class TestStats(BaseTestCase):
             np.asarray(test), np.asarray(expected), DECIMAL_PLACES
         )
 
-        self.assert_indexes_match(test, returns[-len(expected):])
+        self.assert_indexes_match(test, returns[-len(expected) :])
 
     @parameterized.expand(
         [
             (empty_returns, simple_benchmark, (np.nan, np.nan)),
             (one_return, one_return, (np.nan, np.nan)),
             (
-                    mixed_returns[1:],
-                    negative_returns[1:],
-                    (-0.9997853834885004, -0.71296296296296313),
+                mixed_returns[1:],
+                negative_returns[1:],
+                (-0.9997853834885004, -0.71296296296296313),
             ),
             (mixed_returns, mixed_returns, (0.0, 1.0)),
             (mixed_returns, -mixed_returns, (0.0, -1.0)),
@@ -1458,9 +1458,9 @@ class TestStats(BaseTestCase):
             (empty_returns, simple_benchmark, (np.nan, np.nan)),
             (one_return, one_return, (np.nan, np.nan)),
             (
-                    mixed_returns[1:],
-                    positive_returns[1:],
-                    (0.432961242076658, 0.4285714285),
+                mixed_returns[1:],
+                positive_returns[1:],
+                (0.432961242076658, 0.4285714285),
             ),
             (mixed_returns, mixed_returns, (0.0, 1.0)),
             (mixed_returns, -mixed_returns, (0.0, -1.0)),
@@ -1943,7 +1943,7 @@ class ReturnTypeEmpyricalProxy(object):
                     arg_copy,
                     atol=0.5 * 10 ** (-DECIMAL_PLACES),
                     err_msg="Input 'arg %s' mutated by %s"
-                            % (i, func.__name__),
+                    % (i, func.__name__),
                 )
             for kwarg_name, kwarg_copy in kwarg_copies.items():
                 assert_allclose(
@@ -1951,7 +1951,7 @@ class ReturnTypeEmpyricalProxy(object):
                     kwarg_copy,
                     atol=0.5 * 10 ** (-DECIMAL_PLACES),
                     err_msg="Input '%s' mutated by %s"
-                            % (kwarg_name, func.__name__),
+                    % (kwarg_name, func.__name__),
                 )
 
             return result
@@ -2020,11 +2020,11 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
 
     def __getattr__(self, item):
         if item in (
-                "alpha",
-                "beta",
-                "alpha_beta",
-                "beta_fragility_heuristic",
-                "gpd_risk_estimates",
+            "alpha",
+            "beta",
+            "alpha_beta",
+            "beta_fragility_heuristic",
+            "gpd_risk_estimates",
         ):
             item += "_aligned"
 

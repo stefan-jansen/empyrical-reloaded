@@ -59,7 +59,7 @@ def _create_unary_vectorized_roll_function(function):
             out = np.empty(0, dtype="float64")
 
         if allocated_output and isinstance(arr, pd.Series):
-            out = pd.Series(out, index=arr.index[-len(out):])
+            out = pd.Series(out, index=arr.index[-len(out) :])
 
         return out
 
@@ -111,9 +111,9 @@ def _create_binary_vectorized_roll_function(function):
 
         if allocated_output:
             if out.ndim == 1 and isinstance(lhs, pd.Series):
-                out = pd.Series(out, index=lhs.index[-len(out):])
+                out = pd.Series(out, index=lhs.index[-len(out) :])
             elif out.ndim == 2 and isinstance(lhs, pd.Series):
-                out = pd.DataFrame(out, index=lhs.index[-len(out):])
+                out = pd.DataFrame(out, index=lhs.index[-len(out) :])
         return out
 
     binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
@@ -484,7 +484,7 @@ roll_cagr = _create_unary_vectorized_roll_function(cagr)
 
 
 def annual_volatility(
-        returns, period=DAILY, alpha=2.0, annualization=None, out=None
+    returns, period=DAILY, alpha=2.0, annualization=None, out=None
 ):
     """
     Determines the annual volatility of a strategy.
@@ -592,10 +592,10 @@ def calmar_ratio(returns, period=DAILY, annualization=None):
 
 
 def omega_ratio(
-        returns,
-        risk_free=0.0,
-        required_return=0.0,
-        annualization=APPROX_BDAYS_PER_YEAR,
+    returns,
+    risk_free=0.0,
+    required_return=0.0,
+    annualization=APPROX_BDAYS_PER_YEAR,
 ):
     """Determines the Omega ratio of a strategy.
 
@@ -648,7 +648,7 @@ def omega_ratio(
 
 
 def sharpe_ratio(
-        returns, risk_free=0, period=DAILY, annualization=None, out=None
+    returns, risk_free=0, period=DAILY, annualization=None, out=None
 ):
     """
     Determines the Sharpe ratio of a strategy.
@@ -721,12 +721,12 @@ roll_sharpe_ratio = _create_unary_vectorized_roll_function(sharpe_ratio)
 
 
 def sortino_ratio(
-        returns,
-        required_return=0,
-        period=DAILY,
-        annualization=None,
-        out=None,
-        _downside_risk=None,
+    returns,
+    required_return=0,
+    period=DAILY,
+    annualization=None,
+    out=None,
+    _downside_risk=None,
 ):
     """
     Determines the Sortino ratio of a strategy.
@@ -807,7 +807,7 @@ roll_sortino_ratio = _create_unary_vectorized_roll_function(sortino_ratio)
 
 
 def downside_risk(
-        returns, required_return=0, period=DAILY, annualization=None, out=None
+    returns, required_return=0, period=DAILY, annualization=None, out=None
 ):
     """
     Determines the downside deviation below a threshold
@@ -986,25 +986,24 @@ def _aligned_series(*many_series):
     tail = many_series[1:]
     n = len(head)
     if isinstance(head, np.ndarray) and all(
-            len(s) == n and isinstance(s, np.ndarray) for s in tail
+        len(s) == n and isinstance(s, np.ndarray) for s in tail
     ):
         # optimization: ndarrays of the same length are already aligned
         return many_series
 
     # dataframe has no ``itervalues``
     return (
-        v
-        for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
+        v for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
     )
 
 
 def alpha_beta(
-        returns,
-        factor_returns,
-        risk_free=0.0,
-        period=DAILY,
-        annualization=None,
-        out=None,
+    returns,
+    factor_returns,
+    risk_free=0.0,
+    period=DAILY,
+    annualization=None,
+    out=None,
 ):
     """Calculates annualized alpha and beta.
 
@@ -1080,12 +1079,12 @@ def roll_alpha_beta(returns, factor_returns, window=10, **kwargs):
 
 
 def alpha_beta_aligned(
-        returns,
-        factor_returns,
-        risk_free=0.0,
-        period=DAILY,
-        annualization=None,
-        out=None,
+    returns,
+    factor_returns,
+    risk_free=0.0,
+    period=DAILY,
+    annualization=None,
+    out=None,
 ):
     """Calculates annualized alpha and beta.
 
@@ -1150,13 +1149,13 @@ roll_alpha_beta_aligned = _create_binary_vectorized_roll_function(
 
 
 def alpha(
-        returns,
-        factor_returns,
-        risk_free=0.0,
-        period=DAILY,
-        annualization=None,
-        out=None,
-        _beta=None,
+    returns,
+    factor_returns,
+    risk_free=0.0,
+    period=DAILY,
+    annualization=None,
+    out=None,
+    _beta=None,
 ):
     """Calculates annualized alpha.
 
@@ -1199,8 +1198,8 @@ def alpha(
         Alpha.
     """
     if not (
-            isinstance(returns, np.ndarray)
-            and isinstance(factor_returns, np.ndarray)
+        isinstance(returns, np.ndarray)
+        and isinstance(factor_returns, np.ndarray)
     ):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
@@ -1219,13 +1218,13 @@ roll_alpha = _create_binary_vectorized_roll_function(alpha)
 
 
 def alpha_aligned(
-        returns,
-        factor_returns,
-        risk_free=0.0,
-        period=DAILY,
-        annualization=None,
-        out=None,
-        _beta=None,
+    returns,
+    factor_returns,
+    risk_free=0.0,
+    period=DAILY,
+    annualization=None,
+    out=None,
+    _beta=None,
 ):
     """Calculates annualized alpha.
 
@@ -1335,8 +1334,8 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     beta : float
     """
     if not (
-            isinstance(returns, np.ndarray)
-            and isinstance(factor_returns, np.ndarray)
+        isinstance(returns, np.ndarray)
+        and isinstance(factor_returns, np.ndarray)
     ):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
@@ -1665,17 +1664,17 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
     # using a convex combination
     if not factor_returns_range == 0:
         start_returns_weight = (
-                                       mid_factor_returns - start_factor_returns
-                               ) / factor_returns_range
+            mid_factor_returns - start_factor_returns
+        ) / factor_returns_range
         end_returns_weight = (
-                                     end_factor_returns - mid_factor_returns
-                             ) / factor_returns_range
+            end_factor_returns - mid_factor_returns
+        ) / factor_returns_range
 
     # calculate fragility heuristic
     heuristic = (
-            (start_returns_weight * start_returns)
-            + (end_returns_weight * end_returns)
-            - mid_returns
+        (start_returns_weight * start_returns)
+        + (end_returns_weight * end_returns)
+        - mid_returns
     )
 
     return heuristic
@@ -1815,14 +1814,14 @@ def gpd_es_calculator(var_estimate, threshold, scale_param, shape_param):
         # this formula is from Gilli and Kellezi pg. 8
         var_ratio = var_estimate / (1 - shape_param)
         param_ratio = (scale_param - (shape_param * threshold)) / (
-                1 - shape_param
+            1 - shape_param
         )
         result = var_ratio + param_ratio
     return result
 
 
 def gpd_var_calculator(
-        threshold, scale_param, shape_param, probability, total_n, exceedance_n
+    threshold, scale_param, shape_param, probability, total_n, exceedance_n
 ):
     result = 0
     if exceedance_n > 0 and shape_param > 0:
@@ -1830,7 +1829,7 @@ def gpd_var_calculator(
         param_ratio = scale_param / shape_param
         prob_ratio = (total_n / exceedance_n) * probability
         result = threshold + (
-                param_ratio * (pow(prob_ratio, -shape_param) - 1)
+            param_ratio * (pow(prob_ratio, -shape_param) - 1)
         )
     return result
 
@@ -1884,8 +1883,8 @@ def gpd_loglikelihood_scale_and_shape(scale, shape, price_data):
         param_factor = shape / scale
         if shape != 0 and param_factor >= 0 and scale >= 0:
             result = (-n * np.log(scale)) - (
-                    ((1 / shape) + 1)
-                    * (np.log((shape / scale * price_data) + 1)).sum()
+                ((1 / shape) + 1)
+                * (np.log((shape / scale * price_data) + 1)).sum()
             )
     return result
 
