@@ -1,5 +1,3 @@
-from __future__ import division
-
 from copy import copy
 from operator import attrgetter
 from unittest import TestCase, SkipTest
