@@ -63,3 +63,11 @@ target/
 
 # JetBrains
 .idea/
+
+.pre-commit-config.yaml
+.python-version
+
+conda/recipe/linux-64/
+conda/recipe/osx-64/
+conda/recipe/win-64/
+docs/test/
