@@ -1,9 +1,15 @@
+<p align="center">
+<a href="https://empyrical.ml4trading.io">
+<img src="https://i.imgur.com/PbZNeud.png" width="35%">
+</a>
+</p>
+
+![PyPI](https://img.shields.io/pypi/v/empyrical-reloaded)
 [![PyPI Wheels](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml)
+[![Conda packages](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml)
 [![CI Tests](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml)
 
-# empyrical
-
-Common financial risk metrics in Python.
+Common financial return and risk metrics in Python.
 
 ## Installation
 
@@ -15,7 +21,7 @@ pip install empyrical-reloaded
 
 or `conda`:
 ```bash
-conda install -c ml4t empyrical-reloaded
+conda install empyrical-reloaded -c ml4t -c ranaroussi
 ```
 
 empyrical requires and installs the following packages while executing the above commands:
@@ -24,7 +30,9 @@ empyrical requires and installs the following packages while executing the above
 - pandas>=1.0.0
 - scipy>=0.15.1
 - pandas-datareader>=0.4
-- yfinance>=0.1.55
+- yfinance>=0.1.59
+
+Empyrical now uses [yfinance](https://github.com/ranaroussi/yfinance) to download price data from [Yahoo! Finance](https://finance.yahoo.com/).
 
 ## Usage
 
