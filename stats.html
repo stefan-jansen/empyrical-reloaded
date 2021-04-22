@@ -1,0 +1,1851 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Performance &amp; Risk Metrics &#8212; empyrical 0.5.6+11.g5eee8ce documentation</title>
+
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Performance Attribution" href="perf_attrib.html" />
+    <link rel="prev" title="empyrical" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="index.html">
+<p class="title">empyrical</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Performance &amp; Risk Metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="perf_attrib.html">
+  Performance Attribution
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="utils.html">
+  Utilities
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/emyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+
+<nav id="bd-toc-nav">
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/main/docs/source/stats.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <div class="section" id="performance-risk-metrics">
+<span id="stats"></span><h1>Performance &amp; Risk Metrics<a class="headerlink" href="#performance-risk-metrics" title="Permalink to this headline">¶</a></h1>
+<p>The module <a class="reference internal" href="#module-empyrical.stats" title="empyrical.stats"><code class="xref py py-mod docutils literal notranslate"><span class="pre">empyrical.stats</span></code></a> includes various return and risk metrics, such as the
+computation of returns and volatility, alpha and beta, Value at Risk, and Shorpe or Sortino ratios.</p>
+<span class="target" id="module-empyrical.stats"></span><dl class="py function">
+<dt id="empyrical.stats.aggregate_returns">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">aggregate_returns</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.aggregate_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregates returns by week, month, or year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series</span></dt><dd><dl class="simple">
+<dt>Daily returns of the strategy, noncumulative.</dt><dd><ul class="simple">
+<li><p>See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt><strong>convert_to</strong><span class="classifier">str</span></dt><dd><p>Can be ‘weekly’, ‘monthly’, or ‘yearly’.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>aggregated_returns</strong><span class="classifier">pd.Series</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.alpha">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">alpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates annualized alpha.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a>.</p>
+</dd>
+<dt><strong>_beta</strong><span class="classifier">float, optional</span></dt><dd><p>The beta for the given inputs, if already known. Will be calculated
+internally if not provided.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>Alpha.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.alpha_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">alpha_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.alpha_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates annualized alpha.</p>
+<p>If they are pd.Series, expects returns and factor_returns have already
+been aligned on their labels.  If np.ndarray, these arguments should have
+the same shape.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a>.</p>
+</dd>
+<dt><strong>_beta</strong><span class="classifier">float, optional</span></dt><dd><p>The beta for the given inputs, if already known. Will be calculated
+internally if not provided.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>alpha</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.alpha_beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">alpha_beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.alpha_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates annualized alpha and beta.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>alpha</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.alpha_beta_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">alpha_beta_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.alpha_beta_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates annualized alpha and beta.</p>
+<p>If they are pd.Series, expects returns and factor_returns have already
+been aligned on their labels.  If np.ndarray, these arguments should have
+the same shape.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>alpha</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.annual_return">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">annual_return</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.annual_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the mean annual growth rate of returns. This is equivilent
+to the compound annual growth rate.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Periodic returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>annual_return</strong><span class="classifier">float</span></dt><dd><p>Annual Return as CAGR (Compounded Annual Growth Rate).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.annual_volatility">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">annual_volatility</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.annual_volatility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the annual volatility of a strategy.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Periodic returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>alpha</strong><span class="classifier">float, optional</span></dt><dd><p>Scaling relation (Levy stability exponent).</p>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>annual_volatility</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.annualization_factor">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">annualization_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.annualization_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return annualization factor from period entered or if a custom
+value is passed in.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>annualization_factor</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates beta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.beta_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">beta_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.beta_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates beta.</p>
+<p>If they are pd.Series, expects returns and factor_returns have already
+been aligned on their labels.  If np.ndarray, these arguments should have
+the same shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float, optional</span></dt><dd><p>Constant risk-free return throughout the period. For example, the
+interest rate on a three month us treasury bill.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd><p>Beta.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.beta_fragility_heuristic">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">beta_fragility_heuristic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.beta_fragility_heuristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate fragility to drops in beta.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><blockquote>
+<div><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>factor_returns<span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float, np.nan</dt><dd><p>The beta fragility of the strategy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.beta_fragility_heuristic_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">beta_fragility_heuristic_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.beta_fragility_heuristic_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate fragility to drops in beta</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><blockquote>
+<div><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>factor_returns<span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float, np.nan</dt><dd><p>The beta fragility of the strategy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.cagr">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">cagr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.cagr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute compound annual growth rate. Alias function for
+<a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>cagr</strong><span class="classifier">float</span></dt><dd><p>The CAGR value.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.calmar_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">calmar_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.calmar_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the Calmar ratio, or drawdown ratio, of a strategy.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>calmar_ratio</strong><span class="classifier">float</span></dt><dd><p>Calmar ratio (drawdown ratio) as float. Returns np.nan if there is no
+calmar ratio.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute capture ratio.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>capture_ratio</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.conditional_value_at_risk">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">conditional_value_at_risk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.conditional_value_at_risk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conditional value at risk (CVaR) of a returns stream.</p>
+<p>CVaR measures the expected single-day returns of an asset on that asset’s
+worst performing days, where “worst-performing” is defined as falling below
+<code class="docutils literal notranslate"><span class="pre">cutoff</span></code> as a percentile of all daily returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pandas.Series or 1-D numpy.array</span></dt><dd><p>Non-cumulative daily returns.</p>
+</dd>
+<dt><strong>cutoff</strong><span class="classifier">float, optional</span></dt><dd><p>Decimal representing the percentage cutoff for the bottom percentile of
+returns. Defaults to 0.05.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>CVaR</strong><span class="classifier">float</span></dt><dd><p>The CVaR value.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.cum_returns">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">cum_returns</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.cum_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute cumulative returns from simple returns.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series, np.ndarray, or pd.DataFrame</span></dt><dd><dl>
+<dt>Returns of the strategy as a percentage, noncumulative.</dt><dd><ul>
+<li><p>Time series with decimal returns.</p></li>
+<li><p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">16</span>   <span class="o">-</span><span class="mf">0.012143</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">17</span>    <span class="mf">0.045350</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">20</span>    <span class="mf">0.030957</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">21</span>    <span class="mf">0.004902</span>
+</pre></div>
+</div>
+</li>
+<li><p>Also accepts two dimensional data. In this case, each column is
+cumulated.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt><strong>starting_value</strong><span class="classifier">float, optional</span></dt><dd><p>The starting returns.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>cumulative_returns</strong><span class="classifier">array-like</span></dt><dd><p>Series of cumulative returns.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.cum_returns_final">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">cum_returns_final</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.cum_returns_final" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute total returns from simple returns.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.DataFrame, pd.Series, or np.ndarray</span></dt><dd><p>Noncumulative simple returns of one or more timeseries.</p>
+</dd>
+<dt><strong>starting_value</strong><span class="classifier">float, optional</span></dt><dd><p>The starting returns.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>total_returns</strong><span class="classifier">pd.Series, np.ndarray, or float</span></dt><dd><p>If input is 1-dimensional (a Series or 1D numpy array), the result is a
+scalar.</p>
+<p>If input is 2-dimensional (a DataFrame or 2D numpy array), the result
+is a 1D array containing cumulative returns for each column of input.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.down_alpha_beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">down_alpha_beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.down_alpha_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes alpha and beta for periods when the benchmark return is negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>see documentation for `alpha_beta`.</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>alpha</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.down_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">down_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.down_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the capture ratio for periods when the benchmark return is negative</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>down_capture</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.downside_risk">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">downside_risk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.downside_risk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the downside deviation below a threshold</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray or pd.DataFrame</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>required_return: float / series</strong></dt><dd><p>minimum acceptable return</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>downside_deviation</strong><span class="classifier">float or pd.Series</span></dt><dd><p>depends on input type
+series ==&gt; float
+DataFrame ==&gt; pd.Series</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.excess_sharpe">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">excess_sharpe</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.excess_sharpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the Excess Sharpe of a strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns: float / series</strong></dt><dd><p>Benchmark return to compare returns against.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>excess_sharpe</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_es_calculator">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_es_calculator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_estimate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_param</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_es_calculator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_factory">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_factory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_minimizer_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_minimizer_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_minimizer_aligned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_scale_and_shape">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_scale_and_shape</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_scale_and_shape_factory">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_scale_and_shape_factory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_scale_only">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_scale_only</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_scale_only" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_loglikelihood_scale_only_factory">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_loglikelihood_scale_only_factory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_loglikelihood_scale_only_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_risk_estimates">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_risk_estimates</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_risk_estimates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate VaR and ES using the Generalized Pareto Distribution (GPD)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>var_p</strong><span class="classifier">float</span></dt><dd><p>The percentile to use for estimating the VaR and ES</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt>[threshold, scale_param, shape_param, var_estimate, es_estimate]</dt><dd><p>: list[float]
+threshold - the threshold use to cut off exception tail losses
+scale_param - a parameter (often denoted by sigma, capturing the</p>
+<blockquote>
+<div><p>scale, related to variance)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>shape_param - a parameter (often denoted by xi, capturing the shape</dt><dd><p>or type of the distribution)</p>
+</dd>
+</dl>
+<p>var_estimate - an estimate for the VaR for the given percentile
+es_estimate - an estimate for the ES for the given percentile</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_risk_estimates_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_risk_estimates_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_risk_estimates_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate VaR and ES using the Generalized Pareto Distribution (GPD)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>var_p</strong><span class="classifier">float</span></dt><dd><p>The percentile to use for estimating the VaR and ES</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt>[threshold, scale_param, shape_param, var_estimate, es_estimate]</dt><dd><p>: list[float]
+threshold - the threshold use to cut off exception tail losses
+scale_param - a parameter (often denoted by sigma, capturing the</p>
+<blockquote>
+<div><p>scale, related to variance)</p>
+</div></blockquote>
+<p>shape_param - a parameter (often denoted by xi, capturing the shape
+or type of the distribution)
+var_estimate - an estimate for the VaR for the given percentile
+es_estimate - an estimate for the ES for the given percentile</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.gpd_var_calculator">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">gpd_var_calculator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exceedance_n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.gpd_var_calculator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.max_drawdown">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">max_drawdown</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.max_drawdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the maximum drawdown of a strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>max_drawdown</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.omega_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">omega_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">252</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.omega_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the Omega ratio of a strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float</span></dt><dd><p>Constant risk-free return throughout the period</p>
+</dd>
+<dt><strong>required_return</strong><span class="classifier">float, optional</span></dt><dd><p>Minimum acceptance return of the investor. Threshold over which to
+consider positive vs negative returns. It will be converted to a
+value appropriate for the period of the returns. E.g. An annual minimum
+acceptable return of 100 will translate to a minimum acceptable
+return of 0.018.</p>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Factor used to convert the required_return into a daily
+value. Enter 1 if no time period conversion is necessary.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>omega_ratio</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_alpha">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_alpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the alpha measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling alpha.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling alpha.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">alpha()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_alpha</strong><span class="classifier">array-like</span></dt><dd><p>The rolling alpha.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_alpha_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_alpha_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_alpha_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the alpha aligned measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling alpha aligned.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling alpha aligned.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">alpha_aligned()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_alpha_aligned</strong><span class="classifier">array-like</span></dt><dd><p>The rolling alpha aligned.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_alpha_beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_alpha_beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_alpha_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes alpha and beta over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling alpha-beta.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling alpha-beta.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">alpha_beta()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_alpha_beta_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_alpha_beta_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_alpha_beta_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the alpha beta aligned measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling alpha beta aligned.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling alpha beta aligned.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">alpha_beta_aligned()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_alpha_beta_aligned</strong><span class="classifier">array-like</span></dt><dd><p>The rolling alpha beta aligned.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_annual_volatility">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_annual_volatility</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_annual_volatility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the annual volatility measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling annual volatility over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">annual_volatility()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_annual_volatility</strong><span class="classifier">array-like</span></dt><dd><p>The rolling annual volatility.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the beta measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling beta.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling beta.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">beta()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_beta</strong><span class="classifier">array-like</span></dt><dd><p>The rolling beta.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_beta_aligned">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_beta_aligned</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_beta_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the beta aligned measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling beta aligned.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling beta aligned.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">beta_aligned()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_beta_aligned</strong><span class="classifier">array-like</span></dt><dd><p>The rolling beta aligned.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_cagr">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_cagr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_cagr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cagr measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling cagr over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">cagr()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_cagr</strong><span class="classifier">array-like</span></dt><dd><p>The rolling cagr.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_down_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_down_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_down_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the down capture measure over a rolling window.
+see documentation for <a class="reference internal" href="#empyrical.stats.down_capture" title="empyrical.stats.down_capture"><code class="xref py py-func docutils literal notranslate"><span class="pre">down_capture()</span></code></a>.
+(pass all args, kwargs required)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int, required</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.
+- eg window = 60, periodicity=DAILY, represents a rolling 60 day window</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_downsize_risk">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_downsize_risk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_downsize_risk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the downside risk measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling downside risk over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">downside_risk()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_downside_risk</strong><span class="classifier">array-like</span></dt><dd><p>The rolling downside risk.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_excess_sharpe">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_excess_sharpe</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_excess_sharpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the excess sharpe measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lhs</strong><span class="classifier">array-like</span></dt><dd><p>The first array to pass to the rolling excess sharpe.</p>
+</dd>
+<dt><strong>rhs</strong><span class="classifier">array-like</span></dt><dd><p>The second array to pass to the rolling excess sharpe.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">excess_sharpe()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_excess_sharpe</strong><span class="classifier">array-like</span></dt><dd><p>The rolling excess sharpe.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_max_drawdown">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_max_drawdown</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_max_drawdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the max drawdown measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling max drawdown over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">max_drawdown()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_max_drawdown</strong><span class="classifier">array-like</span></dt><dd><p>The rolling max drawdown.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_sharpe_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_sharpe_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_sharpe_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the sharpe ratio measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling sharpe ratio over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">sharpe_ratio()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_sharpe_ratio</strong><span class="classifier">array-like</span></dt><dd><p>The rolling sharpe ratio.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_sortino_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_sortino_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_sortino_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the sortino ratio measure over a rolling window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">array-like</span></dt><dd><p>The array to compute the rolling sortino ratio over.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Forwarded to <code class="xref py py-func docutils literal notranslate"><span class="pre">sortino_ratio()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rolling_sortino_ratio</strong><span class="classifier">array-like</span></dt><dd><p>The rolling sortino ratio.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_up_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_up_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_up_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the up capture measure over a rolling window.
+see documentation for <a class="reference internal" href="#empyrical.stats.up_capture" title="empyrical.stats.up_capture"><code class="xref py py-func docutils literal notranslate"><span class="pre">up_capture()</span></code></a>.
+(pass all args, kwargs required)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int, required</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.
+- eg window = 60, periodicity=DAILY, represents a rolling 60 day window</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.roll_up_down_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">roll_up_down_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.roll_up_down_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the up/down capture measure over a rolling window.
+see documentation for <a class="reference internal" href="#empyrical.stats.up_down_capture" title="empyrical.stats.up_down_capture"><code class="xref py py-func docutils literal notranslate"><span class="pre">up_down_capture()</span></code></a>.
+(pass all args, kwargs required)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int, required</span></dt><dd><p>Size of the rolling window in terms of the periodicity of the data.
+- eg window = 60, periodicity=DAILY, represents a rolling 60 day window</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.sharpe_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">sharpe_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.sharpe_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the Sharpe ratio of a strategy.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>risk_free</strong><span class="classifier">int, float</span></dt><dd><p>Constant daily risk-free return throughout the period.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>sharpe_ratio</strong><span class="classifier">float</span></dt><dd><p>nan if insufficient length of returns or if if adjusted returns are 0.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.simple_returns">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">simple_returns</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.simple_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute simple returns from a timeseries of prices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>prices</strong><span class="classifier">pd.Series, pd.DataFrame or np.ndarray</span></dt><dd><p>Prices of assets in wide-format, with assets as columns,
+and indexed by datetimes.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">array-like</span></dt><dd><p>Returns of assets in wide-format, with assets as columns,
+and index coerced to be tz-aware.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.sortino_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">sortino_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_downside_risk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.sortino_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the Sortino ratio of a strategy.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray or pd.DataFrame</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>required_return: float / series</strong></dt><dd><p>minimum acceptable return</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>annualization</strong><span class="classifier">int, optional</span></dt><dd><p>Used to suppress default values available in <cite>period</cite> to convert
+returns into annual returns. Value should be the annual frequency of
+<cite>returns</cite>.</p>
+</dd>
+<dt><strong>_downside_risk</strong><span class="classifier">float, optional</span></dt><dd><p>The downside risk of the given inputs, if known. Will be calculated if
+not provided.</p>
+</dd>
+<dt><strong>out</strong><span class="classifier">array-like, optional</span></dt><dd><p>Array to use as output buffer.
+If not passed, a new array will be created.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>sortino_ratio</strong><span class="classifier">float or pd.Series</span></dt><dd><p>depends on input type
+series ==&gt; float
+DataFrame ==&gt; pd.Series</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.stability_of_timeseries">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">stability_of_timeseries</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.stability_of_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines R-squared of a linear fit to the cumulative
+log returns. Computes an ordinary least squares linear fit,
+and returns R-squared.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>R-squared.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.tail_ratio">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">tail_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.tail_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the ratio between the right (95%) and left tail (5%).</p>
+<p>For example, a ratio of 0.25 means that losses are four times
+as bad as profits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><dl class="simple">
+<dt>Daily returns of the strategy, noncumulative.</dt><dd><ul class="simple">
+<li><p>See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>tail_ratio</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.up_alpha_beta">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">up_alpha_beta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.up_alpha_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes alpha and beta for periods when the benchmark return is positive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>see documentation for `alpha_beta`.</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>Alpha.</p>
+</dd>
+<dt>float</dt><dd><p>Beta.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.up_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">up_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.up_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the capture ratio for periods when the benchmark return is positive</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>up_capture</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.up_down_capture">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">up_down_capture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.up_down_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the ratio of up_capture to down_capture.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Noncumulative returns of the factor to which beta is
+computed. Usually a benchmark such as the market.
+- This is in the same style as returns.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
+annualizing. Value ignored if <cite>annualization</cite> parameter is specified.
+Defaults are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;monthly&#39;</span><span class="p">:</span><span class="mi">12</span>
+<span class="s1">&#39;weekly&#39;</span><span class="p">:</span> <span class="mi">52</span>
+<span class="s1">&#39;daily&#39;</span><span class="p">:</span> <span class="mi">252</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>up_down_capture</strong><span class="classifier">float</span></dt><dd><p>the updown capture ratio</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.stats.value_at_risk">
+<code class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></code><code class="sig-name descname"><span class="pre">value_at_risk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.value_at_risk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value at risk (VaR) of a returns stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pandas.Series or 1-D numpy.array</span></dt><dd><p>Non-cumulative daily returns.</p>
+</dd>
+<dt><strong>cutoff</strong><span class="classifier">float, optional</span></dt><dd><p>Decimal representing the percentage cutoff for the bottom percentile of
+returns. Defaults to 0.05.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>VaR</strong><span class="classifier">float</span></dt><dd><p>The VaR value.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">empyrical</a>
+    <a class='right-next' id="next-link" href="perf_attrib.html" title="next page">Performance Attribution</a>
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+
+
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74956955-3', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br/>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>

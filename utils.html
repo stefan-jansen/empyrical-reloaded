@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utilities &#8212; empyrical 0.5.6+11.g5eee8ce documentation</title>
+
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Performance Attribution" href="perf_attrib.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="index.html">
+<p class="title">empyrical</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="stats.html">
+  Performance &amp; Risk Metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="perf_attrib.html">
+  Performance Attribution
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Utilities
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/emyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+
+<nav id="bd-toc-nav">
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/main/docs/source/utils.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <div class="section" id="utilities">
+<span id="utils"></span><h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+<p>The module <a class="reference internal" href="#module-empyrical.utils" title="empyrical.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">empyrical.utils</span></code></a> contains various helper functions, e.g. to source risk factor and
+return data using <cite>pandas-datareader and `yfinance</cite>.</p>
+<span class="target" id="module-empyrical.utils"></span><dl class="py function">
+<dt id="empyrical.utils.data_path">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">data_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.data_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.default_returns_func">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">default_returns_func</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.default_returns_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets returns for a symbol.
+Queries Yahoo Finance. Attempts to cache SPY.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>symbol</strong><span class="classifier">str</span></dt><dd><p>Ticker symbol, e.g. APPL.</p>
+</dd>
+<dt><strong>start</strong><span class="classifier">date, optional</span></dt><dd><p>Earliest date to fetch data for.
+Defaults to earliest date available.</p>
+</dd>
+<dt><strong>end</strong><span class="classifier">date, optional</span></dt><dd><p>Latest date to fetch data for.
+Defaults to latest date available.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pd.Series</dt><dd><dl class="simple">
+<dt>Daily returns for the symbol.</dt><dd><ul class="simple">
+<li><p>See full explanation in tears.create_full_tear_sheet (returns).</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.down">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">down</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a given statistic filtering only negative factor return periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns (optional): float / series</strong></dt><dd><p>Benchmark return to compare returns against.</p>
+</dd>
+<dt><strong>function:</strong></dt><dd><p>the function to run for each rolling window.</p>
+</dd>
+<dt><strong>(other keywords): other keywords that are required to be passed to the</strong></dt><dd><p>function in the ‘function’ argument may also be passed in.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Same as the return of the ‘function’</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.ensure_directory">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">ensure_directory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.ensure_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensure that a directory named “path” exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.get_fama_french">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_fama_french</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_fama_french" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve Fama-French factors via pandas-datareader
+Returns
+——-
+pandas.DataFrame</p>
+<blockquote>
+<div><p>Percent change of Fama-French factors</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.get_returns_cached">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_returns_cached</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_returns_cached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get returns from a cached file if the cache is recent enough,
+otherwise, try to retrieve via a provided update function and
+update the cache file.
+Parameters
+———-
+filepath : str</p>
+<blockquote>
+<div><p>Path to cached csv file</p>
+</div></blockquote>
+<dl class="simple">
+<dt>update_func<span class="classifier">function</span></dt><dd><p>Function to call in case cache is not up-to-date.</p>
+</dd>
+<dt>latest_dt<span class="classifier">pd.Timestamp (tz=UTC)</span></dt><dd><p>Latest datetime required in csv file.</p>
+</dd>
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs<span class="classifier">Keyword arguments</span></dt><dd><p>Optional keyword arguments will be passed to update_func()</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>DataFrame containing returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.get_symbol_returns_from_yahoo">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_symbol_returns_from_yahoo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_symbol_returns_from_yahoo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for pandas.io.data.get_data_yahoo().
+Retrieves prices for symbol from yahoo and computes returns
+based on adjusted closing prices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>symbol</strong><span class="classifier">str</span></dt><dd><p>Yahoo symbol name to load, e.g. ‘SPY’</p>
+</dd>
+<dt><strong>start</strong><span class="classifier">pandas.Timestamp compatible, optional</span></dt><dd><p>Start date of time period to retrieve</p>
+</dd>
+<dt><strong>end</strong><span class="classifier">pandas.Timestamp compatible, optional</span></dt><dd><p>End date of time period to retrieve</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Returns of symbol in requested period.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.get_treasury_yield">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_treasury_yield</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3MO'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_treasury_yield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load treasury yields from FRED.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>start</strong><span class="classifier">date, optional</span></dt><dd><p>Earliest date to fetch data for.
+Defaults to earliest date available.</p>
+</dd>
+<dt><strong>end</strong><span class="classifier">date, optional</span></dt><dd><p>Latest date to fetch data for.
+Defaults to latest date available.</p>
+</dd>
+<dt><strong>period</strong><span class="classifier">{‘1MO’, ‘3MO’, ‘6MO’, 1’, ‘5’, ‘10’}, optional</span></dt><dd><p>Which maturity to use.</p>
+</dd>
+<dt><strong>Returns</strong></dt><dd></dd>
+<dt><strong>——-</strong></dt><dd></dd>
+<dt><strong>pd.Series</strong></dt><dd><p>Annual treasury yield for every day.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.get_utc_timestamp">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_utc_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_utc_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Timestamp/DatetimeIndex
+with either localized or converted to UTC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dt</strong><span class="classifier">Timestamp/DatetimeIndex</span></dt><dd><p>the date(s) to be converted</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>same type as input</dt><dd><p>date(s) converted to UTC</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.load_portfolio_risk_factors">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">load_portfolio_risk_factors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.load_portfolio_risk_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
+Data is stored in HDF5 file. If the data is more than 2
+days old, redownload from Dartmouth.
+Returns
+——-
+five_factors : pd.DataFrame</p>
+<blockquote>
+<div><p>Risk factors timeseries.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.roll">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">roll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a given statistic across a rolling time period.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns (optional): float / series</strong></dt><dd><p>Benchmark return to compare returns against.</p>
+</dd>
+<dt><strong>function:</strong></dt><dd><p>the function to run for each rolling window.</p>
+</dd>
+<dt><strong>window (keyword): int</strong></dt><dd><p>the number of periods included in each calculation.</p>
+</dd>
+<dt><strong>(other keywords): other keywords that are required to be passed to the</strong></dt><dd><p>function in the ‘function’ argument may also be passed in.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt>np.ndarray, pd.Series</dt><dd><p>depends on input type
+ndarray(s) ==&gt; ndarray
+Series(s) ==&gt; pd.Series</p>
+<p>A Series or ndarray of the results of the stat across the rolling
+window.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.rolling_window">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">rolling_window</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.rolling_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restride an array of shape</p>
+<blockquote>
+<div><p>(X_0, … X_N)</p>
+</div></blockquote>
+<p>into an array of shape</p>
+<blockquote>
+<div><p>(length, X_0 - length + 1, … X_N)</p>
+</div></blockquote>
+<p>where each slice at index i along the first axis is equivalent to</p>
+<blockquote>
+<div><p>result[i] = array[length * i:length * (i + 1)]</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>array</strong><span class="classifier">np.ndarray</span></dt><dd><p>The base array.</p>
+</dd>
+<dt><strong>length</strong><span class="classifier">int</span></dt><dd><p>Length of the synthetic first axis to generate.</p>
+</dd>
+<dt><strong>mutable</strong><span class="classifier">bool, optional</span></dt><dd><p>Return a mutable array? The returned array shares the same memory as
+the input array. This means that writes into the returned array affect
+<code class="docutils literal notranslate"><span class="pre">array</span></code>. The returned array also uses strides to map the same values
+to multiple indices. Writes to a single index may appear to change many
+values in the returned array.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>out</strong><span class="classifier">np.ndarray</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="empyrical.utils.up">
+<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">up</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a given statistic filtering only positive factor return periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+- See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
+</dd>
+<dt><strong>factor_returns (optional): float / series</strong></dt><dd><p>Benchmark return to compare returns against.</p>
+</dd>
+<dt><strong>function:</strong></dt><dd><p>the function to run for each rolling window.</p>
+</dd>
+<dt><strong>(other keywords): other keywords that are required to be passed to the</strong></dt><dd><p>function in the ‘function’ argument may also be passed in.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Same as the return of the function</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+    <a class='left-prev' id="prev-link" href="perf_attrib.html" title="previous page">Performance Attribution</a>
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+
+
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74956955-3', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br/>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>
