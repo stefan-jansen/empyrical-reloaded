@@ -25,7 +25,7 @@ requirements:
     - numpy >=1.9.2
     - pandas >=1.0.0
     - scipy >=0.15.1
-    - yfinance >=0.1.54
+    - yfinance >=0.1.59
     - pandas-datareader >=0.4
 
 test:
