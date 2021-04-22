@@ -23,26 +23,9 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 import pandas as pd
 from pandas.tseries.offsets import BDay
+from pandas_datareader import data as web
+import yfinance as yf
 
-try:
-    from pandas_datareader import data as web
-except ImportError:
-    msg = (
-        "Unable to import pandas_datareader. Suppressing import error and "
-        "continuing. All data reading functionality will raise errors; but "
-        "has been deprecated and will be removed in a later version."
-    )
-    warnings.warn(msg)
-from .deprecate import deprecated
-
-DATAREADER_DEPRECATION_WARNING = (
-    "Yahoo and Google Finance have suffered large API breaks with no "
-    "stable replacement. As a result, any data reading functionality "
-    "in empyrical has been deprecated and will be removed in a future "
-    "version. See README.md for more details: "
-    "\n\n"
-    "\thttps://github.com/quantopian/pyfolio/blob/master/README.md"
-)
 try:
     # fast versions
     import bottleneck as bn
@@ -193,7 +176,6 @@ def _roll_pandas(func, window, *args, **kwargs):
     return pd.Series(data, index=type(args[0].index)(index_values))
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def cache_dir(environ=environ):
     try:
         return environ["EMPYRICAL_CACHE_DIR"]
@@ -207,12 +189,10 @@ def cache_dir(environ=environ):
         )
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def data_path(name):
     return join(cache_dir(), name)
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def ensure_directory(path):
     """
     Ensure that a directory named "path" exists.
@@ -256,7 +236,6 @@ def _1_bday_ago():
     return pd.Timestamp.now().normalize() - _1_bday
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_fama_french():
     """
     Retrieve Fama-French factors via pandas-datareader
@@ -270,19 +249,21 @@ def get_fama_french():
     research_factors = web.DataReader(
         "F-F_Research_Data_Factors_daily", "famafrench", start=start
     )[0]
+
     momentum_factor = web.DataReader(
         "F-F_Momentum_Factor_daily", "famafrench", start=start
     )[0]
-    five_factors = research_factors.join(momentum_factor).dropna()
-    five_factors /= 100.0
+
+    five_factors = (
+        research_factors.join(momentum_factor)
+        .dropna()
+        .div(100)
+        .rename(columns=str.strip)
+    )
     five_factors.index = five_factors.index.tz_localize("utc")
-
-    five_factors.columns = five_factors.columns.str.strip()
-
     return five_factors
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     """
     Get returns from a cached file if the cache is recent enough,
@@ -354,7 +335,6 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     return returns
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     """
     Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
@@ -384,7 +364,6 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     return five_factors.loc[start:end]
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_treasury_yield(start=None, end=None, period="3MO"):
     """
     Load treasury yields from FRED.
@@ -406,18 +385,16 @@ def get_treasury_yield(start=None, end=None, period="3MO"):
     """
 
     if start is None:
-        start = "1/1/1970"
+        start = "1970-01-01"
     if end is None:
         end = _1_bday_ago()
 
-    treasury = web.DataReader("DGS3{}".format(period), "fred", start, end)
+    treasury = web.DataReader(
+        f"DGS{period}", data_source="fred", start=start, end=end
+    )
+    return treasury.ffill()
 
-    treasury = treasury.ffill()
 
-    return treasury
-
-
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     """
     Wrapper for pandas.io.data.get_data_yahoo().
@@ -427,7 +404,7 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     Parameters
     ----------
     symbol : str
-        Symbol name to load, e.g. 'SPY'
+        Yahoo symbol name to load, e.g. 'SPY'
     start : pandas.Timestamp compatible, optional
         Start date of time period to retrieve
     end : pandas.Timestamp compatible, optional
@@ -440,24 +417,20 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     """
 
     try:
-        px = web.get_data_yahoo(symbol, start=start, end=end)
-        px["date"] = pd.to_datetime(px["date"])
-        px.set_index("date", drop=False, inplace=True)
-        rets = px[["adjclose"]].pct_change().dropna()
+
+        px = yf.download(symbol, start=start, end=end)
+        rets = px[["Adj Close"]].pct_change().dropna()
     except Exception as e:
         warnings.warn(
-            "Yahoo Finance read failed: {}, falling back to Google".format(e),
+            "Yahoo Finance read failed: {}".format(e),
             UserWarning,
         )
-        px = web.get_data_google(symbol, start=start, end=end)
-        rets = px[["Close"]].pct_change().dropna()
 
     rets.index = rets.index.tz_localize("UTC")
     rets.columns = [symbol]
     return rets
 
 
-@deprecated(msg=DATAREADER_DEPRECATION_WARNING)
 def default_returns_func(symbol, start=None, end=None):
     """
     Gets returns for a symbol.
@@ -482,7 +455,7 @@ def default_returns_func(symbol, start=None, end=None):
     """
 
     if start is None:
-        start = "1/1/1970"
+        start = "1970-01-01"
     if end is None:
         end = _1_bday_ago()
 

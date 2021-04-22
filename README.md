@@ -3,7 +3,7 @@
 
 # empyrical
 
-Common financial risk metrics.
+Common financial risk metrics in Python.
 
 ## Installation
 
@@ -17,6 +17,14 @@ or `conda`:
 ```bash
 conda install -c ml4t empyrical-reloaded
 ```
+
+empyrical requires and installs the following packages while executing the above commands:
+
+- numpy>=1.9.2
+- pandas>=1.0.0
+- scipy>=0.15.1
+- pandas-datareader>=0.4
+- yfinance>=0.1.55
 
 ## Usage
 
@@ -65,35 +73,6 @@ roll_up_capture(returns, window=60)
 ## Support
 
 Please [open an issue](https://github.com/stefan-jansen/empyrical-reloaded/issues/new) for support.
-
-### Deprecated: Data Reading via `pandas-datareader`
-
-As of early 2018, Yahoo Finance has suffered major API breaks with no stable
-replacement, and the Google Finance API has not been stable since late 2017
-[(source)](https://github.com/pydata/pandas-datareader/blob/da18fbd7621d473828d7fa81dfa5e0f9516b6793/README.rst).
-In recent months it has become a greater and greater strain on the `empyrical`
-development team to maintain support for fetching data through
-`pandas-datareader` and other third-party libraries, as these APIs are known to
-be unstable.
-
-As a result, all `empyrical` support for data reading functionality has been
-deprecated and will be removed in a future version.
-
-Users should beware that the following functions are now deprecated:
-
-- `empyrical.utils.cache_dir`
-- `empyrical.utils.data_path`
-- `empyrical.utils.ensure_directory`
-- `empyrical.utils.get_fama_french`
-- `empyrical.utils.load_portfolio_risk_factors`
-- `empyrical.utils.default_returns_func`
-- `empyrical.utils.get_symbol_returns_from_yahoo`
-
-Users should expect regular failures from the following functions, pending
-patches to the Yahoo or Google Finance API:
-
-- `empyrical.utils.default_returns_func`
-- `empyrical.utils.get_symbol_returns_from_yahoo`
 
 ## Contributing
 
