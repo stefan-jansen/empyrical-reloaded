@@ -9,7 +9,7 @@ from subprocess import check_call
 
 HERE = Path(__file__).resolve(strict=True).parent
 ALPHALENS_ROOT = HERE.parent
-TEMP_LOCATION = "/tmp/alphalens-doc"
+TEMP_LOCATION = "/tmp/empyrical-doc"
 TEMP_LOCATION_GLOB = TEMP_LOCATION + "/*"
 
 
