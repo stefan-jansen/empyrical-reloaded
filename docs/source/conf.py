@@ -10,7 +10,7 @@ sys.path.insert(0, Path("../..").resolve(strict=True).as_posix())
 # This is the expected signature of the handler for this event, cf doc
 def autodoc_skip_member_handler(app, what, name, obj, skip, options):
     # Basic approach; you might want a regex instead
-    return name.startswith("cache")
+    return name.startswith(("cache", "_"))
 
 
 # Automatically called by sphinx at startup
