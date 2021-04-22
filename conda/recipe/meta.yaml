@@ -26,7 +26,7 @@ requirements:
     - pandas >=1.0.0
     - scipy >=0.15.1
     - yfinance >=0.1.54
-    - pandas-datareader >=0.2
+    - pandas-datareader >=0.4
 
 test:
   imports:

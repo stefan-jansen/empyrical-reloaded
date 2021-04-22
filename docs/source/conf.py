@@ -81,8 +81,8 @@ latex_elements = {}
 latex_documents = [
     (
         master_doc,
-        "Pyfolio.tex",
-        "Pyfolio Documentation",
+        "Empyrical.tex",
+        "Empyrical Documentation",
         "Quantopian, Inc.",
         "manual",
     )
