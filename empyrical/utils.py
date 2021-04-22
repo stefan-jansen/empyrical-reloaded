@@ -236,6 +236,7 @@ def _1_bday_ago():
     return pd.Timestamp.now().normalize() - _1_bday
 
 
+# ToDo: start & end parameters; choose FF data
 def get_fama_french():
     """
     Retrieve Fama-French factors via pandas-datareader
