@@ -6,6 +6,19 @@ from empyrical import __version__ as version
 
 sys.path.insert(0, Path("../..").resolve(strict=True).as_posix())
 
+
+# This is the expected signature of the handler for this event, cf doc
+def autodoc_skip_member_handler(app, what, name, obj, skip, options):
+    # Basic approach; you might want a regex instead
+    return name.startswith("cache")
+
+
+# Automatically called by sphinx at startup
+def setup(app):
+    # Connect the autodoc-skip-member event from apidoc to the callback
+    app.connect("autodoc-skip-member", autodoc_skip_member_handler)
+
+
 extensions = [
     "sphinx.ext.autodoc",
     "numpydoc",
