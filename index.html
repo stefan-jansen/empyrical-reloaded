@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>empyrical &#8212; empyrical 0.5.6+11.g5eee8ce documentation</title>
+    <title>empyrical &#8212; empyrical 0.5.7+0.g19ade20.dirty documentation</title>
 
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -155,27 +155,59 @@
 
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installation">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
    Installation
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#usage">
    Usage
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-statistics">
+     Simple Statistics
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rolling-measures">
+     Rolling Measures
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pandas-support">
+     Pandas Support
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fama-french-risk-factors">
+     Fama-French Risk Factors
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#asset-prices-and-benchmark-returns">
+     Asset Prices and Benchmark Returns
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#support">
    Support
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#contributing">
    Contributing
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#testing">
    Testing
   </a>
@@ -208,19 +240,24 @@
 
               <div>
 
-  <a class="reference external image-reference" href="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml"><img alt="PyPI Wheels" src="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml/badge.svg" /></a>
+  <p align="center">
+<a href="https://empyrical.ml4trading.io">
+<img src="https://i.imgur.com/PbZNeud.png" width="35%">
+</a>
+</p><a class="reference external image-reference" href="https://img.shields.io/pypi/v/empyrical-reloaded"><img alt="PyPI" src="https://img.shields.io/pypi/v/empyrical-reloaded" /></a>
+<a class="reference external image-reference" href="https://img.shields.io/conda/vn/ml4t/empyrical-reloaded"><img alt="Conda (channel only)" src="https://img.shields.io/conda/vn/ml4t/empyrical-reloaded" /></a>
+<a class="reference external image-reference" href="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml"><img alt="PyPI Wheels" src="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml"><img alt="Conda packages" src="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml"><img alt="CI Tests" src="https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/unit_tests.yml/badge.svg" /></a>
-<div class="section" id="empyrical">
-<h1>empyrical<a class="headerlink" href="#empyrical" title="Permalink to this headline">¶</a></h1>
-<p>Common financial risk metrics in Python.</p>
+<p>Common financial return and risk metrics in Python.</p>
 <div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>empyrical requires Python 3.7+. You can install it using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install empyrical-reloaded
 </pre></div>
 </div>
 <p>or <code class="docutils literal notranslate"><span class="pre">conda</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c ml4t empyrical-reloaded
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install empyrical-reloaded -c ml4t -c ranaroussi
 </pre></div>
 </div>
 <p>empyrical requires and installs the following packages while executing the above commands:</p>
@@ -229,12 +266,15 @@
 <li><p>pandas&gt;=1.0.0</p></li>
 <li><p>scipy&gt;=0.15.1</p></li>
 <li><p>pandas-datareader&gt;=0.4</p></li>
-<li><p>yfinance&gt;=0.1.55</p></li>
+<li><p>yfinance&gt;=0.1.59</p></li>
 </ul>
+<p>Empyrical uses <a class="reference external" href="https://github.com/ranaroussi/yfinance">yfinance</a> to download price data from <a class="reference external" href="https://finance.yahoo.com/">Yahoo! Finance</a> and <a class="reference external" href="https://pandas-datareader.readthedocs.io/en/latest/">pandas-datareader</a> to access <a class="reference external" href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Fama-French</a> risk factors.</p>
 </div>
 <div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Simple Statistics</p>
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simple-statistics">
+<h2>Simple Statistics<a class="headerlink" href="#simple-statistics" title="Permalink to this headline">¶</a></h2>
+<p>Empyrical computes basic metrics from returns and volatility to alpha and beta, Value at Risk, and Shorpe or Sortino ratios.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">empyrical</span> <span class="kn">import</span> <span class="n">max_drawdown</span><span class="p">,</span> <span class="n">alpha_beta</span>
 
@@ -248,7 +288,10 @@
 <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">alpha_beta</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span> <span class="n">benchmark_returns</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Rolling Measures</p>
+</div>
+<div class="section" id="rolling-measures">
+<h2>Rolling Measures<a class="headerlink" href="#rolling-measures" title="Permalink to this headline">¶</a></h2>
+<p>Empyrical also aggregates returna nd risk metrics for rolling windows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">empyrical</span> <span class="kn">import</span> <span class="n">roll_max_drawdown</span>
 
@@ -258,30 +301,88 @@
 <span class="n">roll_max_drawdown</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Pandas Support</p>
+</div>
+<div class="section" id="pandas-support">
+<h2>Pandas Support<a class="headerlink" href="#pandas-support" title="Permalink to this headline">¶</a></h2>
+<p>Empyrical also works with both <a class="reference external" href="https://numpy.org/">NumPy</a> arrays and <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> data structures:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">empyrical</span> <span class="kn">import</span> <span class="n">roll_up_capture</span><span class="p">,</span> <span class="n">capture</span>
 
 <span class="n">returns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">02</span><span class="p">,</span> <span class="o">.</span><span class="mi">03</span><span class="p">,</span> <span class="o">-.</span><span class="mi">4</span><span class="p">,</span> <span class="o">-.</span><span class="mi">06</span><span class="p">,</span> <span class="o">-.</span><span class="mi">02</span><span class="p">])</span>
+<span class="n">factor_returns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="o">.</span><span class="mi">02</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">03</span><span class="p">,</span> <span class="o">-.</span><span class="mi">01</span><span class="p">,</span> <span class="o">-.</span><span class="mi">02</span><span class="p">,</span> <span class="o">.</span><span class="mi">02</span><span class="p">])</span>
 
 <span class="c1"># calculate a capture ratio</span>
-<span class="n">capture</span><span class="p">(</span><span class="n">returns</span><span class="p">)</span>
-
-<span class="c1"># calculate capture for up markets on a rolling 60 day basis</span>
-<span class="n">roll_up_capture</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">capture</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span> <span class="n">factor_returns</span><span class="p">)</span>
+<span class="o">-</span><span class="mf">0.147387712263491</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="fama-french-risk-factors">
+<h2>Fama-French Risk Factors<a class="headerlink" href="#fama-french-risk-factors" title="Permalink to this headline">¶</a></h2>
+<p>Empyrical downloads Fama-French risk factors from 1970 onward:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">empyrical</span> <span class="k">as</span> <span class="nn">emp</span>
+
+<span class="n">risk_factors</span> <span class="o">=</span> <span class="n">emp</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_fama_french</span><span class="p">()</span>
+
+<span class="n">risk_factors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">risk_factors</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+
+                           <span class="n">Mkt</span><span class="o">-</span><span class="n">RF</span>     <span class="n">SMB</span>     <span class="n">HML</span>       <span class="n">RF</span>     <span class="n">Mom</span>
+<span class="n">Date</span>
+<span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>  <span class="mf">0.0118</span>  <span class="mf">0.0131</span>  <span class="mf">0.0100</span>  <span class="mf">0.00029</span> <span class="o">-</span><span class="mf">0.0341</span>
+<span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>  <span class="mf">0.0059</span>  <span class="mf">0.0066</span>  <span class="mf">0.0072</span>  <span class="mf">0.00029</span> <span class="o">-</span><span class="mf">0.0152</span>
+<span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0074</span>  <span class="mf">0.0010</span>  <span class="mf">0.0020</span>  <span class="mf">0.00029</span>  <span class="mf">0.0040</span>
+<span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">07</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0015</span>  <span class="mf">0.0039</span> <span class="o">-</span><span class="mf">0.0032</span>  <span class="mf">0.00029</span>  <span class="mf">0.0011</span>
+<span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">08</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>  <span class="mf">0.0004</span>  <span class="mf">0.0018</span> <span class="o">-</span><span class="mf">0.0015</span>  <span class="mf">0.00029</span>  <span class="mf">0.0033</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">22</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0112</span> <span class="o">-</span><span class="mf">0.0009</span>  <span class="mf">0.0314</span>  <span class="mf">0.00000</span> <span class="o">-</span><span class="mf">0.0325</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">23</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0015</span> <span class="o">-</span><span class="mf">0.0128</span>  <span class="mf">0.0090</span>  <span class="mf">0.00000</span> <span class="o">-</span><span class="mf">0.0185</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">24</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>  <span class="mf">0.0115</span>  <span class="mf">0.0120</span>  <span class="mf">0.0134</span>  <span class="mf">0.00000</span> <span class="o">-</span><span class="mf">0.0007</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">25</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0273</span> <span class="o">-</span><span class="mf">0.0112</span>  <span class="mf">0.0087</span>  <span class="mf">0.00000</span> <span class="o">-</span><span class="mf">0.0195</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">26</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">-</span><span class="mf">0.0028</span>  <span class="mf">0.0072</span> <span class="o">-</span><span class="mf">0.0156</span>  <span class="mf">0.00000</span>  <span class="mf">0.0195</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="asset-prices-and-benchmark-returns">
+<h2>Asset Prices and Benchmark Returns<a class="headerlink" href="#asset-prices-and-benchmark-returns" title="Permalink to this headline">¶</a></h2>
+<p>Empyrical <a class="reference external" href="https://github.com/ranaroussi/yfinance">yfinance</a> to download price data from <a class="reference external" href="https://finance.yahoo.com/">Yahoo! Finance</a>. To obtain the S&amp;P returns since 1950, use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">empyrical</span> <span class="k">as</span> <span class="nn">emp</span>
+
+<span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;^GSPC&#39;</span>
+<span class="n">returns</span> <span class="o">=</span> <span class="n">emp</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_symbol_returns_from_yahoo</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span>
+                                                  <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1950-01-01&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>  <span class="c1"># requires separate installation</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># requires separate installation</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">):</span>
+    <span class="n">returns</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Time Series&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Daily S&amp;P 500 Returns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><span class="raw-html-m2r"><a href="https://empyrical.ml4trading.io">
+<img src="https://i.imgur.com/0PSxfSI.png" width="100%">
+</a></span></p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference external" href="https://empyrical.ml4trading.io">documentation</a> for details on the API.</p>
+</div>
+</div>
 <div class="section" id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
 <p>Please <a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/issues/new">open an issue</a> for support.</p>
 </div>
 <div class="section" id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
 <p>Please contribute using <a class="reference external" href="https://guides.github.com/introduction/flow/">Github Flow</a>. Create a branch, add commits, and <a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/compare/">open a pull request</a>.</p>
 </div>
 <div class="section" id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p>install requirements</p>
 <ul>
@@ -299,7 +400,6 @@
 <li class="toctree-l1"><a class="reference internal" href="perf_attrib.html">Performance Attribution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a></li>
 </ul>
-</div>
 </div>
 </div>
 
