@@ -30,7 +30,7 @@ jobs:
           auto-update-conda: true
           python-version: ${{ matrix.python }}
           activate-environment: recipe
-          channels: defaults, conda-forge, anaconda
+          channels: defaults, conda-forge, anaconda, ranaroussi
 
       - name: conda build for ${{ matrix.os }}
         run: |
