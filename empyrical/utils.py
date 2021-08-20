@@ -173,7 +173,11 @@ def _roll_pandas(func, window, *args, **kwargs):
         index_value = args[0].index[i - 1]
         index_values.append(index_value)
         data[index_value] = func(*rets, **kwargs)
-    return pd.Series(data, index=type(args[0].index)(index_values))
+    return pd.Series(
+        data,
+        index=type(args[0].index)(index_values),
+        dtype=np.float64,
+    )
 
 
 def cache_dir(environ=environ):
