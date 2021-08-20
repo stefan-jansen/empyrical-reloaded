@@ -77,11 +77,11 @@ class PerfAttribTestCase(unittest.TestCase):
             returns, positions, factor_returns, factor_loadings
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_perf_attrib_output, perf_attrib_output
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_exposures_portfolio, exposures_portfolio
         )
 
@@ -120,11 +120,11 @@ class PerfAttribTestCase(unittest.TestCase):
             data={"risk_factor1": [0.0, 0.0], "risk_factor2": [0.0, 0.0]},
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_perf_attrib_output, perf_attrib_output
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_exposures_portfolio, exposures_portfolio
         )
 
@@ -166,11 +166,11 @@ class PerfAttribTestCase(unittest.TestCase):
             },
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_perf_attrib_output, perf_attrib_output
         )
 
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             expected_exposures_portfolio, exposures_portfolio
         )
 
@@ -238,14 +238,14 @@ class PerfAttribTestCase(unittest.TestCase):
 
         # since all returns are factor returns, common returns should be
         # equivalent to total returns, and specific returns should be 0
-        pd.util.testing.assert_series_equal(
+        pd.testing.assert_series_equal(
             returns, common_returns, check_names=False
         )
 
         self.assertTrue(np.isclose(specific_returns, 0).all())
 
         # specific and common returns combined should equal total returns
-        pd.util.testing.assert_series_equal(
+        pd.testing.assert_series_equal(
             returns, combined_returns, check_names=False
         )
 
@@ -257,13 +257,13 @@ class PerfAttribTestCase(unittest.TestCase):
             factor_returns, axis="rows"
         ).sum(axis="columns")
 
-        pd.util.testing.assert_series_equal(
+        pd.testing.assert_series_equal(
             expected_common_returns, common_returns, check_names=False
         )
 
         # since factor loadings are ones, portfolio risk exposures
         # should be ones
-        pd.util.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             risk_exposures_portfolio,
             pd.DataFrame(
                 np.ones_like(risk_exposures_portfolio),
