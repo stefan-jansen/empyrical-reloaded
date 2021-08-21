@@ -28,5 +28,5 @@ if __name__ == "__main__":
     setup(
         cmdclass=versioneer.get_cmdclass(),
         version=versioneer.get_version(),
-        packages=["empyrical", "empyrical.tests"],
+        packages=["empyrical"],
     )

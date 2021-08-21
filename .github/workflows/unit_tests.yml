@@ -2,8 +2,7 @@ name: CI Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [feature/pytest]
   pull_request:
     branches:
       - main
@@ -14,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest , windows-latest, macos-latest ]
-        python-version: [ 3.7, 3.8, 3.9 ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.7, 3.8, 3.9]
     steps:
       - name: Checkout empyrical
         uses: actions/checkout@v2
@@ -35,6 +34,6 @@ jobs:
         run: |
           flake8
 
-      - name: Unittests with tox & nose
+      - name: Unittests with tox & pytest
         run: |
           tox -p auto -q

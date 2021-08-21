@@ -157,9 +157,8 @@ Please contribute using [Github Flow](https://guides.github.com/introduction/flo
 ## Testing
 
 - install requirements
-    - "nose>=1.3.7",
-    - "parameterized>=0.6.1"
+    - "pytest>=6.2.0",
 
 ```bash
-nosetests empyrical.tests
+pytest tests
 ```
