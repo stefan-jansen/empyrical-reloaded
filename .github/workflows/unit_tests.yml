@@ -2,7 +2,8 @@ name: CI Tests
 
 on:
   push:
-    branches: [feature/pytest]
+    branches:
+    - main
   pull_request:
     branches:
       - main
