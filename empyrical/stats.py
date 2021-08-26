@@ -689,7 +689,7 @@ def sharpe_ratio(
     """
     allocated_output = out is None
     if allocated_output:
-        out = np.empty(returns.shape[1:])
+        out = np.full(returns.shape[1:],np.nan)
 
     return_1d = returns.ndim == 1
 
