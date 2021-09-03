@@ -1,6 +1,7 @@
-name: CI Tests
+name: Tests
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
