@@ -2,6 +2,11 @@ name: PyPI
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Package Index'
+        required: true
+        default: 'TESTPYPI'
   push:
     tags:
       - '*'
@@ -38,8 +43,8 @@ jobs:
   upload_pypi:
     needs: [ dist ]
     runs-on: ubuntu-latest
-#     upload to (Test)-PyPI on push with tag starting with v; diff by commit
-#        if: startsWith(github.ref, 'refs/tags')
+    # upload to (Test)-PyPI on push with tag starting with v; diff by commit
+    if: startsWith(github.ref, 'refs/tags')
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -47,14 +52,16 @@ jobs:
           path: dist
       - name: publish to testpypi
         uses: pypa/gh-action-pypi-publish@v1.4.1
-        if: startsWith(github.event.head_commit.message, 'TEST')
+        #        if: startsWith(github.event.head_commit.message, 'TEST')
+        if: ${{ github.event.inputs.target }} == 'TESTPYPI
         with:
           user: __token__
           password: ${{ secrets.TESTPYPI_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
       - name: publish to pypi
         uses: pypa/gh-action-pypi-publish@master
-        if: startsWith(github.event.head_commit.message, 'PYPI')
+        #        if: startsWith(github.event.head_commit.message, 'PYPI')
+        if: ${{ github.event.inputs.target }} == 'PYPI
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
