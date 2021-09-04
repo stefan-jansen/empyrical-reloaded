@@ -16,6 +16,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Checkout empyrical
+        uses: actions/checkout@v2
+
       - name: Install wheel
         run: |
           pip install -U pip wheel
