@@ -1,6 +1,7 @@
-name: CI Tests
+name: Tests
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
@@ -37,4 +38,4 @@ jobs:
 
       - name: Unittests with tox & pytest
         run: |
-          tox -p auto -q
+          tox
