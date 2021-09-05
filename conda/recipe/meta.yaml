@@ -1,5 +1,5 @@
 {% set name = "empyrical-reloaded" %}
-{% set version = "0.5.7" %}
+{% set version = "0.5.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  md5: 20d04dbad0c4d7f0d23dccc91ce35617
+  md5: 04ac0b02d943e267cd61b3d6edc31f4c
 
 
 build:
