@@ -24,6 +24,7 @@ jobs:
       - name: Checkout empyrical
         uses: actions/checkout@v2
 
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -53,7 +54,7 @@ jobs:
       - name: publish to testpypi
         uses: pypa/gh-action-pypi-publish@v1.4.1
         #        if: startsWith(github.event.head_commit.message, 'TEST')
-        if: ${{ github.event.inputs.target }} == 'TESTPYPI
+        if: ${{ github.event.inputs.target }} == 'TESTPYPI'
         with:
           user: __token__
           password: ${{ secrets.TESTPYPI_TOKEN }}
@@ -61,7 +62,7 @@ jobs:
       - name: publish to pypi
         uses: pypa/gh-action-pypi-publish@master
         #        if: startsWith(github.event.head_commit.message, 'PYPI')
-        if: ${{ github.event.inputs.target }} == 'PYPI
+        if: ${{ github.event.inputs.target }} == 'PYPI;
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
