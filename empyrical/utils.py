@@ -562,3 +562,186 @@ def rolling_window(array, length, mutable=False):
     out = as_strided(array, new_shape, new_strides)
     out.setflags(write=mutable)
     return out
+
+
+def _create_unary_vectorized_roll_function(function):
+    def unary_vectorized_roll(arr, window, out=None, **kwargs):
+        """
+        Computes the {human_readable} measure over a rolling window.
+
+        Parameters
+        ----------
+        arr : array-like
+            The array to compute the rolling {human_readable} over.
+        window : int
+            Size of the rolling window in terms of the periodicity of the data.
+        out : array-like, optional
+            Array to use as output buffer.
+            If not passed, a new array will be created.
+        **kwargs
+            Forwarded to :func:`~empyrical.{name}`.
+
+        Returns
+        -------
+        rolling_{name} : array-like
+            The rolling {human_readable}.
+        """
+        allocated_output = out is None
+
+        if len(arr):
+            out = function(
+                rolling_window(_flatten(arr), min(len(arr), window)).T,
+                out=out,
+                **kwargs,
+            )
+        else:
+            out = np.empty(0, dtype="float64")
+
+        if allocated_output and isinstance(arr, pd.Series):
+            out = pd.Series(out, index=arr.index[-len(out) :])
+
+        return out
+
+    unary_vectorized_roll.__doc__ = unary_vectorized_roll.__doc__.format(
+        name=function.__name__,
+        human_readable=function.__name__.replace("_", " "),
+    )
+    unary_vectorized_roll.__name__ = f"rolling_{function.__name__}"
+
+    return unary_vectorized_roll
+
+
+def _create_binary_vectorized_roll_function(function):
+    def binary_vectorized_roll(lhs, rhs, window, out=None, **kwargs):
+        """
+        Computes the {human_readable} measure over a rolling window.
+
+        Parameters
+        ----------
+        lhs : array-like
+            The first array to pass to the rolling {human_readable}.
+        rhs : array-like
+            The second array to pass to the rolling {human_readable}.
+        window : int
+            Size of the rolling window in terms of the periodicity of the data.
+        out : array-like, optional
+            Array to use as output buffer.
+            If not passed, a new array will be created.
+        **kwargs
+            Forwarded to :func:`~empyrical.{name}`.
+
+        Returns
+        -------
+        rolling_{name} : array-like
+            The rolling {human_readable}.
+        """
+        allocated_output = out is None
+
+        if window >= 1 and len(lhs) and len(rhs):
+            out = function(
+                rolling_window(_flatten(lhs), min(len(lhs), window)).T,
+                rolling_window(_flatten(rhs), min(len(rhs), window)).T,
+                out=out,
+                **kwargs,
+            )
+        elif allocated_output:
+            out = np.empty(0, dtype="float64")
+        else:
+            out[()] = np.nan
+
+        if allocated_output:
+            if out.ndim == 1 and isinstance(lhs, pd.Series):
+                out = pd.Series(out, index=lhs.index[-len(out) :])
+            elif out.ndim == 2 and isinstance(lhs, pd.Series):
+                out = pd.DataFrame(out, index=lhs.index[-len(out) :])
+        return out
+
+    binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
+        name=function.__name__,
+        human_readable=function.__name__.replace("_", " "),
+    )
+
+    binary_vectorized_roll.__name__ = f"rolling_{function.__name__}"
+
+    return binary_vectorized_roll
+
+
+def _flatten(arr):
+    return arr if not isinstance(arr, pd.Series) else arr.values
+
+
+def _aligned_series(*many_series):
+    """
+    Return a new list of series containing the data in the input series, but
+    with their indices aligned. NaNs will be filled in for missing values.
+
+    Parameters
+    ----------
+    *many_series
+        The series to align.
+
+    Returns
+    -------
+    aligned_series : iterable[array-like]
+        A new list of series containing the data in the input series, but
+        with their indices aligned. NaNs will be filled in for missing values.
+
+    """
+    head = many_series[0]
+    tail = many_series[1:]
+    n = len(head)
+    if isinstance(head, np.ndarray) and all(
+        len(s) == n and isinstance(s, np.ndarray) for s in tail
+    ):
+        # optimization: ndarrays of the same length are already aligned
+        return many_series
+
+    # dataframe has no ``itervalues``
+    return (
+        v for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
+    )
+
+
+def _to_pandas(ob):
+    """Convert an array-like to a pandas object.
+
+    Parameters
+    ----------
+    ob : array-like
+        The object to convert.
+
+    Returns
+    -------
+    pandas_structure : pd.Series or pd.DataFrame
+        The correct structure based on the dimensionality of the data.
+    """
+    if isinstance(ob, (pd.Series, pd.DataFrame)):
+        return ob
+
+    if ob.ndim == 1:
+        return pd.Series(ob)
+    elif ob.ndim == 2:
+        return pd.DataFrame(ob)
+    else:
+        raise ValueError(
+            "cannot convert array of dim > 2 to a pandas structure",
+        )
+
+
+def _adjust_returns(returns, adjustment_factor):
+    """
+    Returns the returns series adjusted by adjustment_factor. Optimizes for the
+    case of adjustment_factor being 0 by returning returns itself, not a copy!
+
+    Parameters
+    ----------
+    returns : pd.Series or np.ndarray
+    adjustment_factor : pd.Series or np.ndarray or float or int
+
+    Returns
+    -------
+    adjusted_returns : array-like
+    """
+    if isinstance(adjustment_factor, (float, int)) and adjustment_factor == 0:
+        return returns
+    return returns - adjustment_factor
