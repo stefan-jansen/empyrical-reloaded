@@ -48,7 +48,6 @@ from .stats import (
     roll_alpha,
     roll_alpha_aligned,
     roll_alpha_beta,
-    roll_alpha_beta,
     roll_alpha_beta_aligned,
     roll_annual_volatility,
     roll_beta,

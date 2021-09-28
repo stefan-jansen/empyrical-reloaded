@@ -170,8 +170,6 @@ def input_data():
         ),
         # Positive and negative returns with max drawdown
         "mixed_returns": mixed_returns,
-        # Flat line
-        "flat_line_1": flat_line_1_tz,
         # Weekly returns
         "weekly_returns": pd.Series(
             np.array([0.0, 1.0, 10.0, -4.0, 2.0, 3.0, 2.0, 1.0, -10.0]) / 100,
@@ -312,7 +310,7 @@ def expected_data():
         106.646123,
     ]
 
-    mixed_returns_expected_gpd_risk_result = [
+    mixed_returns_gpd_risk = [
         0.1,
         0.10001255835838491,
         1.5657360018514067e-06,
@@ -320,7 +318,7 @@ def expected_data():
         0.59126595492541179,
     ]
 
-    negative_returns_expected_gpd_risk_result = [
+    negative_returns_gpd_risk = [
         0.05,
         0.068353586736348199,
         9.4304947982121171e-07,
@@ -347,8 +345,8 @@ def expected_data():
         "df_empty": pd.DataFrame(),
         "df_0_expected": df_0_expected,
         "df_100_expected": df_100_expected,
-        "mixed_returns_expected_gpd_risk_result": mixed_returns_expected_gpd_risk_result,
-        "negative_returns_expected_gpd_risk_result": negative_returns_expected_gpd_risk_result,
+        "mixed_returns_expected_gpd_risk_result": mixed_returns_gpd_risk,
+        "negative_returns_expected_gpd_risk_result": negative_returns_gpd_risk,
     }
 
 
