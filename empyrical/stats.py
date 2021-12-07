@@ -36,6 +36,8 @@ from .utils import (
 from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
 from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
 
+import warnings
+
 
 def annualization_factor(period, annualization):
     """
@@ -647,6 +649,11 @@ def sharpe_ratio(
     returns_risk_adj = np.asanyarray(_adjust_returns(returns, risk_free))
     ann_factor = annualization_factor(period, annualization)
 
+    warnings.filterwarnings(
+        "ignore",
+        category=RuntimeWarning,
+        message="divide by zero",
+    )
     np.multiply(
         np.divide(
             nanmean(returns_risk_adj, axis=0),
