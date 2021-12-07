@@ -66,6 +66,7 @@ from .stats import (
     up_alpha_beta,
     up_capture,
     up_down_capture,
+    batting_average,
     value_at_risk,
 )
 

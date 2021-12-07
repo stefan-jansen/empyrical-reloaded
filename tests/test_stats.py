@@ -1716,6 +1716,28 @@ class Test2DStats:
         np.testing.assert_almost_equal(np.array(result), expected.iloc[-1], 5)
         self.assert_indexes_match(result, expected.iloc[-1])
 
+    @pytest.mark.parametrize(
+        "returns, benchmark, expected",
+        [
+            ("empty_returns", "empty_returns", [np.nan, np.nan, np.nan]),
+            ("positive_returns", "all_negative_returns", [1, np.nan, 1]),
+            ("all_negative_returns", "positive_returns", [0, 0, np.nan]),
+            ("mixed_returns", "mixed_returns", [0, 0, 0]),
+            (
+                "simple_benchmark",
+                "simple_benchmark_w_noise",
+                [0.666667, 0.5, 1.0],
+            ),
+        ],
+        indirect=["returns", "benchmark"],
+    )
+    def test_batting_average(self, returns, benchmark, expected):
+        return_types = (pd.Series, np.ndarray)
+        batting_average = self.empyrical(
+            return_types=return_types
+        ).batting_average(returns, benchmark)
+        np.testing.assert_almost_equal(batting_average, expected, 4)
+
     @property
     def empyrical(self):
         """
