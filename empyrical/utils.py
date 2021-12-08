@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import datetime
-from functools import wraps
+from functools import wraps, partial
 from os import makedirs, environ
 from os.path import expanduser, join, getmtime, isdir
 import errno
@@ -24,6 +24,7 @@ from numpy.lib.stride_tricks import as_strided
 import pandas as pd
 from pandas.tseries.offsets import BDay
 from pandas_datareader import data as web
+from pytz import UTC
 import yfinance as yf
 
 try:
@@ -240,33 +241,43 @@ def _1_bday_ago():
     return pd.Timestamp.now().normalize() - _1_bday
 
 
-# ToDo: start & end parameters; choose FF data
-def get_fama_french():
+def get_fama_french(
+    start="1-1-1970",
+    end=None,
+    datasets=[
+        "F-F_Research_Data_Factors_daily",
+        "F-F_Momentum_Factor_daily",
+    ],
+):
     """
     Retrieve Fama-French factors via pandas-datareader
+    Parameters
+    ----------
+    start: str or datetime or Timestamp, start date
+    end: str or datetime or Timestamp, end date
+    datasets: list of factors (default is the five factors)
     Returns
     -------
     pandas.DataFrame
         Percent change of Fama-French factors
     """
+    if not isinstance(start, datetime):
+        start = pd.Timestamp(start).date()
+    if not isinstance(end, datetime):
+        end = pd.Timestamp(end).date()
 
-    start = "1/1/1970"
-    research_factors = web.DataReader(
-        "F-F_Research_Data_Factors_daily", "famafrench", start=start
-    )[0]
-
-    momentum_factor = web.DataReader(
-        "F-F_Momentum_Factor_daily", "famafrench", start=start
-    )[0]
-
-    five_factors = (
-        research_factors.join(momentum_factor)
-        .dropna()
-        .div(100)
-        .rename(columns=str.strip)
+    ff_function = partial(
+        web.DataReader,
+        data_source="famafrench",
+        start=start,
+        end=end,
     )
-    five_factors.index = five_factors.index.tz_localize("utc")
-    return five_factors
+
+    df = [ff_function(dataset)[0] for dataset in datasets]
+    df = pd.concat(df, axis=1).dropna().div(100).rename(columns=str.strip)
+
+    df.index = df.index.tz_localize("utc")
+    return df
 
 
 def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
@@ -309,7 +320,8 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
             update_cache = True
         else:
             returns = pd.read_csv(filepath, index_col=0, parse_dates=True)
-            returns.index = returns.index.tz_localize("UTC")
+            if returns.index.tz != UTC:
+                returns.index = returns.index.tz_localize("UTC")
 
     if update_cache:
         returns = update_func(**kwargs)
