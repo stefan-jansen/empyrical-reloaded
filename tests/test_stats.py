@@ -39,166 +39,15 @@ class BaseTestClass:
 
 
 class TestStats(BaseTestClass):
-
-    # Simple benchmark, no drawdown
-    simple_benchmark = pd.Series(
-        np.array([0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # All positive returns, small variance
-    positive_returns = pd.Series(
-        np.array([1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # All negative returns
-    negative_returns = pd.Series(
-        np.array([0.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # All negative returns
-    all_negative_returns = pd.Series(
-        np.array([-2.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # Positive and negative returns with max drawdown
-    mixed_returns = pd.Series(
-        np.array([np.nan, 1.0, 10.0, -4.0, 2.0, 3.0, 2.0, 1.0, -10.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # Flat line
-    flat_line_1 = pd.Series(
-        np.array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="D"),
-    )
-
-    # Weekly returns
-    weekly_returns = pd.Series(
-        np.array([0.0, 1.0, 10.0, -4.0, 2.0, 3.0, 2.0, 1.0, -10.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="W"),
-    )
-
-    # Monthly returns
-    monthly_returns = pd.Series(
-        np.array([0.0, 1.0, 10.0, -4.0, 2.0, 3.0, 2.0, 1.0, -10.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=9, freq="M"),
-    )
-
-    # Series of length 1
-    one_return = pd.Series(
-        np.array([1.0]) / 100,
-        index=pd.date_range("2000-1-30", periods=1, freq="D"),
-    )
-
-    # Empty series
-    empty_returns = pd.Series(
-        np.array([]) / 100,
-        index=pd.date_range("2000-1-30", periods=0, freq="D"),
-    )
-
-    # Random noise
-    noise = pd.Series(
-        rand.normal(0, 0.001, 1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-
-    noise_uniform = pd.Series(
-        rand.uniform(-0.01, 0.01, 1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-
-    # Random noise inv
-    inv_noise = noise.multiply(-1)
-
-    # Flat line
-    flat_line_0 = pd.Series(
-        np.linspace(0, 0, num=1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-    # Flat line
-    flat_line_1_tz = pd.Series(
-        np.linspace(0.01, 0.01, num=1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-
-    # Positive line
-    pos_line = pd.Series(
-        np.linspace(0, 1, num=1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-
-    # Negative line
-    neg_line = pd.Series(
-        np.linspace(0, -1, num=1000),
-        index=pd.date_range("2000-1-30", periods=1000, freq="D", tz="UTC"),
-    )
-
-    # Sparse noise, same as noise but with np.nan sprinkled in
-    replace_nan = rand.choice(noise.index.tolist(), rand.randint(1, 10))
-    sparse_noise = noise.replace(replace_nan, np.nan)
-
-    # Sparse flat line at 0.01
-    replace_nan = rand.choice(noise.index.tolist(), rand.randint(1, 10))
-    sparse_flat_line_1_tz = flat_line_1_tz.replace(replace_nan, np.nan)
-
-    one = [
-        -0.00171614,
-        0.01322056,
-        0.03063862,
-        -0.01422057,
-        -0.00489779,
-        0.01268925,
-        -0.03357711,
-        0.01797036,
-    ]
-    two = [
-        0.01846232,
-        0.00793951,
-        -0.01448395,
-        0.00422537,
-        -0.00339611,
-        0.03756813,
-        0.0151531,
-        0.03549769,
-    ]
-
-    df_index_simple = pd.date_range("2000-1-30", periods=8, freq="D")
-    df_index_week = pd.date_range("2000-1-30", periods=8, freq="W")
-    df_index_month = pd.date_range("2000-1-30", periods=8, freq="M")
-
-    df_simple = pd.DataFrame(
-        {
-            "one": pd.Series(one, index=df_index_simple),
-            "two": pd.Series(two, index=df_index_simple),
-        }
-    )
-
-    df_week = pd.DataFrame(
-        {
-            "one": pd.Series(one, index=df_index_week),
-            "two": pd.Series(two, index=df_index_week),
-        }
-    )
-
-    df_month = pd.DataFrame(
-        {
-            "one": pd.Series(one, index=df_index_month),
-            "two": pd.Series(two, index=df_index_month),
-        }
-    )
-
     @pytest.mark.parametrize(
         "prices, expected",
         [
             # Constant price implies zero returns,
             # and linearly increasing prices imples returns like 1/n
-            (flat_line_1, [0.0] * (flat_line_1.shape[0] - 1)),
-            (pos_line, [np.inf] + [1 / n for n in range(1, 999)]),
+            ("flat_line_1", [0.0] * (9 - 1)),
+            ("pos_line", [np.inf] + [1 / n for n in range(1, 999)]),
         ],
+        indirect=["prices"],
     )
     def test_simple_returns(self, prices, expected):
         simple_returns = self.empyrical.simple_returns(prices)
@@ -208,9 +57,9 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, starting_value, expected",
         [
-            (empty_returns, 0, []),
+            ("empty_returns", 0, []),
             (
-                mixed_returns,
+                "mixed_returns",
                 0,
                 [
                     0.0,
@@ -225,7 +74,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
             (
-                mixed_returns,
+                "mixed_returns",
                 100,
                 [
                     100.0,
@@ -240,7 +89,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
             (
-                negative_returns,
+                "negative_returns",
                 0,
                 [
                     0.0,
@@ -255,6 +104,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
         ],
+        indirect=["returns"],
     )
     def test_cum_returns(self, returns, starting_value, expected):
         cum_returns = self.empyrical.cum_returns(
@@ -269,12 +119,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, starting_value, expected",
         [
-            (empty_returns, 0, np.nan),
-            (one_return, 0, one_return[0]),
-            (mixed_returns, 0, 0.03893),
-            (mixed_returns, 100, 103.89310),
-            (negative_returns, 0, -0.36590),
+            ("empty_returns", 0, np.nan),
+            ("one_return", 0, 0.01),
+            ("mixed_returns", 0, 0.03893),
+            ("mixed_returns", 100, 103.89310),
+            ("negative_returns", 0, -0.36590),
         ],
+        indirect=["returns"],
     )
     def test_cum_returns_final(self, returns, starting_value, expected):
         cum_returns_final = self.empyrical.cum_returns_final(
@@ -287,22 +138,26 @@ class TestStats(BaseTestClass):
         "returns, convert_to, expected",
         [
             (
-                simple_benchmark,
+                "simple_benchmark",
                 empyrical.WEEKLY,
                 [0.0, 0.040604010000000024, 0.0],
             ),
-            (simple_benchmark, empyrical.MONTHLY, [0.01, 0.03030099999999991]),
-            (simple_benchmark, empyrical.QUARTERLY, [0.04060401]),
-            (simple_benchmark, empyrical.YEARLY, [0.040604010000000024]),
             (
-                weekly_returns,
+                "simple_benchmark",
+                empyrical.MONTHLY,
+                [0.01, 0.03030099999999991],
+            ),
+            ("simple_benchmark", empyrical.QUARTERLY, [0.04060401]),
+            ("simple_benchmark", empyrical.YEARLY, [0.040604010000000024]),
+            (
+                "weekly_returns",
                 empyrical.MONTHLY,
                 [0.0, 0.087891200000000058, -0.04500459999999995],
             ),
-            (weekly_returns, empyrical.YEARLY, [0.038931091700480147]),
-            (monthly_returns, empyrical.YEARLY, [0.038931091700480147]),
+            ("weekly_returns", empyrical.YEARLY, [0.038931091700480147]),
+            ("monthly_returns", empyrical.YEARLY, [0.038931091700480147]),
             (
-                monthly_returns,
+                "monthly_returns",
                 empyrical.QUARTERLY,
                 [
                     0.11100000000000021,
@@ -311,6 +166,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
         ],
+        indirect=["returns"],
     )
     def test_aggregate_returns(self, returns, convert_to, expected):
         returns = aggregate_returns(returns, convert_to).values.tolist()
@@ -320,25 +176,23 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, expected",
         [
-            (empty_returns, np.nan),
-            (one_return, 0.0),
-            (simple_benchmark, 0.0),
-            (mixed_returns, -0.1),
-            (positive_returns, -0.0),
+            ("empty_returns", np.nan),
+            ("one_return", 0.0),
+            ("simple_benchmark", 0.0),
+            ("mixed_returns", -0.1),
+            ("positive_returns", -0.0),
             # negative returns means the drawdown is just the returns
-            (negative_returns, empyrical.cum_returns_final(negative_returns)),
+            ("negative_returns", -0.36590730),
             (
-                all_negative_returns,
-                empyrical.cum_returns_final(all_negative_returns),
+                "all_negative_returns",
+                -0.378589157,
             ),
             (
-                pd.Series(
-                    np.array([10, -10, 10]) / 100,
-                    index=pd.date_range("2000-1-30", periods=3, freq="D"),
-                ),
+                "udu_returns",
                 -0.10,
             ),
         ],
+        indirect=["returns"],
     )
     def test_max_drawdown(self, returns, expected):
         np.testing.assert_almost_equal(
@@ -354,11 +208,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, constant",
         [
-            (noise, 0.0001),
-            (noise, 0.001),
-            (noise_uniform, 0.01),
-            (noise_uniform, 0.1),
+            ("noise", 0.0001),
+            ("noise", 0.001),
+            ("noise_uniform", 0.01),
+            ("noise_uniform", 0.1),
         ],
+        indirect=["returns"],
     )
     def test_max_drawdown_translation(self, returns, constant):
         depressed_returns = returns - constant
@@ -372,10 +227,11 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, period, expected",
         [
-            (mixed_returns, empyrical.DAILY, 1.9135925373194231),
-            (weekly_returns, empyrical.WEEKLY, 0.24690830513998208),
-            (monthly_returns, empyrical.MONTHLY, 0.052242061386048144),
+            ("mixed_returns", empyrical.DAILY, 1.9135925373194231),
+            ("weekly_returns", empyrical.WEEKLY, 0.24690830513998208),
+            ("monthly_returns", empyrical.MONTHLY, 0.052242061386048144),
         ],
+        indirect=["returns"],
     )
     def test_annual_ret(self, returns, period, expected):
         np.testing.assert_almost_equal(
@@ -387,11 +243,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, period, expected",
         [
-            (flat_line_1_tz, empyrical.DAILY, 0.0),
-            (mixed_returns, empyrical.DAILY, 0.9136465399704637),
-            (weekly_returns, empyrical.WEEKLY, 0.38851569394870583),
-            (monthly_returns, empyrical.MONTHLY, 0.18663690238892558),
+            ("flat_line_1_tz", empyrical.DAILY, 0.0),
+            ("mixed_returns", empyrical.DAILY, 0.9136465399704637),
+            ("weekly_returns", empyrical.WEEKLY, 0.38851569394870583),
+            ("monthly_returns", empyrical.MONTHLY, 0.18663690238892558),
         ],
+        indirect=["returns"],
     )
     def test_annual_volatility(self, returns, period, expected):
         np.testing.assert_almost_equal(
@@ -403,12 +260,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, period, expected",
         [
-            (empty_returns, empyrical.DAILY, np.nan),
-            (one_return, empyrical.DAILY, np.nan),
-            (mixed_returns, empyrical.DAILY, 19.135925373194233),
-            (weekly_returns, empyrical.WEEKLY, 2.4690830513998208),
-            (monthly_returns, empyrical.MONTHLY, 0.52242061386048144),
+            ("empty_returns", empyrical.DAILY, np.nan),
+            ("one_return", empyrical.DAILY, np.nan),
+            ("mixed_returns", empyrical.DAILY, 19.135925373194233),
+            ("weekly_returns", empyrical.WEEKLY, 2.4690830513998208),
+            ("monthly_returns", empyrical.MONTHLY, 0.52242061386048144),
         ],
+        indirect=["returns"],
     )
     def test_calmar(self, returns, period, expected):
         np.testing.assert_almost_equal(
@@ -421,16 +279,17 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, risk_free, required_return, expected",
         [
-            (empty_returns, 0.0, 0.0, np.nan),
-            (one_return, 0.0, 0.0, np.nan),
-            (mixed_returns, 0.0, 10.0, 0.83354263497557934),
-            (mixed_returns, 0.0, -10.0, np.nan),
-            (mixed_returns, flat_line_1, 0.0, 0.8125),
-            (positive_returns, 0.01, 0.0, np.nan),
-            (positive_returns, 0.011, 0.0, 1.125),
-            (positive_returns, 0.02, 0.0, 0.0),
-            (negative_returns, 0.01, 0.0, 0.0),
+            ("empty_returns", "0.0", 0.0, np.nan),
+            ("one_return", "0.0", 0.0, np.nan),
+            ("mixed_returns", "0.0", 10.0, 0.83354263497557934),
+            ("mixed_returns", "0.0", -10.0, np.nan),
+            ("mixed_returns", "flat_line_1", 0.0, 0.8125),
+            ("positive_returns", "0.01", 0.0, np.nan),
+            ("positive_returns", "0.011", 0.0, 1.125),
+            ("positive_returns", "0.02", 0.0, 0.0),
+            ("negative_returns", "0.01", 0.0, 0.0),
         ],
+        indirect=["returns", "risk_free"],
     )
     def test_omega(self, returns, risk_free, required_return, expected):
         np.testing.assert_almost_equal(
@@ -446,9 +305,10 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, required_return_less, required_return_more",
         [
-            (noise_uniform, 0.0, 0.001),
-            (noise, 0.001, 0.002),
+            ("noise_uniform", 0.0, 0.001),
+            ("noise", 0.001, 0.002),
         ],
+        indirect=["returns"],
     )
     def test_omega_returns(
         self, returns, required_return_less, required_return_more
@@ -461,15 +321,16 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, risk_free, expected",
         [
-            (empty_returns, 0.0, np.nan),
-            (one_return, 0.0, np.nan),
-            (mixed_returns, mixed_returns, np.nan),
-            (mixed_returns, 0.0, 1.7238613961706866),
-            (mixed_returns, simple_benchmark, 0.34111411441060574),
-            (positive_returns, 0.0, 52.915026221291804),
-            (negative_returns, 0.0, -24.406808633910085),
-            (flat_line_1, 0.0, np.inf),
+            ("empty_returns", "0.0", np.nan),
+            ("one_return", "0.0", np.nan),
+            ("mixed_returns", "mixed_returns", np.nan),
+            ("mixed_returns", "0.0", 1.7238613961706866),
+            ("mixed_returns", "simple_benchmark", 0.34111411441060574),
+            ("positive_returns", "0.0", 52.915026221291804),
+            ("negative_returns", "0.0", -24.406808633910085),
+            ("flat_line_1", "0.0", np.inf),
         ],
+        indirect=["returns", "risk_free"],
     )
     def test_sharpe_ratio(self, returns, risk_free, expected):
         np.testing.assert_almost_equal(
@@ -482,7 +343,11 @@ class TestStats(BaseTestClass):
     # does not change the sharpe ratio.
     @pytest.mark.parametrize(
         "returns, required_return, translation",
-        [(noise_uniform, 0, 0.005), (noise_uniform, 0.005, 0.005)],
+        [
+            ("noise_uniform", 0, 0.005),
+            ("noise_uniform", 0.005, 0.005),
+        ],
+        indirect=["returns"],
     )
     def test_sharpe_translation_same(
         self, returns, required_return, translation
@@ -502,9 +367,10 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, required_return, translation_returns, translation_required",
         [
-            (noise_uniform, 0, 0.0002, 0.0001),
-            (noise_uniform, 0.005, 0.0001, 0.0002),
+            ("noise_uniform", 0, 0.0002, 0.0001),
+            ("noise_uniform", 0.005, 0.0001, 0.0002),
         ],
+        indirect=["returns"],
     )
     def test_sharpe_translation_diff(
         self,
@@ -528,7 +394,8 @@ class TestStats(BaseTestClass):
     # Translating the required return inversely affects the sharpe ratio.
     @pytest.mark.parametrize(
         "returns, required_return, translation",
-        [(noise_uniform, 0, 0.005), (noise, 0, 0.005)],
+        [("noise_uniform", 0, 0.005), ("noise", 0, 0.005)],
+        indirect=["returns"],
     )
     def test_sharpe_translation_1(self, returns, required_return, translation):
         sr = self.empyrical.sharpe_ratio(returns, required_return)
@@ -562,18 +429,18 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, required_return, period, expected",
         [
-            (empty_returns, 0.0, empyrical.DAILY, np.nan),
-            (one_return, 0.0, empyrical.DAILY, 0.0),
-            (mixed_returns, mixed_returns, empyrical.DAILY, 0.0),
-            (mixed_returns, 0.0, empyrical.DAILY, 0.60448325038829653),
-            (mixed_returns, 0.1, empyrical.DAILY, 1.7161730681956295),
-            (weekly_returns, 0.0, empyrical.WEEKLY, 0.25888650451930134),
-            (weekly_returns, 0.1, empyrical.WEEKLY, 0.7733045971672482),
-            (monthly_returns, 0.0, empyrical.MONTHLY, 0.1243650540411842),
-            (monthly_returns, 0.1, empyrical.MONTHLY, 0.37148351242013422),
+            ("empty_returns", "0.0", empyrical.DAILY, np.nan),
+            ("one_return", "0.0", empyrical.DAILY, 0.0),
+            ("mixed_returns", "mixed_returns", empyrical.DAILY, 0.0),
+            ("mixed_returns", "0.0", empyrical.DAILY, 0.60448325038829653),
+            ("mixed_returns", "0.1", empyrical.DAILY, 1.7161730681956295),
+            ("weekly_returns", "0.0", empyrical.WEEKLY, 0.25888650451930134),
+            ("weekly_returns", "0.1", empyrical.WEEKLY, 0.7733045971672482),
+            ("monthly_returns", "0.0", empyrical.MONTHLY, 0.1243650540411842),
+            ("monthly_returns", "0.1", empyrical.MONTHLY, 0.37148351242013422),
             (
-                df_simple,
-                0.0,
+                "df_simple",
+                "0.0",
                 empyrical.DAILY,
                 pd.Series(
                     [0.20671788246185202, 0.083495680595704475],
@@ -581,8 +448,8 @@ class TestStats(BaseTestClass):
                 ),
             ),
             (
-                df_week,
-                0.0,
+                "df_week",
+                "0.0",
                 empyrical.WEEKLY,
                 pd.Series(
                     [0.093902996054410062, 0.037928477556776516],
@@ -590,8 +457,8 @@ class TestStats(BaseTestClass):
                 ),
             ),
             (
-                df_month,
-                0.0,
+                "df_month",
+                "0.0",
                 empyrical.MONTHLY,
                 pd.Series(
                     [0.045109540184877193, 0.018220251263412916],
@@ -599,6 +466,7 @@ class TestStats(BaseTestClass):
                 ),
             ),
         ],
+        indirect=["returns", "required_return"],
     )
     def test_downside_risk(self, returns, required_return, period, expected):
         downside_risk = self.empyrical.downside_risk(
@@ -617,22 +485,25 @@ class TestStats(BaseTestClass):
     # As a higher percentage of returns are below the required return,
     # downside risk increases.
     @pytest.mark.parametrize(
-        "noise, flat_line",
-        [(noise, flat_line_0), (noise_uniform, flat_line_0)],
+        "add_noise, returns",
+        [("noise", "flat_line_0"), ("noise_uniform", "flat_line_0")],
+        indirect=True,
     )
-    def test_downside_risk_noisy(self, noise, flat_line):
-        noisy_returns_1 = noise[0:250].add(flat_line[250:], fill_value=0)
-        noisy_returns_2 = noise[0:500].add(flat_line[500:], fill_value=0)
-        noisy_returns_3 = noise[0:750].add(flat_line[750:], fill_value=0)
-        dr_1 = self.empyrical.downside_risk(noisy_returns_1, flat_line)
-        dr_2 = self.empyrical.downside_risk(noisy_returns_2, flat_line)
-        dr_3 = self.empyrical.downside_risk(noisy_returns_3, flat_line)
+    def test_downside_risk_noisy(self, add_noise, returns):
+        noisy_returns_1 = add_noise[0:250].add(returns[250:], fill_value=0)
+        noisy_returns_2 = add_noise[0:500].add(returns[500:], fill_value=0)
+        noisy_returns_3 = add_noise[0:750].add(returns[750:], fill_value=0)
+        dr_1 = self.empyrical.downside_risk(noisy_returns_1, returns)
+        dr_2 = self.empyrical.downside_risk(noisy_returns_2, returns)
+        dr_3 = self.empyrical.downside_risk(noisy_returns_3, returns)
         assert dr_1 <= dr_2
         assert dr_2 <= dr_3
 
     # Downside risk increases as the required_return increases
     @pytest.mark.parametrize(
-        "returns, required_return", [(noise, 0.005), (noise_uniform, 0.005)]
+        "returns, required_return",
+        [("noise", 0.005), ("noise_uniform", 0.005)],
+        indirect=["returns"],
     )
     def test_downside_risk_trans(self, returns, required_return):
         dr_0 = self.empyrical.downside_risk(returns, -required_return)
@@ -671,19 +542,24 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, required_return, period, expected",
         [
-            (empty_returns, 0.0, empyrical.DAILY, np.nan),
-            (one_return, 0.0, empyrical.DAILY, np.nan),
-            (mixed_returns, mixed_returns, empyrical.DAILY, np.nan),
-            (mixed_returns, 0.0, empyrical.DAILY, 2.605531251673693),
-            (mixed_returns, flat_line_1, empyrical.DAILY, -1.3934779588919977),
-            (positive_returns, 0.0, empyrical.DAILY, np.inf),
-            (negative_returns, 0.0, empyrical.DAILY, -13.532743075043401),
-            (simple_benchmark, 0.0, empyrical.DAILY, np.inf),
-            (weekly_returns, 0.0, empyrical.WEEKLY, 1.1158901056866439),
-            (monthly_returns, 0.0, empyrical.MONTHLY, 0.53605626741889756),
+            ("empty_returns", "0.0", empyrical.DAILY, np.nan),
+            ("one_return", "0.0", empyrical.DAILY, np.nan),
+            ("mixed_returns", "mixed_returns", empyrical.DAILY, np.nan),
+            ("mixed_returns", "0.0", empyrical.DAILY, 2.605531251673693),
             (
-                df_simple,
-                0.0,
+                "mixed_returns",
+                "flat_line_1",
+                empyrical.DAILY,
+                -1.3934779588919977,
+            ),
+            ("positive_returns", "0.0", empyrical.DAILY, np.inf),
+            ("negative_returns", "0.0", empyrical.DAILY, -13.532743075043401),
+            ("simple_benchmark", "0.0", empyrical.DAILY, np.inf),
+            ("weekly_returns", "0.0", empyrical.WEEKLY, 1.1158901056866439),
+            ("monthly_returns", "0.0", empyrical.MONTHLY, 0.53605626741889756),
+            (
+                "df_simple",
+                "0.0",
                 empyrical.DAILY,
                 pd.Series(
                     [3.0639640966566306, 38.090963117002495],
@@ -691,8 +567,8 @@ class TestStats(BaseTestClass):
                 ),
             ),
             (
-                df_week,
-                0.0,
+                "df_week",
+                "0.0",
                 empyrical.WEEKLY,
                 pd.Series(
                     [1.3918264112070571, 17.303077589064618],
@@ -700,8 +576,8 @@ class TestStats(BaseTestClass):
                 ),
             ),
             (
-                df_month,
-                0.0,
+                "df_month",
+                "0.0",
                 empyrical.MONTHLY,
                 pd.Series(
                     [0.6686117809312383, 8.3121296084492844],
@@ -709,6 +585,7 @@ class TestStats(BaseTestClass):
                 ),
             ),
         ],
+        indirect=["returns", "required_return"],
     )
     def test_sortino(self, returns, required_return, period, expected):
         sortino_ratio = self.empyrical.sortino_ratio(
@@ -730,9 +607,10 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, required_return",
         [
-            (noise_uniform, 0),
-            (noise, 0),
+            ("noise_uniform", "0"),
+            ("noise", "0"),
         ],
+        indirect=True,
     )
     def test_sortino_add_noise(self, returns, required_return):
         # Don't mutate global test state
@@ -751,7 +629,9 @@ class TestStats(BaseTestClass):
     # Similarly, randomly increasing some values below the required return to
     # the required return increases the ratio.
     @pytest.mark.parametrize(
-        "returns, required_return", [(noise_uniform, 0), (noise, 0)]
+        "returns, required_return",
+        [("noise_uniform", "0"), ("noise", "0")],
+        indirect=True,
     )
     def test_sortino_sub_noise(self, returns, required_return):
         # Don't mutate global test state
@@ -771,7 +651,8 @@ class TestStats(BaseTestClass):
     # should not change the sortino ratio.
     @pytest.mark.parametrize(
         "returns, required_return, translation",
-        [(noise_uniform, 0, 0.005), (noise_uniform, 0.005, 0.005)],
+        [("noise_uniform", 0, 0.005), ("noise_uniform", 0.005, 0.005)],
+        indirect=["returns"],
     )
     def test_sortino_translation_same(
         self, returns, required_return, translation
@@ -790,7 +671,8 @@ class TestStats(BaseTestClass):
     # should not change the sortino ratio.
     @pytest.mark.parametrize(
         "returns, required_return, translation_returns, translation_required",
-        [(noise_uniform, 0, 0, 0.001), (noise_uniform, 0.005, 0.001, 0)],
+        [("noise_uniform", 0, 0, 0.001), ("noise_uniform", 0.005, 0.001, 0)],
+        indirect=["returns"],
     )
     def test_sortino_translation_diff(
         self,
@@ -815,12 +697,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, expected",
         [
-            (empty_returns, 0.0, np.nan),
-            (one_return, 0.0, np.nan),
-            (pos_line, pos_line, np.nan),
-            (mixed_returns, 0.0, 0.10859306069076737),
-            (mixed_returns, flat_line_1, -0.06515583641446039),
+            ("empty_returns", "0.0", np.nan),
+            ("one_return", "0.0", np.nan),
+            ("pos_line", "pos_line", np.nan),
+            ("mixed_returns", "0.0", 0.10859306069076737),
+            ("mixed_returns", "flat_line_1", -0.06515583641446039),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_excess_sharpe(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
@@ -832,17 +715,18 @@ class TestStats(BaseTestClass):
     # The magnitude of the information ratio increases as a higher
     # proportion of returns are uncorrelated with the benchmark.
     @pytest.mark.parametrize(
-        "noise_line, benchmark",
+        "returns, benchmark",
         [
-            (flat_line_0, pos_line),
-            (flat_line_1_tz, pos_line),
-            (noise, pos_line),
+            ("flat_line_0", "pos_line"),
+            ("flat_line_1_tz", "pos_line"),
+            ("noise", "pos_line"),
         ],
+        indirect=True,
     )
-    def test_excess_sharpe_noisy(self, noise_line, benchmark):
-        noisy_returns_1 = noise_line[0:250].add(benchmark[250:], fill_value=0)
-        noisy_returns_2 = noise_line[0:500].add(benchmark[500:], fill_value=0)
-        noisy_returns_3 = noise_line[0:750].add(benchmark[750:], fill_value=0)
+    def test_excess_sharpe_noisy(self, returns, benchmark):
+        noisy_returns_1 = returns[0:250].add(benchmark[250:], fill_value=0)
+        noisy_returns_2 = returns[0:500].add(benchmark[500:], fill_value=0)
+        noisy_returns_3 = returns[0:750].add(benchmark[750:], fill_value=0)
         ir_1 = self.empyrical.excess_sharpe(noisy_returns_1, benchmark)
         ir_2 = self.empyrical.excess_sharpe(noisy_returns_2, benchmark)
         ir_3 = self.empyrical.excess_sharpe(noisy_returns_3, benchmark)
@@ -852,21 +736,22 @@ class TestStats(BaseTestClass):
     # Vertical translations change the information ratio in the
     # direction of the translation.
     @pytest.mark.parametrize(
-        "returns, add_noise, translation",
+        "returns, add_noise, benchmark",
         [
-            (pos_line, noise, flat_line_1_tz),
-            (pos_line, inv_noise, flat_line_1_tz),
-            (neg_line, noise, flat_line_1_tz),
-            (neg_line, inv_noise, flat_line_1_tz),
+            ("pos_line", "noise", "flat_line_1_tz"),
+            ("pos_line", "inv_noise", "flat_line_1_tz"),
+            ("neg_line", "noise", "flat_line_1_tz"),
+            ("neg_line", "inv_noise", "flat_line_1_tz"),
         ],
+        indirect=True,
     )
-    def test_excess_sharpe_trans(self, returns, add_noise, translation):
+    def test_excess_sharpe_trans(self, returns, add_noise, benchmark):
         ir = self.empyrical.excess_sharpe(returns + add_noise, returns)
         raised_ir = self.empyrical.excess_sharpe(
-            returns + add_noise + translation, returns
+            returns + add_noise + benchmark, returns
         )
         depressed_ir = self.empyrical.excess_sharpe(
-            returns + add_noise - translation, returns
+            returns + add_noise - benchmark, returns
         )
         assert ir < raised_ir
         assert depressed_ir < ir
@@ -874,16 +759,17 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark, expected",
         [
-            (empty_returns, simple_benchmark, (np.nan, np.nan)),
-            (one_return, one_return, (np.nan, np.nan)),
+            ("empty_returns", "simple_benchmark", (np.nan, np.nan)),
+            ("one_return", "one_return", (np.nan, np.nan)),
             (
-                mixed_returns,
-                negative_returns[1:],
+                "mixed_returns",
+                "negative_returns[1:]",
                 (-0.9997853834885004, -0.71296296296296313),
             ),
-            (mixed_returns, mixed_returns, (0.0, 1.0)),
-            (mixed_returns, -mixed_returns, (0.0, -1.0)),
+            ("mixed_returns", "mixed_returns", (0.0, 1.0)),
+            ("mixed_returns", "-mixed_returns", (0.0, -1.0)),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_alpha_beta(self, returns, benchmark, expected):
         alpha, beta = alpha_beta(returns, benchmark)
@@ -895,12 +781,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark, expected",
         [
-            (empty_returns, simple_benchmark, np.nan),
-            (one_return, one_return, np.nan),
-            (mixed_returns, flat_line_1, np.nan),
-            (mixed_returns, mixed_returns, 0.0),
-            (mixed_returns, -mixed_returns, 0.0),
+            ("empty_returns", "simple_benchmark", np.nan),
+            ("one_return", "one_return", np.nan),
+            ("mixed_returns", "flat_line_1", np.nan),
+            ("mixed_returns", "mixed_returns", 0.0),
+            ("mixed_returns", "-mixed_returns", 0.0),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_alpha(self, returns, benchmark, expected):
         observed = self.empyrical.alpha(returns, benchmark)
@@ -1022,8 +909,9 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark",
         [
-            (sparse_noise, sparse_noise),
+            ("sparse_noise", "sparse_noise"),
         ],
+        indirect=True,
     )
     def test_alpha_beta_with_nan_inputs(self, returns, benchmark):
         alpha, beta = self.empyrical(return_types=np.ndarray).alpha_beta(
@@ -1036,27 +924,27 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark, expected, decimal_places",
         [
-            (empty_returns, simple_benchmark, np.nan, DECIMAL_PLACES),
-            (one_return, one_return, np.nan, DECIMAL_PLACES),
-            (mixed_returns, flat_line_1, np.nan, DECIMAL_PLACES),
-            (noise, noise, 1.0, DECIMAL_PLACES),
-            (2 * noise, noise, 2.0, DECIMAL_PLACES),
-            (noise, inv_noise, -1.0, DECIMAL_PLACES),
-            (2 * noise, inv_noise, -2.0, DECIMAL_PLACES),
+            ("empty_returns", "simple_benchmark", np.nan, DECIMAL_PLACES),
+            ("one_return", "one_return", np.nan, DECIMAL_PLACES),
+            ("mixed_returns", "flat_line_1", np.nan, DECIMAL_PLACES),
+            ("noise", "noise", 1.0, DECIMAL_PLACES),
+            ("2 * noise", "noise", 2.0, DECIMAL_PLACES),
+            ("noise", "inv_noise", -1.0, DECIMAL_PLACES),
+            ("2 * noise", "inv_noise", -2.0, DECIMAL_PLACES),
             (
-                sparse_noise * flat_line_1_tz,
-                sparse_flat_line_1_tz,
+                "sparse_noise * flat_line_1_tz",
+                "sparse_flat_line_1_tz",
                 np.nan,
                 DECIMAL_PLACES,
             ),
             (
-                simple_benchmark
-                + rand.normal(0, 0.001, len(simple_benchmark)),
-                pd.DataFrame({"returns": simple_benchmark}),
+                "simple_benchmark_w_noise",
+                "simple_benchmark_df",
                 1.0,
                 2,
             ),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_beta(
         self,
@@ -1090,14 +978,15 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark",
         [
-            (empty_returns, simple_benchmark),
-            (one_return, one_return),
+            ("empty_returns", "simple_benchmark"),
+            ("one_return", "one_return"),
             # TODO: these are failing, disabling for now
             # (mixed_returns, simple_benchmark[1:]),
             # (mixed_returns, negative_returns[1:]),
-            (mixed_returns, mixed_returns),
-            (mixed_returns, -mixed_returns),
+            ("mixed_returns", "mixed_returns"),
+            ("mixed_returns", "-mixed_returns"),
         ],
+        indirect=True,
     )
     def test_alpha_beta_equality(self, returns, benchmark):
         alpha, beta = alpha_beta(returns, benchmark)
@@ -1123,11 +1012,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, expected",
         [
-            (empty_returns, np.nan),
-            (one_return, np.nan),
-            (mixed_returns, 0.1529973665111273),
-            (flat_line_1_tz, 1.0),
+            ("empty_returns", np.nan),
+            ("one_return", np.nan),
+            ("mixed_returns", 0.1529973665111273),
+            ("flat_line_1_tz", 1.0),
         ],
+        indirect=["returns"],
     )
     def test_stability_of_timeseries(self, returns, expected):
         np.testing.assert_almost_equal(
@@ -1139,11 +1029,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, expected",
         [
-            (empty_returns, np.nan),
-            (one_return, 1.0),
-            (mixed_returns, 0.9473684210526313),
-            (pd.Series(rand.randn(100000)), 1.0),
+            ("empty_returns", np.nan),
+            ("one_return", 1.0),
+            ("mixed_returns", 0.9473684210526313),
+            ("random_100k", 1.0),
         ],
+        indirect=["returns"],
     )
     def test_tail_ratio(self, returns, expected):
         np.testing.assert_almost_equal(
@@ -1154,19 +1045,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, period, expected",
         [
-            (empty_returns, empyrical.DAILY, np.nan),
-            (one_return, empyrical.DAILY, 11.274002099240244),
-            (mixed_returns, empyrical.DAILY, 1.9135925373194231),
-            (flat_line_1_tz, empyrical.DAILY, 11.274002099240256),
-            (
-                pd.Series(
-                    np.array([3.0, 3.0, 3.0]) / 100,
-                    index=pd.date_range("2000-1-30", periods=3, freq="A"),
-                ),
-                "yearly",
-                0.03,
-            ),
+            ("empty_returns", empyrical.DAILY, np.nan),
+            ("one_return", empyrical.DAILY, 11.274002099240244),
+            ("mixed_returns", empyrical.DAILY, 1.9135925373194231),
+            ("flat_line_1_tz", empyrical.DAILY, 11.274002099240256),
+            ("flat_line_yearly", empyrical.YEARLY, 0.03),
         ],
+        indirect=["returns"],
     )
     def test_cagr(self, returns, period, expected):
         np.testing.assert_almost_equal(
@@ -1179,7 +1064,9 @@ class TestStats(BaseTestClass):
     # translating returns by a constant will change cagr in the same
     # direction of translation.
     @pytest.mark.parametrize(
-        "returns, constant", [(noise, 0.01), (noise_uniform, 0.01)]
+        "returns, constant",
+        [("noise", 0.01), ("noise_uniform", 0.01)],
+        indirect=["returns"],
     )
     def test_cagr_translation(self, returns, constant):
         cagr_depressed = self.empyrical.cagr(returns - constant)
@@ -1189,7 +1076,7 @@ class TestStats(BaseTestClass):
         assert cagr_unchanged < cagr_raised
 
     # Function does not return np.nan when inputs contain np.nan.
-    @pytest.mark.parametrize("returns", [sparse_noise])
+    @pytest.mark.parametrize("returns", ["sparse_noise"], indirect=True)
     def test_cagr_with_nan_inputs(self, returns):
         assert not np.isnan(self.empyrical.cagr(returns))
 
@@ -1199,10 +1086,11 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, add_noise",
         [
-            (pos_line, noise),
-            (pos_line, noise_uniform),
-            (flat_line_1_tz, noise),
+            ("pos_line", "noise"),
+            ("pos_line", "noise_uniform"),
+            ("flat_line_1_tz", "noise"),
         ],
+        indirect=True,
     )
     def test_cagr_noisy(self, returns, add_noise):
         cagr = self.empyrical.cagr(returns)
@@ -1215,11 +1103,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, expected",
         [
-            (one_return, one_return, np.nan),
-            (positive_returns, simple_benchmark, 0.0),
-            (mixed_returns, simple_benchmark, 0.09),
-            (negative_returns, simple_benchmark, -0.029999999999999999),
+            ("one_return", "one_return", np.nan),
+            ("positive_returns", "simple_benchmark", 0.0),
+            ("mixed_returns", "simple_benchmark", 0.09),
+            ("negative_returns", "simple_benchmark", -0.029999999999999999),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_beta_fragility_heuristic(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
@@ -1228,36 +1117,21 @@ class TestStats(BaseTestClass):
             DECIMAL_PLACES,
         )
 
-    mixed_returns_expected_gpd_risk_result = [
-        0.1,
-        0.10001255835838491,
-        1.5657360018514067e-06,
-        0.4912526273742347,
-        0.59126595492541179,
-    ]
-
-    negative_returns_expected_gpd_risk_result = [
-        0.05,
-        0.068353586736348199,
-        9.4304947982121171e-07,
-        0.34511639904932639,
-        0.41347032855617882,
-    ]
-
     # regression tests for gpd_risk_estimates
     @pytest.mark.parametrize(
         "returns, expected",
         [
-            (one_return, [0, 0, 0, 0, 0]),
-            (empty_returns, [0, 0, 0, 0, 0]),
-            (simple_benchmark, [0, 0, 0, 0, 0]),
-            (positive_returns, [0, 0, 0, 0, 0]),
-            (negative_returns, negative_returns_expected_gpd_risk_result),
-            (mixed_returns, mixed_returns_expected_gpd_risk_result),
-            (flat_line_1, [0, 0, 0, 0]),
-            (weekly_returns, mixed_returns_expected_gpd_risk_result),
-            (monthly_returns, mixed_returns_expected_gpd_risk_result),
+            ("one_return", "[0, 0, 0, 0, 0]"),
+            ("empty_returns", "[0, 0, 0, 0, 0]"),
+            ("simple_benchmark", "[0, 0, 0, 0, 0]"),
+            ("positive_returns", "[0, 0, 0, 0, 0]"),
+            ("negative_returns", "negative_returns_expected_gpd_risk_result"),
+            ("mixed_returns", "mixed_returns_expected_gpd_risk_result"),
+            ("flat_line_1", "[0, 0, 0, 0]"),
+            ("weekly_returns", "mixed_returns_expected_gpd_risk_result"),
+            ("monthly_returns", "mixed_returns_expected_gpd_risk_result"),
         ],
+        indirect=["returns", "expected"],
     )
     def test_gpd_risk_estimates(self, returns, expected):
         result = self.empyrical.gpd_risk_estimates_aligned(returns)
@@ -1269,9 +1143,10 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, window, expected",
         [
-            (empty_returns, 6, []),
-            (negative_returns, 6, [-0.2282, -0.2745, -0.2899, -0.2747]),
+            ("empty_returns", 6, []),
+            ("negative_returns", 6, [-0.2282, -0.2745, -0.2899, -0.2747]),
         ],
+        indirect=["returns"],
     )
     def test_roll_max_drawdown(self, returns, window, expected):
         test = self.empyrical.roll_max_drawdown(returns, window=window)
@@ -1284,18 +1159,19 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, window, expected",
         [
-            (empty_returns, 6, []),
+            ("empty_returns", 6, []),
             (
-                negative_returns,
+                "negative_returns",
                 6,
                 [-18.09162052, -26.79897486, -26.69138263, -25.72298838],
             ),
             (
-                mixed_returns,
+                "mixed_returns",
                 6,
                 [7.57445259, 8.22784105, 8.22784105, -3.1374751],
             ),
         ],
+        indirect=["returns"],
     )
     def test_roll_sharpe_ratio(self, returns, window, expected):
         test = self.empyrical.roll_sharpe_ratio(returns, window=window)
@@ -1308,11 +1184,12 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, expected",
         [
-            (empty_returns, empty_returns, np.nan),
-            (one_return, one_return, 1.0),
-            (mixed_returns, mixed_returns, 1.0),
-            (all_negative_returns, mixed_returns, -0.52257643222960259),
+            ("empty_returns", "empty_returns", np.nan),
+            ("one_return", "one_return", 1.0),
+            ("mixed_returns", "mixed_returns", 1.0),
+            ("all_negative_returns", "mixed_returns", -0.52257643222960259),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_capture_ratio(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
@@ -1324,12 +1201,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, expected",
         [
-            (empty_returns, empty_returns, np.nan),
-            (one_return, one_return, np.nan),
-            (mixed_returns, mixed_returns, 1.0),
-            (all_negative_returns, mixed_returns, 0.99956025703798634),
-            (positive_returns, mixed_returns, -11.27400221),
+            ("empty_returns", "empty_returns", np.nan),
+            ("one_return", "one_return", np.nan),
+            ("mixed_returns", "mixed_returns", 1.0),
+            ("all_negative_returns", "mixed_returns", 0.99956025703798634),
+            ("positive_returns", "mixed_returns", -11.27400221),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_down_capture(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
@@ -1342,15 +1220,15 @@ class TestStats(BaseTestClass):
         "returns, benchmark, window, expected",
         [
             (
-                empty_returns,
-                simple_benchmark,
+                "empty_returns",
+                "simple_benchmark",
                 1,
-                [(np.nan, np.nan)] * len(simple_benchmark),
+                [(np.nan, np.nan)] * 9,
             ),
-            (one_return, one_return, 1, [(np.nan, np.nan)]),
+            ("one_return", "one_return", 1, [(np.nan, np.nan)]),
             (
-                mixed_returns,
-                negative_returns,
+                "mixed_returns",
+                "negative_returns",
                 6,
                 [
                     (-0.97854954, -0.7826087),
@@ -1360,18 +1238,19 @@ class TestStats(BaseTestClass):
                 ],
             ),
             (
-                mixed_returns,
-                mixed_returns,
+                "mixed_returns",
+                "mixed_returns",
                 6,
                 [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)],
             ),
             (
-                mixed_returns,
-                -mixed_returns,
+                "mixed_returns",
+                "-mixed_returns",
                 6,
                 [(0.0, -1.0), (0.0, -1.0), (0.0, -1.0), (0.0, -1.0)],
             ),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_roll_alpha_beta(self, returns, benchmark, window, expected):
         test = self.empyrical(
@@ -1406,18 +1285,18 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, window, expected",
         [
-            (empty_returns, empty_returns, 1, []),
-            (one_return, one_return, 1, np.nan),
-            (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
+            ("empty_returns", "empty_returns", 1, []),
+            ("one_return", "one_return", 1, np.nan),
+            ("mixed_returns", "mixed_returns", 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                positive_returns,
-                mixed_returns,
+                "positive_returns",
+                "mixed_returns",
                 6,
                 [-0.00011389, -0.00025861, -0.00015211, -0.00689239],
             ),
             (
-                all_negative_returns,
-                mixed_returns,
+                "all_negative_returns",
+                "mixed_returns",
                 6,
                 [
                     -6.38880246e-05,
@@ -1427,6 +1306,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_roll_up_down_capture(
         self, returns, factor_returns, window, expected
@@ -1441,22 +1321,23 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, window, expected",
         [
-            (empty_returns, empty_returns, 1, []),
-            (one_return, one_return, 1, [np.nan]),
-            (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
+            ("empty_returns", "empty_returns", 1, []),
+            ("one_return", "one_return", 1, [np.nan]),
+            ("mixed_returns", "mixed_returns", 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                positive_returns,
-                mixed_returns,
+                "positive_returns",
+                "mixed_returns",
                 6,
                 [-11.2743862, -11.2743862, -11.2743862, -11.27400221],
             ),
             (
-                all_negative_returns,
-                mixed_returns,
+                "all_negative_returns",
+                "mixed_returns",
                 6,
                 [0.92058591, 0.92058591, 0.92058591, 0.99956026],
             ),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_roll_down_capture(
         self, returns, factor_returns, window, expected
@@ -1473,18 +1354,18 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, window, expected",
         [
-            (empty_returns, empty_returns, 1, []),
-            (one_return, one_return, 1, [1.0]),
-            (mixed_returns, mixed_returns, 6, [1.0, 1.0, 1.0, 1.0]),
+            ("empty_returns", "empty_returns", 1, []),
+            ("one_return", "one_return", 1, [1.0]),
+            ("mixed_returns", "mixed_returns", 6, [1.0, 1.0, 1.0, 1.0]),
             (
-                positive_returns,
-                mixed_returns,
+                "positive_returns",
+                "mixed_returns",
                 6,
                 [0.00128406, 0.00291564, 0.00171499, 0.0777048],
             ),
             (
-                all_negative_returns,
-                mixed_returns,
+                "all_negative_returns",
+                "mixed_returns",
                 6,
                 [
                     -5.88144154e-05,
@@ -1494,6 +1375,7 @@ class TestStats(BaseTestClass):
                 ],
             ),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_roll_up_capture(self, returns, factor_returns, window, expected):
         test = self.empyrical.roll_up_capture(
@@ -1508,16 +1390,17 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark, expected",
         [
-            (empty_returns, simple_benchmark, (np.nan, np.nan)),
-            (one_return, one_return, (np.nan, np.nan)),
+            ("empty_returns", "simple_benchmark", (np.nan, np.nan)),
+            ("one_return", "one_return", (np.nan, np.nan)),
             (
-                mixed_returns[1:],
-                negative_returns[1:],
+                "mixed_returns[1:]",
+                "negative_returns[1:]",
                 (-0.9997853834885004, -0.71296296296296313),
             ),
-            (mixed_returns, mixed_returns, (0.0, 1.0)),
-            (mixed_returns, -mixed_returns, (0.0, -1.0)),
+            ("mixed_returns", "mixed_returns", (0.0, 1.0)),
+            ("mixed_returns", "-mixed_returns", (0.0, -1.0)),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_down_alpha_beta(self, returns, benchmark, expected):
         down_alpha, down_beta = down_alpha_beta(returns, benchmark)
@@ -1528,16 +1411,17 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, benchmark, expected",
         [
-            (empty_returns, simple_benchmark, (np.nan, np.nan)),
-            (one_return, one_return, (np.nan, np.nan)),
+            ("empty_returns", "simple_benchmark", (np.nan, np.nan)),
+            ("one_return", "one_return", (np.nan, np.nan)),
             (
-                mixed_returns[1:],
-                positive_returns[1:],
+                "mixed_returns[1:]",
+                "positive_returns[1:]",
                 (0.432961242076658, 0.4285714285),
             ),
-            (mixed_returns, mixed_returns, (0.0, 1.0)),
-            (mixed_returns, -mixed_returns, (0.0, -1.0)),
+            ("mixed_returns", "mixed_returns", (0.0, 1.0)),
+            ("mixed_returns", "-mixed_returns", (0.0, -1.0)),
         ],
+        indirect=["returns", "benchmark"],
     )
     def test_up_alpha_beta(self, returns, benchmark, expected):
         up_alpha, up_beta = up_alpha_beta(returns, benchmark)
@@ -1548,12 +1432,13 @@ class TestStats(BaseTestClass):
     @pytest.mark.parametrize(
         "returns, factor_returns, expected",
         [
-            (empty_returns, empty_returns, np.nan),
-            (one_return, one_return, np.nan),
-            (mixed_returns, mixed_returns, 1.0),
-            (positive_returns, mixed_returns, -0.0006756053495),
-            (all_negative_returns, mixed_returns, -0.0004338236),
+            ("empty_returns", "empty_returns", np.nan),
+            ("one_return", "one_return", np.nan),
+            ("mixed_returns", "mixed_returns", 1.0),
+            ("positive_returns", "mixed_returns", -0.0006756053495),
+            ("all_negative_returns", "mixed_returns", -0.0004338236),
         ],
+        indirect=["returns", "factor_returns"],
     )
     def test_up_down_capture(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
@@ -1563,18 +1448,19 @@ class TestStats(BaseTestClass):
         )
 
     @pytest.mark.parametrize(
-        "returns, factor_returns, expected",
+        "returns, benchmark, expected",
         [
-            (empty_returns, empty_returns, np.nan),
-            (one_return, one_return, 1.0),
-            (mixed_returns, mixed_returns, 1.0),
-            (positive_returns, mixed_returns, 0.0076167762),
-            (all_negative_returns, mixed_returns, -0.0004336328),
+            ("empty_returns", "empty_returns", np.nan),
+            ("one_return", "one_return", 1.0),
+            ("mixed_returns", "mixed_returns", 1.0),
+            ("positive_returns", "mixed_returns", 0.0076167762),
+            ("all_negative_returns", "mixed_returns", -0.0004336328),
         ],
+        indirect=["returns", "benchmark"],
     )
-    def test_up_capture(self, returns, factor_returns, expected):
+    def test_up_capture(self, returns, benchmark, expected):
         np.testing.assert_almost_equal(
-            self.empyrical.up_capture(returns, factor_returns),
+            self.empyrical.up_capture(returns, benchmark),
             expected,
             DECIMAL_PLACES,
         )
@@ -1699,23 +1585,7 @@ class TestStatsIntIndex(TestStats):
         pass
 
 
-@pytest.fixture(scope="function")
-def set_helper(request):
-    request.cls.ser_length = 120
-    request.cls.window = 12
-
-    request.cls.returns = pd.Series(
-        rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="M"),
-    )
-
-    request.cls.factor_returns = pd.Series(
-        rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="M"),
-    )
-
-
-@pytest.mark.usefixtures("set_helper")
+@pytest.mark.usefixtures("set_helpers")
 class TestHelpers(BaseTestClass):
     """
     Tests for helper methods and utils.
@@ -1806,101 +1676,14 @@ class Test2DStats:
         ):
             pd.testing.assert_index_equal(result.columns, expected.columns)
 
-    input_one = [
-        np.nan,
-        0.01322056,
-        0.03063862,
-        -0.01422057,
-        -0.00489779,
-        0.01268925,
-        -0.03357711,
-        0.01797036,
-    ]
-    input_two = [
-        0.01846232,
-        0.00793951,
-        -0.01448395,
-        0.00422537,
-        -0.00339611,
-        0.03756813,
-        0.0151531,
-        np.nan,
-    ]
-
-    expected_0_one = [
-        0.000000,
-        0.013221,
-        0.044264,
-        0.029414,
-        0.024372,
-        0.037371,
-        0.002539,
-        0.020555,
-    ]
-    expected_0_two = [
-        0.018462,
-        0.026548,
-        0.011680,
-        0.015955,
-        0.012504,
-        0.050542,
-        0.066461,
-        0.066461,
-    ]
-
-    expected_100_one = [
-        100.000000,
-        101.322056,
-        104.426424,
-        102.941421,
-        102.437235,
-        103.737087,
-        100.253895,
-        102.055494,
-    ]
-    expected_100_two = [
-        101.846232,
-        102.654841,
-        101.167994,
-        101.595466,
-        101.250436,
-        105.054226,
-        106.646123,
-        106.646123,
-    ]
-
-    df_index = pd.date_range("2000-1-30", periods=8, freq="D")
-
-    df_input = pd.DataFrame(
-        {
-            "one": pd.Series(input_one, index=df_index),
-            "two": pd.Series(input_two, index=df_index),
-        }
-    )
-
-    df_empty = pd.DataFrame()
-
-    df_0_expected = pd.DataFrame(
-        {
-            "one": pd.Series(expected_0_one, index=df_index),
-            "two": pd.Series(expected_0_two, index=df_index),
-        }
-    )
-
-    df_100_expected = pd.DataFrame(
-        {
-            "one": pd.Series(expected_100_one, index=df_index),
-            "two": pd.Series(expected_100_two, index=df_index),
-        }
-    )
-
     @pytest.mark.parametrize(
         "returns, starting_value, expected",
         [
-            (df_input, 0, df_0_expected),
-            (df_input, 100, df_100_expected),
-            (df_empty, 0, pd.DataFrame()),
+            ("df_input", 0, "df_0_expected"),
+            ("df_input", 100, "df_100_expected"),
+            ("df_empty", 0, "df_empty"),
         ],
+        indirect=["returns", "expected"],
     )
     def test_cum_returns_df(self, returns, starting_value, expected):
         cum_returns = self.empyrical.cum_returns(
@@ -1919,9 +1702,10 @@ class Test2DStats:
     @pytest.mark.parametrize(
         "returns, starting_value, expected",
         [
-            (df_input, 0, df_0_expected.iloc[-1]),
-            (df_input, 100, df_100_expected.iloc[-1]),
+            ("df_input", 0, "df_0_expected"),
+            ("df_input", 100, "df_100_expected"),
         ],
+        indirect=["returns", "expected"],
     )
     def test_cum_returns_final_df(self, returns, starting_value, expected):
         return_types = (pd.Series, np.ndarray)
@@ -1929,8 +1713,30 @@ class Test2DStats:
             returns,
             starting_value=starting_value,
         )
-        np.testing.assert_almost_equal(np.array(result), expected, 5)
-        self.assert_indexes_match(result, expected)
+        np.testing.assert_almost_equal(np.array(result), expected.iloc[-1], 5)
+        self.assert_indexes_match(result, expected.iloc[-1])
+
+    @pytest.mark.parametrize(
+        "returns, benchmark, expected",
+        [
+            ("empty_returns", "empty_returns", [np.nan, np.nan, np.nan]),
+            ("positive_returns", "all_negative_returns", [1, np.nan, 1]),
+            ("all_negative_returns", "positive_returns", [0, 0, np.nan]),
+            ("mixed_returns", "mixed_returns", [0, 0, 0]),
+            (
+                "simple_benchmark",
+                "simple_benchmark_w_noise",
+                [0.666667, 0.5, 1.0],
+            ),
+        ],
+        indirect=["returns", "benchmark"],
+    )
+    def test_batting_average(self, returns, benchmark, expected):
+        return_types = (pd.Series, np.ndarray)
+        batting_average = self.empyrical(
+            return_types=return_types
+        ).batting_average(returns, benchmark)
+        np.testing.assert_almost_equal(batting_average, expected, 4)
 
     @property
     def empyrical(self):

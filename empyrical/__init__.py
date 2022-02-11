@@ -48,7 +48,6 @@ from .stats import (
     roll_alpha,
     roll_alpha_aligned,
     roll_alpha_beta,
-    roll_alpha_beta,
     roll_alpha_beta_aligned,
     roll_annual_volatility,
     roll_beta,
@@ -67,6 +66,7 @@ from .stats import (
     up_alpha_beta,
     up_capture,
     up_down_capture,
+    batting_average,
     value_at_risk,
 )
 

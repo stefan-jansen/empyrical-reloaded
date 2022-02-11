@@ -14,137 +14,29 @@
 # limitations under the License.
 
 import math
+from collections import OrderedDict
 import pandas as pd
 import numpy as np
 from math import pow
 from scipy import stats, optimize
 from sys import float_info
 
-from .utils import nanmean, nanstd, nanmin, up, down, roll, rolling_window
+from .utils import (
+    nanmean,
+    nanstd,
+    nanmin,
+    up,
+    down,
+    roll,
+    _create_unary_vectorized_roll_function,
+    _create_binary_vectorized_roll_function,
+    _aligned_series,
+    _adjust_returns,
+)
 from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
 from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
 
-
-def _create_unary_vectorized_roll_function(function):
-    def unary_vectorized_roll(arr, window, out=None, **kwargs):
-        """
-        Computes the {human_readable} measure over a rolling window.
-
-        Parameters
-        ----------
-        arr : array-like
-            The array to compute the rolling {human_readable} over.
-        window : int
-            Size of the rolling window in terms of the periodicity of the data.
-        out : array-like, optional
-            Array to use as output buffer.
-            If not passed, a new array will be created.
-        **kwargs
-            Forwarded to :func:`~empyrical.{name}`.
-
-        Returns
-        -------
-        rolling_{name} : array-like
-            The rolling {human_readable}.
-        """
-        allocated_output = out is None
-
-        if len(arr):
-            out = function(
-                rolling_window(_flatten(arr), min(len(arr), window)).T,
-                out=out,
-                **kwargs,
-            )
-        else:
-            out = np.empty(0, dtype="float64")
-
-        if allocated_output and isinstance(arr, pd.Series):
-            out = pd.Series(out, index=arr.index[-len(out) :])
-
-        return out
-
-    unary_vectorized_roll.__doc__ = unary_vectorized_roll.__doc__.format(
-        name=function.__name__,
-        human_readable=function.__name__.replace("_", " "),
-    )
-
-    return unary_vectorized_roll
-
-
-def _create_binary_vectorized_roll_function(function):
-    def binary_vectorized_roll(lhs, rhs, window, out=None, **kwargs):
-        """
-        Computes the {human_readable} measure over a rolling window.
-
-        Parameters
-        ----------
-        lhs : array-like
-            The first array to pass to the rolling {human_readable}.
-        rhs : array-like
-            The second array to pass to the rolling {human_readable}.
-        window : int
-            Size of the rolling window in terms of the periodicity of the data.
-        out : array-like, optional
-            Array to use as output buffer.
-            If not passed, a new array will be created.
-        **kwargs
-            Forwarded to :func:`~empyrical.{name}`.
-
-        Returns
-        -------
-        rolling_{name} : array-like
-            The rolling {human_readable}.
-        """
-        allocated_output = out is None
-
-        if window >= 1 and len(lhs) and len(rhs):
-            out = function(
-                rolling_window(_flatten(lhs), min(len(lhs), window)).T,
-                rolling_window(_flatten(rhs), min(len(rhs), window)).T,
-                out=out,
-                **kwargs,
-            )
-        elif allocated_output:
-            out = np.empty(0, dtype="float64")
-        else:
-            out[()] = np.nan
-
-        if allocated_output:
-            if out.ndim == 1 and isinstance(lhs, pd.Series):
-                out = pd.Series(out, index=lhs.index[-len(out) :])
-            elif out.ndim == 2 and isinstance(lhs, pd.Series):
-                out = pd.DataFrame(out, index=lhs.index[-len(out) :])
-        return out
-
-    binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
-        name=function.__name__,
-        human_readable=function.__name__.replace("_", " "),
-    )
-
-    return binary_vectorized_roll
-
-
-def _flatten(arr):
-    return arr if not isinstance(arr, pd.Series) else arr.values
-
-
-def _adjust_returns(returns, adjustment_factor):
-    """
-    Returns the returns series adjusted by adjustment_factor. Optimizes for the
-    case of adjustment_factor being 0 by returning returns itself, not a copy!
-
-    Parameters
-    ----------
-    returns : pd.Series or np.ndarray
-    adjustment_factor : pd.Series or np.ndarray or float or int
-
-    Returns
-    -------
-    adjusted_returns : array-like
-    """
-    if isinstance(adjustment_factor, (float, int)) and adjustment_factor == 0:
-        return returns
-    return returns - adjustment_factor
+import warnings
 
 
 def annualization_factor(period, annualization):
@@ -348,6 +240,63 @@ def aggregate_returns(returns, convert_to):
     return returns.groupby(grouping).apply(cumulate_returns)
 
 
+def drawdown_series(returns, out=None):
+    """
+    Computes the series of drawdowns of a strategy.
+
+    Parameters
+    ----------
+    returns : pd.Series, pd.DataFrame or np.ndarray
+        Daily returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    out : array-like, optional
+        Array to use as output buffer.
+        If not passed, a new array will be created.
+
+    Returns
+    -------
+    drawdown_series :  pd.Series, pd.DataFrame or np.ndarray
+
+    Note
+    -----
+    See https://en.wikipedia.org/wiki/Drawdown_(economics) for more details.
+    """
+    allocated_output = out is None
+    if allocated_output:
+        out = np.empty(
+            (returns.shape[0] + 1,) + returns.shape[1:],
+            dtype="float64",
+        )
+
+    returns_1d = returns.ndim == 1
+
+    if len(returns) < 1:
+        out[()] = np.nan
+        if returns_1d:
+            out = out.item()
+        return out
+
+    returns_array = np.asanyarray(returns)
+
+    out[0] = start = 100
+    cum_returns(returns_array, starting_value=start, out=out[1:])
+
+    max_return = np.fmax.accumulate(out, axis=0)
+
+    np.divide((out - max_return), max_return, out=out)
+
+    if returns.ndim == 1 and isinstance(returns, pd.Series):
+        out = pd.Series(out[1:], index=returns.index)
+    elif isinstance(returns, pd.DataFrame):
+        out = pd.DataFrame(
+            out[1:],
+            index=returns.index,
+            columns=returns.columns,
+        )
+
+    return out
+
+
 def max_drawdown(returns, out=None):
     """
     Determines the maximum drawdown of a strategy.
@@ -363,7 +312,7 @@ def max_drawdown(returns, out=None):
 
     Returns
     -------
-    max_drawdown : float
+    max_drawdown : float, np.array or pd.Series
 
     Note
     -----
@@ -381,22 +330,11 @@ def max_drawdown(returns, out=None):
             out = out.item()
         return out
 
-    returns_array = np.asanyarray(returns)
-
-    cumulative = np.empty(
-        (returns.shape[0] + 1,) + returns.shape[1:],
-        dtype="float64",
-    )
-    cumulative[0] = start = 100
-    cum_returns(returns_array, starting_value=start, out=cumulative[1:])
-
-    max_return = np.fmax.accumulate(cumulative, axis=0)
-
-    nanmin((cumulative - max_return) / max_return, axis=0, out=out)
+    nanmin(drawdown_series(returns), axis=0, out=out)
     if returns_1d:
         out = out.item()
     elif allocated_output and isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     return out
 
@@ -702,6 +640,11 @@ def sharpe_ratio(
     returns_risk_adj = np.asanyarray(_adjust_returns(returns, risk_free))
     ann_factor = annualization_factor(period, annualization)
 
+    warnings.filterwarnings(
+        "ignore",
+        category=RuntimeWarning,
+        message="divide by zero",
+    )
     np.multiply(
         np.divide(
             nanmean(returns_risk_adj, axis=0),
@@ -937,64 +880,6 @@ def excess_sharpe(returns, factor_returns, out=None):
 
 
 roll_excess_sharpe = _create_binary_vectorized_roll_function(excess_sharpe)
-
-
-def _to_pandas(ob):
-    """Convert an array-like to a pandas object.
-
-    Parameters
-    ----------
-    ob : array-like
-        The object to convert.
-
-    Returns
-    -------
-    pandas_structure : pd.Series or pd.DataFrame
-        The correct structure based on the dimensionality of the data.
-    """
-    if isinstance(ob, (pd.Series, pd.DataFrame)):
-        return ob
-
-    if ob.ndim == 1:
-        return pd.Series(ob)
-    elif ob.ndim == 2:
-        return pd.DataFrame(ob)
-    else:
-        raise ValueError(
-            "cannot convert array of dim > 2 to a pandas structure",
-        )
-
-
-def _aligned_series(*many_series):
-    """
-    Return a new list of series containing the data in the input series, but
-    with their indices aligned. NaNs will be filled in for missing values.
-
-    Parameters
-    ----------
-    *many_series
-        The series to align.
-
-    Returns
-    -------
-    aligned_series : iterable[array-like]
-        A new list of series containing the data in the input series, but
-        with their indices aligned. NaNs will be filled in for missing values.
-
-    """
-    head = many_series[0]
-    tail = many_series[1:]
-    n = len(head)
-    if isinstance(head, np.ndarray) and all(
-        len(s) == n and isinstance(s, np.ndarray) for s in tail
-    ):
-        # optimization: ndarrays of the same length are already aligned
-        return many_series
-
-    # dataframe has no ``itervalues``
-    return (
-        v for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
-    )
 
 
 def alpha_beta(
@@ -2001,6 +1886,48 @@ def up_down_capture(returns, factor_returns, **kwargs):
     return up_capture(returns, factor_returns, **kwargs) / down_capture(
         returns, factor_returns, **kwargs
     )
+
+
+def batting_average(returns, factor_returns):
+    """
+    Computes the batting average.
+    Parameters
+    ----------
+    returns : pd.Series or np.ndarray
+        Returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    factor_returns : pd.Series or np.ndarray
+        Noncumulative returns of the factor to which beta is
+        computed. Usually a benchmark such as the market.
+        - This is in the same style as returns.
+    Returns
+    -------
+    batting_average : pd.Series
+        batting average, up market, down market
+    Note
+    ----
+    See https://www.investopedia.com/terms/b/batting-average.asp for
+    more information.
+    """
+    results = OrderedDict(
+        {
+            "batting average": np.nan,
+            "up market": np.nan,
+            "down market": np.nan,
+        }
+    )
+    active_return = _adjust_returns(returns, factor_returns)
+    bt = active_return > 0
+    up = active_return[factor_returns >= 0.0] > 0
+    down = active_return[factor_returns < 0.0] > 0
+    if len(bt) > 0:
+        results["batting average"] = bt.mean()
+    if len(up) > 0:
+        results["up market"] = up.mean()
+    if len(down) > 0:
+        results["down market"] = down.mean()
+
+    return pd.Series(results, index=results.keys())
 
 
 def up_alpha_beta(returns, factor_returns, **kwargs):
