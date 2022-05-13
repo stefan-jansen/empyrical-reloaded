@@ -18,7 +18,7 @@ from collections import OrderedDict
 import pandas as pd
 import numpy as np
 from math import pow
-from scipy import stats, optimize
+from scipy import stats, optimize, interpolate
 from sys import float_info
 
 from .utils import (
@@ -35,6 +35,7 @@ from .utils import (
 )
 from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
 from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
+from .emdd_data import QX_N, QX_P
 
 import warnings
 
@@ -2095,6 +2096,71 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     return np.mean(np.partition(returns, cutoff_index)[: cutoff_index + 1])
 
 
+def expected_max_drawdown(
+    mu: float,
+    sigma: float,
+    t: float,
+) -> float:
+    """
+    Determines the expected maximum drawdown of a brownian motion,
+    given drift and diffusion.
+
+    Parameters
+    ----------
+    mu : float
+        The drift term of a Brownian motion with drift.
+    sigma : float
+        The diffusion term of a Brownian motion with drift.
+    t : float
+        Time period of interest in years
+
+    Returns
+    -------
+    expected_max_drawdown : float
+
+    Note
+    -----
+    for more details
+    See http://www.cs.rpi.edu/~magdon/ps/journal/drawdown_journal.pdf
+    and https://doi.org/10.1239/jap/1077134674
+    """
+
+    def _emdd_q(mu: float, sigma2: float, t: float):
+        """Q function based on lookup table"""
+
+        x = (mu ** 2) * t / (2 * sigma2)
+
+        if x < 0.0005:
+            return 0.5 * np.sqrt(np.pi * x)
+
+        if mu > 0:
+            if x > 5000:
+                return 0.25 * np.log(x) + 0.49088
+            XQ = QX_P
+
+        else:  # mu is negative
+            if x > 5:
+                return x + 0.5
+            XQ = QX_N
+
+        return interpolate.interp1d(np.log(XQ[:, 0]), XQ[:, 1], kind="cubic")(
+            [np.log(x)]
+        )[0]
+
+    if (not np.isfinite(mu)) | (not np.isfinite(sigma)) | (sigma <= 0):
+        return np.nan
+
+    if mu == 0:
+        return np.sqrt(np.pi / 2) * sigma * np.sqrt(t)
+
+    sigma2 = np.power(sigma, 2)
+    alpha = (2 * sigma2) / mu
+
+    Q = _emdd_q(mu, sigma2, t)
+
+    return np.sign(mu) * alpha * Q
+
+
 SIMPLE_STAT_FUNCS = [
     cum_returns_final,
     annual_return,
@@ -2103,6 +2169,7 @@ SIMPLE_STAT_FUNCS = [
     calmar_ratio,
     stability_of_timeseries,
     max_drawdown,
+    expected_max_drawdown,
     omega_ratio,
     sortino_ratio,
     stats.skew,

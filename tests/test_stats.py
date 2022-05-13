@@ -225,6 +225,29 @@ class TestStats(BaseTestClass):
         assert depressed_dd <= max_dd
 
     @pytest.mark.parametrize(
+        "mu, sigma, t, expected",
+        [
+            # The data for the 4 lines below is taken from:
+            # https://www.risk.net/risk-management/market-risk/1530272/maximum-drawdown
+            # Table "B.MDD-related statistics ..."
+            (0.1004, 0.1548, 24.25, 0.4456),
+            (0.0701, 0.1666, 19.83, 0.5554),
+            (0.1120, 0.2438, 19.42, 0.7787),
+            (0.1565, 0.0578, 3.08, 0.0477),
+            (0, 1, 1, np.sqrt(np.pi / 2)),
+            (np.nan, 1, 1, np.nan),
+            (0, np.inf, 1, np.nan),
+            (0, -1, 1, np.nan),
+        ],
+    )
+    def test_expected_max_drawdown(self, mu, sigma, t, expected):
+        np.testing.assert_almost_equal(
+            self.empyrical.expected_max_drawdown(mu, sigma, t),
+            expected,
+            decimal=4,
+        )
+
+    @pytest.mark.parametrize(
         "returns, period, expected",
         [
             ("mixed_returns", empyrical.DAILY, 1.9135925373194231),
