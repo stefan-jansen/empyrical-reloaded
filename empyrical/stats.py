@@ -15,28 +15,34 @@
 
 import math
 from collections import OrderedDict
-import pandas as pd
-import numpy as np
 from math import pow
-from scipy import stats, optimize
 from sys import float_info
 
-from .utils import (
-    nanmean,
-    nanstd,
-    nanmin,
-    up,
-    down,
-    roll,
-    _create_unary_vectorized_roll_function,
-    _create_binary_vectorized_roll_function,
-    _aligned_series,
-    _adjust_returns,
-)
-from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
-from .periods import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
+import numpy as np
+import pandas as pd
+from scipy import optimize, stats
 
-import warnings
+from .periods import (
+    ANNUALIZATION_FACTORS,
+    APPROX_BDAYS_PER_YEAR,
+    DAILY,
+    MONTHLY,
+    QUARTERLY,
+    WEEKLY,
+    YEARLY,
+)
+from .utils import (
+    _adjust_returns,
+    _aligned_series,
+    _create_binary_vectorized_roll_function,
+    _create_unary_vectorized_roll_function,
+    down,
+    nanmean,
+    nanmin,
+    nanstd,
+    roll,
+    up,
+)
 
 
 def annualization_factor(period, annualization):
@@ -100,7 +106,10 @@ def simple_returns(prices):
     else:
         # Assume np.ndarray
         out = np.diff(prices, axis=0)
-        np.divide(out, prices[:-1], out=out)
+
+        # Silence divide error warnings
+        with np.errstate(divide="ignore", invalid="ignore"):
+            np.divide(out, prices[:-1], out=out)
 
     return out
 
@@ -640,20 +649,18 @@ def sharpe_ratio(
     returns_risk_adj = np.asanyarray(_adjust_returns(returns, risk_free))
     ann_factor = annualization_factor(period, annualization)
 
-    warnings.filterwarnings(
-        "ignore",
-        category=RuntimeWarning,
-        message="divide by zero",
-    )
-    np.multiply(
-        np.divide(
-            nanmean(returns_risk_adj, axis=0),
-            nanstd(returns_risk_adj, ddof=1, axis=0),
+    # Silence divide error warnings
+    with np.errstate(divide="ignore", invalid="ignore"):
+        np.multiply(
+            np.divide(
+                nanmean(returns_risk_adj, axis=0),
+                nanstd(returns_risk_adj, ddof=1, axis=0),
+                out=out,
+            ),
+            np.sqrt(ann_factor),
             out=out,
-        ),
-        np.sqrt(ann_factor),
-        out=out,
-    )
+        )
+
     if return_1d:
         out = out.item()
 
@@ -737,7 +744,11 @@ def sortino_ratio(
         if _downside_risk is not None
         else downside_risk(returns, required_return, period, annualization)
     )
-    np.divide(average_annual_return, annualized_downside_risk, out=out)
+
+    # Silence divide error warnings
+    with np.errstate(divide="ignore", invalid="ignore"):
+        np.divide(average_annual_return, annualized_downside_risk, out=out)
+
     if return_1d:
         out = out.item()
     elif isinstance(returns, pd.DataFrame):
@@ -869,11 +880,14 @@ def excess_sharpe(returns, factor_returns, out=None):
     active_return = _adjust_returns(returns, factor_returns)
     tracking_error = np.nan_to_num(nanstd(active_return, ddof=1, axis=0))
 
-    out = np.divide(
-        nanmean(active_return, axis=0, out=out),
-        tracking_error,
-        out=out,
-    )
+    # Silence divide warnings
+    with np.errstate(divide="ignore", invalid="ignore"):
+        out = np.divide(
+            nanmean(active_return, axis=0, out=out),
+            tracking_error,
+            out=out,
+        )
+
     if returns_1d:
         out = out.item()
     return out
