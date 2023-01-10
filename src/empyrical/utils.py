@@ -12,20 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import errno
+import warnings
 from datetime import datetime
 from functools import wraps, partial
 from os import makedirs, environ
 from os.path import expanduser, join, getmtime, isdir
-import errno
-import warnings
 
 import numpy as np
-from numpy.lib.stride_tricks import as_strided
 import pandas as pd
+import yfinance as yf
+from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
 from pandas_datareader import data as web
 from pytz import UTC
-import yfinance as yf
 
 try:
     # fast versions
@@ -406,9 +406,7 @@ def get_treasury_yield(start=None, end=None, period="3MO"):
     if end is None:
         end = _1_bday_ago()
 
-    treasury = web.DataReader(
-        f"DGS{period}", data_source="fred", start=start, end=end
-    )
+    treasury = web.DataReader(f"DGS{period}", data_source="fred", start=start, end=end)
     return treasury.ffill()
 
 
@@ -709,9 +707,7 @@ def _aligned_series(*many_series):
         return many_series
 
     # dataframe has no ``itervalues``
-    return (
-        v for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items()
-    )
+    return (v for _, v in pd.concat(map(_to_pandas, many_series), axis=1).items())
 
 
 def _to_pandas(ob):

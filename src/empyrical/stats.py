@@ -76,9 +76,7 @@ def annualization_factor(period, annualization):
         except KeyError:
             raise ValueError(
                 "Period cannot be '{}'. "
-                "Can be '{}'.".format(
-                    period, "', '".join(ANNUALIZATION_FACTORS.keys())
-                )
+                "Can be '{}'.".format(period, "', '".join(ANNUALIZATION_FACTORS.keys()))
             )
     else:
         factor = annualization
@@ -430,9 +428,7 @@ def cagr(returns, period=DAILY, annualization=None):
 roll_cagr = _create_unary_vectorized_roll_function(cagr)
 
 
-def annual_volatility(
-    returns, period=DAILY, alpha=2.0, annualization=None, out=None
-):
+def annual_volatility(returns, period=DAILY, alpha=2.0, annualization=None, out=None):
     """
     Determines the annual volatility of a strategy.
 
@@ -594,9 +590,7 @@ def omega_ratio(
         return np.nan
 
 
-def sharpe_ratio(
-    returns, risk_free=0, period=DAILY, annualization=None, out=None
-):
+def sharpe_ratio(returns, risk_free=0, period=DAILY, annualization=None, out=None):
     """
     Determines the Sharpe ratio of a strategy.
 
@@ -972,9 +966,7 @@ def roll_alpha_beta(returns, factor_returns, window=10, **kwargs):
     """
     returns, factor_returns = _aligned_series(returns, factor_returns)
 
-    return roll_alpha_beta_aligned(
-        returns, factor_returns, window=window, **kwargs
-    )
+    return roll_alpha_beta_aligned(returns, factor_returns, window=window, **kwargs)
 
 
 def alpha_beta_aligned(
@@ -1096,10 +1088,7 @@ def alpha(
     float
         Alpha.
     """
-    if not (
-        isinstance(returns, np.ndarray)
-        and isinstance(factor_returns, np.ndarray)
-    ):
+    if not (isinstance(returns, np.ndarray) and isinstance(factor_returns, np.ndarray)):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
     return alpha_aligned(
@@ -1232,10 +1221,7 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     -------
     beta : float
     """
-    if not (
-        isinstance(returns, np.ndarray)
-        and isinstance(factor_returns, np.ndarray)
-    ):
+    if not (isinstance(returns, np.ndarray) and isinstance(factor_returns, np.ndarray)):
         returns, factor_returns = _aligned_series(returns, factor_returns)
 
     return beta_aligned(
@@ -1392,11 +1378,9 @@ def stability_of_timeseries(returns):
     returns = returns[~np.isnan(returns)]
 
     cum_log_returns = np.log1p(returns).cumsum()
-    rhat = stats.linregress(np.arange(len(cum_log_returns)), cum_log_returns)[
-        2
-    ]
+    rhat = stats.linregress(np.arange(len(cum_log_returns)), cum_log_returns)[2]
 
-    return rhat ** 2
+    return rhat**2
 
 
 def tail_ratio(returns):
@@ -1425,9 +1409,7 @@ def tail_ratio(returns):
     if len(returns) < 1:
         return np.nan
 
-    return np.abs(np.percentile(returns, 95)) / np.abs(
-        np.percentile(returns, 5)
-    )
+    return np.abs(np.percentile(returns, 95)) / np.abs(np.percentile(returns, 5))
 
 
 def capture(returns, factor_returns, period=DAILY):
@@ -1498,9 +1480,7 @@ def beta_fragility_heuristic(returns, factor_returns):
     if len(returns) < 3 or len(factor_returns) < 3:
         return np.nan
 
-    return beta_fragility_heuristic_aligned(
-        *_aligned_series(returns, factor_returns)
-    )
+    return beta_fragility_heuristic_aligned(*_aligned_series(returns, factor_returns))
 
 
 def beta_fragility_heuristic_aligned(returns, factor_returns):
@@ -1669,9 +1649,7 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         shape_param = 0
         while not finished and threshold > MINIMUM_THRESHOLD:
             losses_beyond_threshold = losses[losses >= threshold]
-            param_result = gpd_loglikelihood_minimizer_aligned(
-                losses_beyond_threshold
-            )
+            param_result = gpd_loglikelihood_minimizer_aligned(losses_beyond_threshold)
             if param_result[0] is not False and param_result[1] is not False:
                 scale_param = param_result[0]
                 shape_param = param_result[1]
@@ -1712,9 +1690,7 @@ def gpd_es_calculator(var_estimate, threshold, scale_param, shape_param):
     if (1 - shape_param) != 0:
         # this formula is from Gilli and Kellezi pg. 8
         var_ratio = var_estimate / (1 - shape_param)
-        param_ratio = (scale_param - (shape_param * threshold)) / (
-            1 - shape_param
-        )
+        param_ratio = (scale_param - (shape_param * threshold)) / (1 - shape_param)
         result = var_ratio + param_ratio
     return result
 
@@ -1727,9 +1703,7 @@ def gpd_var_calculator(
         # this formula is from Gilli and Kellezi pg. 12
         param_ratio = scale_param / shape_param
         prob_ratio = (total_n / exceedance_n) * probability
-        result = threshold + (
-            param_ratio * (pow(prob_ratio, -shape_param) - 1)
-        )
+        result = threshold + (param_ratio * (pow(prob_ratio, -shape_param) - 1))
     return result
 
 
@@ -1758,9 +1732,7 @@ def gpd_loglikelihood_factory(price_data):
 
 def gpd_loglikelihood(params, price_data):
     if params[1] != 0:
-        return -gpd_loglikelihood_scale_and_shape(
-            params[0], params[1], price_data
-        )
+        return -gpd_loglikelihood_scale_and_shape(params[0], params[1], price_data)
     else:
         return -gpd_loglikelihood_scale_only(params[0], price_data)
 
@@ -1782,8 +1754,7 @@ def gpd_loglikelihood_scale_and_shape(scale, shape, price_data):
         param_factor = shape / scale
         if shape != 0 and param_factor >= 0 and scale >= 0:
             result = (-n * np.log(scale)) - (
-                ((1 / shape) + 1)
-                * (np.log((shape / scale * price_data) + 1)).sum()
+                ((1 / shape) + 1) * (np.log((shape / scale * price_data) + 1)).sum()
             )
     return result
 
@@ -1999,9 +1970,7 @@ def roll_up_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
-    return roll(
-        returns, factor_returns, window=window, function=up_capture, **kwargs
-    )
+    return roll(returns, factor_returns, window=window, function=up_capture, **kwargs)
 
 
 def roll_down_capture(returns, factor_returns, window=10, **kwargs):
@@ -2025,9 +1994,7 @@ def roll_down_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
-    return roll(
-        returns, factor_returns, window=window, function=down_capture, **kwargs
-    )
+    return roll(returns, factor_returns, window=window, function=down_capture, **kwargs)
 
 
 def roll_up_down_capture(returns, factor_returns, window=10, **kwargs):
