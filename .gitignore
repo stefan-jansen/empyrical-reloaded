@@ -75,3 +75,4 @@ conda/recipe/osx-64/
 conda/recipe/win-64/
 docs/test/
 admin
+src/empyrical/_version.py

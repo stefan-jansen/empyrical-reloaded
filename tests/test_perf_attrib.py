@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
+from pathlib import Path
+
 from empyrical.perf_attrib import perf_attrib
+
+TEST_DATA = Path(__file__).parent / "test_data"
 
 
 class TestPerfAttrib:
@@ -20,9 +24,7 @@ class TestPerfAttrib:
             data={"risk_factor1": [0.1, 0.1], "risk_factor2": [0.1, 0.1]},
         )
 
-        index = pd.MultiIndex.from_product(
-            [dts, tickers], names=["dt", "ticker"]
-        )
+        index = pd.MultiIndex.from_product([dts, tickers], names=["dt", "ticker"])
 
         positions = pd.Series(
             [
@@ -75,13 +77,9 @@ class TestPerfAttrib:
             returns, positions, factor_returns, factor_loadings
         )
 
-        pd.testing.assert_frame_equal(
-            expected_perf_attrib_output, perf_attrib_output
-        )
+        pd.testing.assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        pd.testing.assert_frame_equal(
-            expected_exposures_portfolio, exposures_portfolio
-        )
+        pd.testing.assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
         # test long and short positions
         positions = pd.Series([0.5, -0.5, 0.5, -0.5], index=index)
@@ -118,13 +116,9 @@ class TestPerfAttrib:
             data={"risk_factor1": [0.0, 0.0], "risk_factor2": [0.0, 0.0]},
         )
 
-        pd.testing.assert_frame_equal(
-            expected_perf_attrib_output, perf_attrib_output
-        )
+        pd.testing.assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        pd.testing.assert_frame_equal(
-            expected_exposures_portfolio, exposures_portfolio
-        )
+        pd.testing.assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
         # test long and short positions with tilt exposure
         positions = pd.Series([1.0, -0.5, 1.0, -0.5], index=index)
@@ -164,17 +158,13 @@ class TestPerfAttrib:
             },
         )
 
-        pd.testing.assert_frame_equal(
-            expected_perf_attrib_output, perf_attrib_output
-        )
+        pd.testing.assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        pd.testing.assert_frame_equal(
-            expected_exposures_portfolio, exposures_portfolio
-        )
+        pd.testing.assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
     def test_perf_attrib_regression(self):
         positions = pd.read_csv(
-            "tests/test_data/positions.csv",
+            TEST_DATA / "positions.csv",
             index_col=0,
             parse_dates=True,
         )
@@ -183,33 +173,30 @@ class TestPerfAttrib:
             int(col) if col != "cash" else col for col in positions.columns
         ]
 
-        positions = positions.divide(
-            positions.sum(axis="columns"), axis="rows"
-        )
+        positions = positions.divide(positions.sum(axis="columns"), axis="rows")
         positions = positions.drop("cash", axis="columns").stack()
 
         returns = pd.read_csv(
-            "tests/test_data/returns.csv",
+            TEST_DATA / "returns.csv",
             index_col=0,
             parse_dates=True,
             header=None,
-            squeeze=True,
-        )
+        ).squeeze("columns")
 
         factor_loadings = pd.read_csv(
-            "tests/test_data/factor_loadings.csv",
+            TEST_DATA / "factor_loadings.csv",
             index_col=[0, 1],
             parse_dates=True,
         )
 
         factor_returns = pd.read_csv(
-            "tests/test_data/factor_returns.csv",
+            TEST_DATA / "factor_returns.csv",
             index_col=0,
             parse_dates=True,
         )
 
         residuals = pd.read_csv(
-            "tests/test_data/residuals.csv",
+            TEST_DATA / "residuals.csv",
             index_col=0,
             parse_dates=True,
         )
@@ -217,11 +204,10 @@ class TestPerfAttrib:
         residuals.columns = [int(col) for col in residuals.columns]
 
         intercepts = pd.read_csv(
-            "tests/test_data/intercepts.csv",
+            TEST_DATA / "intercepts.csv",
             index_col=0,
             header=None,
-            squeeze=True,
-        )
+        ).squeeze("columns")
 
         risk_exposures_portfolio, perf_attrib_output = perf_attrib(
             returns,
@@ -236,16 +222,12 @@ class TestPerfAttrib:
 
         # since all returns are factor returns, common returns should be
         # equivalent to total returns, and specific returns should be 0
-        pd.testing.assert_series_equal(
-            returns, common_returns, check_names=False
-        )
+        pd.testing.assert_series_equal(returns, common_returns, check_names=False)
 
         assert np.isclose(specific_returns, 0).all()
 
         # specific and common returns combined should equal total returns
-        pd.testing.assert_series_equal(
-            returns, combined_returns, check_names=False
-        )
+        pd.testing.assert_series_equal(returns, combined_returns, check_names=False)
 
         # check that residuals + intercepts = specific returns
         assert np.isclose((residuals + intercepts), 0).all()

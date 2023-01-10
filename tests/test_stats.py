@@ -32,9 +32,7 @@ class BaseTestClass:
         """
         pd.testing.assert_index_equal(result.index, expected.index)
 
-        if isinstance(result, pd.DataFrame) and isinstance(
-            expected, pd.DataFrame
-        ):
+        if isinstance(result, pd.DataFrame) and isinstance(expected, pd.DataFrame):
             pd.testing.assert_index_equal(result.columns, expected.columns)
 
 
@@ -310,9 +308,7 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns"],
     )
-    def test_omega_returns(
-        self, returns, required_return_less, required_return_more
-    ):
+    def test_omega_returns(self, returns, required_return_less, required_return_more):
         assert self.empyrical.omega_ratio(
             returns, required_return_less
         ) > self.empyrical.omega_ratio(returns, required_return_more)
@@ -349,9 +345,7 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns"],
     )
-    def test_sharpe_translation_same(
-        self, returns, required_return, translation
-    ):
+    def test_sharpe_translation_same(self, returns, required_return, translation):
         sr = self.empyrical.sharpe_ratio(returns, required_return)
         sr_depressed = self.empyrical.sharpe_ratio(
             returns - translation, required_return - translation
@@ -402,9 +396,7 @@ class TestStats(BaseTestClass):
         sr_depressed = self.empyrical.sharpe_ratio(
             returns, required_return - translation
         )
-        sr_raised = self.empyrical.sharpe_ratio(
-            returns, required_return + translation
-        )
+        sr_raised = self.empyrical.sharpe_ratio(returns, required_return + translation)
         assert sr_depressed > sr
         assert sr > sr_raised
 
@@ -473,9 +465,7 @@ class TestStats(BaseTestClass):
             returns, required_return=required_return, period=period
         )
         if isinstance(downside_risk, float):
-            np.testing.assert_almost_equal(
-                downside_risk, expected, DECIMAL_PLACES
-            )
+            np.testing.assert_almost_equal(downside_risk, expected, DECIMAL_PLACES)
         else:
             for i in range(downside_risk.size):
                 np.testing.assert_almost_equal(
@@ -527,16 +517,12 @@ class TestStats(BaseTestClass):
             index=pd.date_range("2000-1-30", periods=1000, freq="D"),
         )
         more_noise = pd.Series(
-            (
-                rand.normal(0, larger_std, 1000)
-                if larger_std != 0
-                else np.full(1000, 0)
-            ),
+            (rand.normal(0, larger_std, 1000) if larger_std != 0 else np.full(1000, 0)),
             index=pd.date_range("2000-1-30", periods=1000, freq="D"),
         )
-        assert self.empyrical.downside_risk(
-            less_noise
-        ) < self.empyrical.downside_risk(more_noise)
+        assert self.empyrical.downside_risk(less_noise) < self.empyrical.downside_risk(
+            more_noise
+        )
 
     # Regressive sortino ratio tests
     @pytest.mark.parametrize(
@@ -592,9 +578,7 @@ class TestStats(BaseTestClass):
             returns, required_return=required_return, period=period
         )
         if isinstance(sortino_ratio, float):
-            np.testing.assert_almost_equal(
-                sortino_ratio, expected, DECIMAL_PLACES
-            )
+            np.testing.assert_almost_equal(sortino_ratio, expected, DECIMAL_PLACES)
         else:
             for i in range(sortino_ratio.size):
                 np.testing.assert_almost_equal(
@@ -654,9 +638,7 @@ class TestStats(BaseTestClass):
         [("noise_uniform", 0, 0.005), ("noise_uniform", 0.005, 0.005)],
         indirect=["returns"],
     )
-    def test_sortino_translation_same(
-        self, returns, required_return, translation
-    ):
+    def test_sortino_translation_same(self, returns, required_return, translation):
         sr = self.empyrical.sortino_ratio(returns, required_return)
         sr_depressed = self.empyrical.sortino_ratio(
             returns - translation, required_return - translation
@@ -802,9 +784,7 @@ class TestStats(BaseTestClass):
                 benchmark_arr[mask], returns_arr[mask]
             )
 
-            np.testing.assert_almost_equal(
-                observed, intercept * 252, DECIMAL_PLACES
-            )
+            np.testing.assert_almost_equal(observed, intercept * 252, DECIMAL_PLACES)
 
     # Alpha/beta translation tests.
     @pytest.mark.parametrize(
@@ -821,8 +801,8 @@ class TestStats(BaseTestClass):
         std_bench = 0.001
         means = [mean_returns, 0.001]
         covs = [
-            [std_returns ** 2, std_returns * std_bench * correlation],
-            [std_returns * std_bench * correlation, std_bench ** 2],
+            [std_returns**2, std_returns * std_bench * correlation],
+            [std_returns * std_bench * correlation, std_bench**2],
         ]
         (ret, bench) = rand.multivariate_normal(means, covs, 1000).T
         returns = pd.Series(
@@ -836,32 +816,24 @@ class TestStats(BaseTestClass):
         returns_depressed = returns - translation
         returns_raised = returns + translation
         alpha_beta = self.empyrical(return_types=np.ndarray).alpha_beta
-        (alpha_depressed, beta_depressed) = alpha_beta(
-            returns_depressed, benchmark
-        )
+        (alpha_depressed, beta_depressed) = alpha_beta(returns_depressed, benchmark)
         (alpha_standard, beta_standard) = alpha_beta(returns, benchmark)
         (alpha_raised, beta_raised) = alpha_beta(returns_raised, benchmark)
         # Alpha should change proportionally to how much returns were
         # translated.
         np.testing.assert_almost_equal(
-            ((alpha_standard + 1) ** (1 / 252))
-            - ((alpha_depressed + 1) ** (1 / 252)),
+            ((alpha_standard + 1) ** (1 / 252)) - ((alpha_depressed + 1) ** (1 / 252)),
             translation,
             DECIMAL_PLACES,
         )
         np.testing.assert_almost_equal(
-            ((alpha_raised + 1) ** (1 / 252))
-            - ((alpha_standard + 1) ** (1 / 252)),
+            ((alpha_raised + 1) ** (1 / 252)) - ((alpha_standard + 1) ** (1 / 252)),
             translation,
             DECIMAL_PLACES,
         )
         # Beta remains constant.
-        np.testing.assert_almost_equal(
-            beta_standard, beta_depressed, DECIMAL_PLACES
-        )
-        np.testing.assert_almost_equal(
-            beta_standard, beta_raised, DECIMAL_PLACES
-        )
+        np.testing.assert_almost_equal(beta_standard, beta_depressed, DECIMAL_PLACES)
+        np.testing.assert_almost_equal(beta_standard, beta_raised, DECIMAL_PLACES)
 
     # Test alpha/beta with a smaller and larger correlation values.
     @pytest.mark.parametrize("corr_less, corr_more", [(0.1, 0.9)])
@@ -874,23 +846,19 @@ class TestStats(BaseTestClass):
         # Generate less correlated returns
         means_less = [mean_returns, mean_bench]
         covs_less = [
-            [std_returns ** 2, std_returns * std_bench * corr_less],
-            [std_returns * std_bench * corr_less, std_bench ** 2],
+            [std_returns**2, std_returns * std_bench * corr_less],
+            [std_returns * std_bench * corr_less, std_bench**2],
         ]
-        (ret_less, bench_less) = rand.multivariate_normal(
-            means_less, covs_less, 1000
-        ).T
+        (ret_less, bench_less) = rand.multivariate_normal(means_less, covs_less, 1000).T
         returns_less = pd.Series(ret_less, index=index)
         benchmark_less = pd.Series(bench_less, index=index)
         # Genereate more highly correlated returns
         means_more = [mean_returns, mean_bench]
         covs_more = [
-            [std_returns ** 2, std_returns * std_bench * corr_more],
-            [std_returns * std_bench * corr_more, std_bench ** 2],
+            [std_returns**2, std_returns * std_bench * corr_more],
+            [std_returns * std_bench * corr_more, std_bench**2],
         ]
-        (ret_more, bench_more) = rand.multivariate_normal(
-            means_more, covs_more, 1000
-        ).T
+        (ret_more, bench_more) = rand.multivariate_normal(means_more, covs_more, 1000).T
         returns_more = pd.Series(ret_more, index=index)
         benchmark_more = pd.Series(bench_more, index=index)
         # Calculate alpha/beta values
@@ -1037,9 +1005,7 @@ class TestStats(BaseTestClass):
         indirect=["returns"],
     )
     def test_tail_ratio(self, returns, expected):
-        np.testing.assert_almost_equal(
-            self.empyrical.tail_ratio(returns), expected, 1
-        )
+        np.testing.assert_almost_equal(self.empyrical.tail_ratio(returns), expected, 1)
 
     # Regression tests for CAGR.
     @pytest.mark.parametrize(
@@ -1136,9 +1102,7 @@ class TestStats(BaseTestClass):
     def test_gpd_risk_estimates(self, returns, expected):
         result = self.empyrical.gpd_risk_estimates_aligned(returns)
         for result_item, expected_item in zip(result, expected):
-            np.testing.assert_almost_equal(
-                result_item, expected_item, DECIMAL_PLACES
-            )
+            np.testing.assert_almost_equal(result_item, expected_item, DECIMAL_PLACES)
 
     @pytest.mark.parametrize(
         "returns, window, expected",
@@ -1150,9 +1114,7 @@ class TestStats(BaseTestClass):
     )
     def test_roll_max_drawdown(self, returns, window, expected):
         test = self.empyrical.roll_max_drawdown(returns, window=window)
-        np.testing.assert_almost_equal(
-            np.asarray(test), np.asarray(expected), 4
-        )
+        np.testing.assert_almost_equal(np.asarray(test), np.asarray(expected), 4)
 
         self.assert_indexes_match(test, returns[-len(expected) :])
 
@@ -1253,9 +1215,7 @@ class TestStats(BaseTestClass):
         indirect=["returns", "benchmark"],
     )
     def test_roll_alpha_beta(self, returns, benchmark, window, expected):
-        test = self.empyrical(
-            return_types=(np.ndarray, pd.DataFrame),
-        ).roll_alpha_beta(
+        test = self.empyrical(return_types=(np.ndarray, pd.DataFrame),).roll_alpha_beta(
             returns,
             benchmark,
             window,
@@ -1308,9 +1268,7 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns", "factor_returns"],
     )
-    def test_roll_up_down_capture(
-        self, returns, factor_returns, window, expected
-    ):
+    def test_roll_up_down_capture(self, returns, factor_returns, window, expected):
         test = self.empyrical.roll_up_down_capture(
             returns, factor_returns, window=window
         )
@@ -1339,12 +1297,8 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns", "factor_returns"],
     )
-    def test_roll_down_capture(
-        self, returns, factor_returns, window, expected
-    ):
-        test = self.empyrical.roll_down_capture(
-            returns, factor_returns, window=window
-        )
+    def test_roll_down_capture(self, returns, factor_returns, window, expected):
+        test = self.empyrical.roll_down_capture(returns, factor_returns, window=window)
         np.testing.assert_almost_equal(
             np.asarray(test), np.asarray(expected), DECIMAL_PLACES
         )
@@ -1378,9 +1332,7 @@ class TestStats(BaseTestClass):
         indirect=["returns", "factor_returns"],
     )
     def test_roll_up_capture(self, returns, factor_returns, window, expected):
-        test = self.empyrical.roll_up_capture(
-            returns, factor_returns, window=window
-        )
+        test = self.empyrical.roll_up_capture(returns, factor_returns, window=window)
         np.testing.assert_almost_equal(
             np.asarray(test), np.asarray(expected), DECIMAL_PLACES
         )
@@ -1476,9 +1428,7 @@ class TestStats(BaseTestClass):
         returns = [1, 81, 82, 83, 84, 85]
         np.testing.assert_almost_equal(value_at_risk(returns, cutoff=0.1), 41)
         np.testing.assert_almost_equal(value_at_risk(returns, cutoff=0.2), 81)
-        np.testing.assert_almost_equal(
-            value_at_risk(returns, cutoff=0.3), 81.5
-        )
+        np.testing.assert_almost_equal(value_at_risk(returns, cutoff=0.3), 81.5)
 
         # Test a returns stream of 21 data points at different cutoffs.
         returns = rand.normal(0, 0.02, 21)
@@ -1671,9 +1621,7 @@ class Test2DStats:
         """
         pd.testing.assert_index_equal(result.index, expected.index)
 
-        if isinstance(result, pd.DataFrame) and isinstance(
-            expected, pd.DataFrame
-        ):
+        if isinstance(result, pd.DataFrame) and isinstance(expected, pd.DataFrame):
             pd.testing.assert_index_equal(result.columns, expected.columns)
 
     @pytest.mark.parametrize(
@@ -1733,9 +1681,9 @@ class Test2DStats:
     )
     def test_batting_average(self, returns, benchmark, expected):
         return_types = (pd.Series, np.ndarray)
-        batting_average = self.empyrical(
-            return_types=return_types
-        ).batting_average(returns, benchmark)
+        batting_average = self.empyrical(return_types=return_types).batting_average(
+            returns, benchmark
+        )
         np.testing.assert_almost_equal(batting_average, expected, 4)
 
     @property
@@ -1843,16 +1791,14 @@ class ReturnTypeEmpyricalProxy(object):
                     args[i],
                     arg_copy,
                     atol=0.5 * 10 ** (-DECIMAL_PLACES),
-                    err_msg="Input 'arg %s' mutated by %s"
-                    % (i, func.__name__),
+                    err_msg="Input 'arg %s' mutated by %s" % (i, func.__name__),
                 )
             for kwarg_name, kwarg_copy in kwarg_copies.items():
                 np.testing.assert_allclose(
                     kwargs[kwarg_name],
                     kwarg_copy,
                     atol=0.5 * 10 ** (-DECIMAL_PLACES),
-                    err_msg="Input '%s' mutated by %s"
-                    % (kwarg_name, func.__name__),
+                    err_msg="Input '%s' mutated by %s" % (kwarg_name, func.__name__),
                 )
 
             return result
@@ -1871,9 +1817,7 @@ class ConvertPandasEmpyricalProxy(ReturnTypeEmpyricalProxy):
     """
 
     def __init__(self, test_case, return_types, convert, pandas_only=False):
-        super(ConvertPandasEmpyricalProxy, self).__init__(
-            test_case, return_types
-        )
+        super(ConvertPandasEmpyricalProxy, self).__init__(test_case, return_types)
         self._convert = convert
         self._pandas_only = pandas_only
 
@@ -1889,8 +1833,7 @@ class ConvertPandasEmpyricalProxy(ReturnTypeEmpyricalProxy):
         @wraps(func)
         def convert_args(*args, **kwargs):
             args = [
-                self._convert(arg) if isinstance(arg, NDFrame) else arg
-                for arg in args
+                self._convert(arg) if isinstance(arg, NDFrame) else arg for arg in args
             ]
             kwargs = {
                 k: self._convert(v) if isinstance(v, NDFrame) else v
