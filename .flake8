@@ -2,5 +2,6 @@
 exclude = .git, __pycache__, docs, conda, tools
 max-line-length = 88
 max-complexity = 18
-select = B,C,E,F,W,T4,B9
-ignore = E203, E266, E501, W503, F403, F401, E231
+select = B,C,E,F,W,T4,B9, B950
+ignore = E266, W503, F403, F401, E231
+extend-ignore = E203, E501
