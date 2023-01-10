@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 from empyrical.perf_attrib import perf_attrib
+
+TEST_DATA = Path(__file__).parent / "test_data"
 
 
 class TestPerfAttrib:
@@ -161,7 +164,7 @@ class TestPerfAttrib:
 
     def test_perf_attrib_regression(self):
         positions = pd.read_csv(
-            "tests/test_data/positions.csv",
+            TEST_DATA / "positions.csv",
             index_col=0,
             parse_dates=True,
         )
@@ -174,26 +177,26 @@ class TestPerfAttrib:
         positions = positions.drop("cash", axis="columns").stack()
 
         returns = pd.read_csv(
-            "tests/test_data/returns.csv",
+            TEST_DATA / "returns.csv",
             index_col=0,
             parse_dates=True,
             header=None,
         ).squeeze("columns")
 
         factor_loadings = pd.read_csv(
-            "tests/test_data/factor_loadings.csv",
+            TEST_DATA / "factor_loadings.csv",
             index_col=[0, 1],
             parse_dates=True,
         )
 
         factor_returns = pd.read_csv(
-            "tests/test_data/factor_returns.csv",
+            TEST_DATA / "factor_returns.csv",
             index_col=0,
             parse_dates=True,
         )
 
         residuals = pd.read_csv(
-            "tests/test_data/residuals.csv",
+            TEST_DATA / "residuals.csv",
             index_col=0,
             parse_dates=True,
         )
@@ -201,7 +204,7 @@ class TestPerfAttrib:
         residuals.columns = [int(col) for col in residuals.columns]
 
         intercepts = pd.read_csv(
-            "tests/test_data/intercepts.csv",
+            TEST_DATA / "intercepts.csv",
             index_col=0,
             header=None,
         ).squeeze("columns")
