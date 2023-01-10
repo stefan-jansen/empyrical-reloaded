@@ -158,14 +158,12 @@ def input_data():
         ),
         # All negative returns
         "negative_returns": pd.Series(
-            np.array([0.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0])
-            / 100,
+            np.array([0.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0]) / 100,
             index=pd.date_range("2000-1-30", periods=9, freq="D"),
         ),
         # All negative returns
         "all_negative_returns": pd.Series(
-            np.array([-2.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0])
-            / 100,
+            np.array([-2.0, -6.0, -7.0, -1.0, -9.0, -2.0, -6.0, -8.0, -5.0]) / 100,
             index=pd.date_range("2000-1-30", periods=9, freq="D"),
         ),
         # Positive and negative returns with max drawdown
