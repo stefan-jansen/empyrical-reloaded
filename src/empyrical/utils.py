@@ -244,10 +244,7 @@ def _1_bday_ago():
 def get_fama_french(
     start="1-1-1970",
     end=None,
-    datasets=[
-        "F-F_Research_Data_Factors_daily",
-        "F-F_Momentum_Factor_daily",
-    ],
+    datasets=("F-F_Research_Data_Factors_daily", "F-F_Momentum_Factor_daily"),
 ):
     """
     Retrieve Fama-French factors via pandas-datareader
