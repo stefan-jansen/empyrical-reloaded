@@ -5,7 +5,10 @@
 </p>
 
 ![PyPI](https://img.shields.io/pypi/v/empyrical-reloaded)
-![Conda (channel only)](https://img.shields.io/conda/vn/ml4t/empyrical-reloaded)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/empyrical-reloaded)
+
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/empyrical-reloaded.svg)](https://anaconda.org/conda-forge/empyrical-reloaded)
+[![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/empyrical-reloaded.svg)](https://anaconda.org/conda-forge/empyrical-reloaded)
 
 [![PyPI Wheels](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/build_wheels.yml)
 [![Conda packages](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml/badge.svg)](https://github.com/stefan-jansen/empyrical-reloaded/actions/workflows/conda_package.yml)
@@ -15,16 +18,16 @@ Common financial return and risk metrics in Python.
 
 ## Installation
 
-empyrical requires Python 3.7+. You can install it using `pip`:
+empyrical requires Python 3.9+. You can install it using `pip`:
 
 ```bash
 pip install empyrical-reloaded
 ```
 
-or `conda`:
+or `conda` from the `conda-forge` channel
 
 ```bash
-conda install empyrical-reloaded -c ml4t -c ranaroussi
+conda install empyrical-reloaded -c conda-forge
 ```
 
 empyrical requires and installs the following packages while executing the above commands:
@@ -33,9 +36,15 @@ empyrical requires and installs the following packages while executing the above
 - pandas>=1.0.0
 - scipy>=0.15.1
 - pandas-datareader>=0.4
+
+Optional dependencies include [yfinance](https://github.com/ranaroussi/yfinance) to download price data from [Yahoo! Finance](https://finance.yahoo.com/) and [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/) to access [Fama-French](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) risk factors.
 - yfinance>=0.1.59
 
-Empyrical uses [yfinance](https://github.com/ranaroussi/yfinance) to download price data from [Yahoo! Finance](https://finance.yahoo.com/) and [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/) to access [Fama-French](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) risk factors.
+To install the optional dependencies, use:
+
+```bash
+pip install empyrical-reloaded[yfinance]
+```
 
 ## Usage
 
@@ -59,7 +68,7 @@ alpha, beta = alpha_beta(returns, benchmark_returns)
 
 ### Rolling Measures
 
-Empyrical also aggregates returna nd risk metrics for rolling windows:
+Empyrical also aggregates return and risk metrics for rolling windows:
 
 ```python
 import numpy as np
@@ -92,6 +101,8 @@ capture(returns, factor_returns)
 
 Empyrical downloads Fama-French risk factors from 1970 onward:
 
+>> Note: requires optional dependency `yfinance` - see installation instructions above.gst
+
 ```python
 import empyrical as emp
 
@@ -116,6 +127,8 @@ Date
 ### Asset Prices and Benchmark Returns
 
 Empyrical [yfinance](https://github.com/ranaroussi/yfinance) to download price data from [Yahoo! Finance](https://finance.yahoo.com/). To obtain the S&P returns since 1950, use:
+
+>> Note: requires optional dependency `yfinance` - see installation instructions above.
 
 ```python
 import empyrical as emp
