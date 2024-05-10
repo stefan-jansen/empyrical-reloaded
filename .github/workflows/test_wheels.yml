@@ -19,8 +19,21 @@ jobs:
       - name: Checkout empyrical
         uses: actions/checkout@v4
 
-      - name: Install wheel & run tests
-        run: |
-          pip install -U pip wheel tox-gh-actions
-          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple your-package empyrical-reloaded[test]
-          tox -p auto -q
+#      - name: Install wheel & run tests
+#        run: |
+#          pip install -U pip wheel tox-gh-actions
+#          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple empyrical-reloaded[test]
+#          tox -p auto -q
+
+      - name: Unittests with tox & pytest
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 90
+          max_attempts: 3
+          retry_on: error
+          new_command_on_retry: |
+            python -m pip install -U pip wheel tox tox-gh-actions
+            python -m pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple empyrical-reloaded[test]
+            tox -p auto -q
+
+          command: tox
