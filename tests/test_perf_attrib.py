@@ -187,7 +187,6 @@ class TestPerfAttrib:
             TEST_DATA / "factor_loadings.csv",
             index_col=[0, 1],
             parse_dates=True,
-            date_format="%Y-%m-%d",
         )
 
         factor_returns = pd.read_csv(
