@@ -21,6 +21,7 @@ from sys import float_info
 import numpy as np
 import pandas as pd
 from scipy import optimize, stats
+from numpy.typing import ArrayLike
 
 from .periods import (
     ANNUALIZATION_FACTORS,
@@ -112,7 +113,7 @@ def simple_returns(prices):
     return out
 
 
-def cum_returns(returns, starting_value=0, out=None):
+def cum_returns(returns, starting_value=0, out=None) -> ArrayLike:
     """
     Compute cumulative returns from simple returns.
 
@@ -756,7 +757,7 @@ roll_sortino_ratio = _create_unary_vectorized_roll_function(sortino_ratio)
 
 def downside_risk(
     returns, required_return=0, period=DAILY, annualization=None, out=None
-):
+) -> float | pd.Series:
     """
     Determines the downside deviation below a threshold
 
