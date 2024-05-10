@@ -38,7 +38,6 @@ dependencies = [
     "pandas >=1.0.0",
     "scipy >=0.15.1",
     "pandas-datareader >=0.4",
-    "yfinance >=0.1.63",
 ]
 
 [project.urls]
@@ -80,6 +79,10 @@ doc = [
     "sphinx_copybutton",
     "nbsphinx",
     "m2r2"
+]
+
+yfinance = [
+    "yfinance >=0.1.63",
 ]
 
 [tool.setuptools]
