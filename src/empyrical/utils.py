@@ -23,8 +23,12 @@ import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
-from pandas_datareader import data as web
 from pytz import UTC
+
+try:  # incompatible with Python 3.12
+    from pandas_datareader import data as web
+except ImportError:
+    web = None
 
 try:
     import yfinance as yf
@@ -262,6 +266,9 @@ def get_fama_french(
     pandas.DataFrame
         Percent change of Fama-French factors
     """
+    if web is None:
+        raise ImportError("pandas-datareader is required to fetch Fama-French data")
+
     if not isinstance(start, datetime):
         start = pd.Timestamp(start).date()
     if not isinstance(end, datetime):

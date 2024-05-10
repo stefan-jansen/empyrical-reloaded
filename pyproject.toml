@@ -37,8 +37,7 @@ dependencies = [
     "bottleneck >=1.3.0",
     "pandas >=1.0.0",
     "scipy >=0.15.1",
-    "peewee<3.17.4", # awwaiting bugfix in latest version: https://github.com/coleifer/peewee/issues/2891
-    "pandas-datareader >=0.4",
+    "peewee<3.17.4" # awwaiting bugfix in latest version: https://github.com/coleifer/peewee/issues/2891
 ]
 
 [project.urls]
@@ -84,6 +83,10 @@ doc = [
 
 yfinance = [
     "yfinance >=0.1.63",
+]
+
+datareader = [
+    "pandas-datareader >=0.4"
 ]
 
 [tool.setuptools]
