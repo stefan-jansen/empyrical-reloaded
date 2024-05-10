@@ -11,12 +11,12 @@ def set_helpers(request):
 
     request.cls.returns = pd.Series(
         rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="M"),
+        index=pd.date_range("2000-1-30", periods=120, freq="ME"),
     )
 
     request.cls.factor_returns = pd.Series(
         rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="M"),
+        index=pd.date_range("2000-1-30", periods=120, freq="ME"),
     )
 
 
