@@ -21,11 +21,15 @@ from os.path import expanduser, join, getmtime, isdir
 
 import numpy as np
 import pandas as pd
-import yfinance as yf
 from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
 from pandas_datareader import data as web
 from pytz import UTC
+
+try:
+    import yfinance as yf
+except ImportError:
+    yf = None
 
 try:
     # fast versions

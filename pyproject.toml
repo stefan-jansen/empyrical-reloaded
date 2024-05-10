@@ -35,11 +35,10 @@ license = { file = "LICENSE" }
 dependencies = [
     "numpy >=1.9.2",
     "bottleneck >=1.3.0",
-    "pandas >=2.0.0",
+    "pandas >=1.0.0",
     "scipy >=0.15.1",
-    "pandas-datareader >=0.9",
-    "yfinance >=0.2",
-    "peewee<3.17.4" # awwaiting bugfix in latest version: https://github.com/coleifer/peewee/issues/2891
+    "peewee<3.17.4", # awwaiting bugfix in latest version: https://github.com/coleifer/peewee/issues/2891
+    "pandas-datareader >=0.4",
 ]
 
 [project.urls]
@@ -81,6 +80,10 @@ doc = [
     "sphinx_copybutton",
     "nbsphinx",
     "m2r2"
+]
+
+yfinance = [
+    "yfinance >=0.1.63",
 ]
 
 [tool.setuptools]
