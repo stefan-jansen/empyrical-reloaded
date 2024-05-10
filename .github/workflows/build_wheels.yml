@@ -7,7 +7,7 @@ on:
         description: 'Publish to PyPI?'
         required: true
         type: boolean
-        default: 'false'
+        default: false
 
 jobs:
   dist:
