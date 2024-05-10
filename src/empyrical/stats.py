@@ -17,10 +17,12 @@ import math
 from collections import OrderedDict
 from math import pow
 from sys import float_info
+import warnings
 
 import numpy as np
 import pandas as pd
 from scipy import optimize, stats
+from numpy.typing import ArrayLike
 
 from .periods import (
     ANNUALIZATION_FACTORS,
@@ -112,7 +114,7 @@ def simple_returns(prices):
     return out
 
 
-def cum_returns(returns, starting_value=0, out=None):
+def cum_returns(returns, starting_value=0, out=None) -> ArrayLike:
     """
     Compute cumulative returns from simple returns.
 
@@ -832,8 +834,17 @@ def downside_risk(
     return out
 
 
-roll_downsize_risk = _create_unary_vectorized_roll_function(downside_risk) # Typo spotted. Should be roll_downside_risk. Ideally be depreciated.
 roll_downside_risk = _create_unary_vectorized_roll_function(downside_risk)
+
+
+# Deprecated typo version
+def roll_downsize_risk(*args, **kwargs):
+    warnings.warn(
+        "roll_downsize_risk is deprecated; use roll_downside_risk instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return roll_downside_risk(*args, **kwargs)
 
 
 def excess_sharpe(returns, factor_returns, out=None):

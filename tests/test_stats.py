@@ -1215,7 +1215,9 @@ class TestStats(BaseTestClass):
         indirect=["returns", "benchmark"],
     )
     def test_roll_alpha_beta(self, returns, benchmark, window, expected):
-        test = self.empyrical(return_types=(np.ndarray, pd.DataFrame),).roll_alpha_beta(
+        test = self.empyrical(
+            return_types=(np.ndarray, pd.DataFrame),
+        ).roll_alpha_beta(
             returns,
             benchmark,
             window,

@@ -23,8 +23,12 @@ import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
-from pandas_datareader import data as web
 from pytz import UTC
+
+try:  # incompatible with Python 3.12
+    from pandas_datareader import data as web
+except ImportError:
+    web = None
 
 try:
     import yfinance as yf
@@ -34,7 +38,6 @@ except ImportError:
 try:
     # fast versions
     import bottleneck as bn
-
 
     def _wrap_function(f):
         @wraps(f)
@@ -49,7 +52,6 @@ try:
             return out
 
         return wrapped
-
 
     nanmean = _wrap_function(bn.nanmean)
     nanstd = _wrap_function(bn.nanstd)
@@ -167,7 +169,7 @@ def down(returns, factor_returns, **kwargs):
 def _roll_ndarray(func, window, *args, **kwargs):
     data = []
     for i in range(window, len(args[0]) + 1):
-        rets = [s[i - window: i] for s in args]
+        rets = [s[i - window : i] for s in args]
         data.append(func(*rets, **kwargs))
     return np.array(data)
 
@@ -176,7 +178,7 @@ def _roll_pandas(func, window, *args, **kwargs):
     data = {}
     index_values = []
     for i in range(window, len(args[0]) + 1):
-        rets = [s.iloc[i - window: i] for s in args]
+        rets = [s.iloc[i - window : i] for s in args]
         index_value = args[0].index[i - 1]
         index_values.append(index_value)
         data[index_value] = func(*rets, **kwargs)
@@ -248,12 +250,9 @@ def _1_bday_ago():
 
 
 def get_fama_french(
-        start="1-1-1970",
-        end=None,
-        datasets=[
-            "F-F_Research_Data_Factors_daily",
-            "F-F_Momentum_Factor_daily",
-        ],
+    start="1-1-1970",
+    end=None,
+    datasets=("F-F_Research_Data_Factors_daily", "F-F_Momentum_Factor_daily"),
 ):
     """
     Retrieve Fama-French factors via pandas-datareader
@@ -267,6 +266,9 @@ def get_fama_french(
     pandas.DataFrame
         Percent change of Fama-French factors
     """
+    if web is None:
+        raise ImportError("pandas-datareader is required to fetch Fama-French data")
+
     if not isinstance(start, datetime):
         start = pd.Timestamp(start).date()
     if not isinstance(end, datetime):
@@ -436,10 +438,6 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
     pandas.DataFrame
         Returns of symbol in requested period.
     """
-
-    if yf is None:
-        raise ImportError("The yfinance library is not installed. "
-                          + "Please install it via pip install yfinance or pip install 'empyrical-reloaded[yfinance]'")
 
     try:
 
@@ -618,7 +616,7 @@ def _create_unary_vectorized_roll_function(function):
             out = np.empty(0, dtype="float64")
 
         if allocated_output and isinstance(arr, pd.Series):
-            out = pd.Series(out, index=arr.index[-len(out):])
+            out = pd.Series(out, index=arr.index[-len(out) :])
 
         return out
 
@@ -671,9 +669,9 @@ def _create_binary_vectorized_roll_function(function):
 
         if allocated_output:
             if out.ndim == 1 and isinstance(lhs, pd.Series):
-                out = pd.Series(out, index=lhs.index[-len(out):])
+                out = pd.Series(out, index=lhs.index[-len(out) :])
             elif out.ndim == 2 and isinstance(lhs, pd.Series):
-                out = pd.DataFrame(out, index=lhs.index[-len(out):])
+                out = pd.DataFrame(out, index=lhs.index[-len(out) :])
         return out
 
     binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
@@ -711,7 +709,7 @@ def _aligned_series(*many_series):
     tail = many_series[1:]
     n = len(head)
     if isinstance(head, np.ndarray) and all(
-            len(s) == n and isinstance(s, np.ndarray) for s in tail
+        len(s) == n and isinstance(s, np.ndarray) for s in tail
     ):
         # optimization: ndarrays of the same length are already aligned
         return many_series
