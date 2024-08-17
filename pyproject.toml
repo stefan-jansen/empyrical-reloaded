@@ -159,10 +159,15 @@ changedir = tmp
 extras = test
 deps =
     pandas12: pandas>=1.2.0,<1.3
+    pandas12: numpy<2.0
     pandas13: pandas>=1.3.0,<1.4
+    pandas13: numpy<2.0
     pandas14: pandas>=1.4.0,<1.5
+    pandas14: numpy<2.0
     pandas15: pandas>=1.5.0,<1.6
+    pandas15: numpy<2.0
     pandas20: pandas>=2.0.0
+    pandas20: numpy<2.0
 
 commands =
     pytest --cov={toxinidir}/src --cov-report term  --cov-report=xml --cov-report=html:htmlcov {toxinidir}/tests
