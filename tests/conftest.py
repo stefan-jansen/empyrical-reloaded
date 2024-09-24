@@ -1,6 +1,11 @@
 import pytest
 import pandas as pd
 import numpy as np
+from packaging.version import Version
+
+PANDAS22 = Version(pd.__version__) >= Version("2.22.0")
+monthly = "ME" if PANDAS22 else "M"
+annual = "YE" if PANDAS22 else "A"
 
 
 @pytest.fixture(scope="function")
@@ -11,12 +16,12 @@ def set_helpers(request):
 
     request.cls.returns = pd.Series(
         rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="ME"),
+        index=pd.date_range("2000-1-30", periods=120, freq=monthly),
     )
 
     request.cls.factor_returns = pd.Series(
         rand.randn(1, 120)[0] / 100.0,
-        index=pd.date_range("2000-1-30", periods=120, freq="ME"),
+        index=pd.date_range("2000-1-30", periods=120, freq=monthly),
     )
 
 
@@ -85,7 +90,7 @@ def input_data():
 
     df_index_simple = pd.date_range("2000-1-30", periods=8, freq="D")
     df_index_week = pd.date_range("2000-1-30", periods=8, freq="W")
-    df_index_month = pd.date_range("2000-1-30", periods=8, freq="ME")
+    df_index_month = pd.date_range("2000-1-30", periods=8, freq=monthly)
 
     df_week = pd.DataFrame(
         {
@@ -176,7 +181,7 @@ def input_data():
         # Monthly returns
         "monthly_returns": pd.Series(
             np.array([0.0, 1.0, 10.0, -4.0, 2.0, 3.0, 2.0, 1.0, -10.0]) / 100,
-            index=pd.date_range("2000-1-30", periods=9, freq="ME"),
+            index=pd.date_range("2000-1-30", periods=9, freq=monthly),
         ),
         # Series of length 1
         "one_return": pd.Series(
@@ -214,7 +219,7 @@ def input_data():
         ),
         "flat_line_yearly": pd.Series(
             np.array([3.0, 3.0, 3.0]) / 100,
-            index=pd.date_range("2000-1-30", periods=3, freq="YE"),
+            index=pd.date_range("2000-1-30", periods=3, freq=annual),
         ),
         # Positive line
         "pos_line": pd.Series(
