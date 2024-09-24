@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from packaging.version import Version
 
-PANDAS22 = Version(pd.__version__) >= Version("2.22.0")
+PANDAS22 = Version(pd.__version__) >= Version("2.2.0")
 monthly = "ME" if PANDAS22 else "M"
 annual = "YE" if PANDAS22 else "A"
 
