@@ -17,9 +17,6 @@ on:
 jobs:
   dist:
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: read
-      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -52,6 +49,9 @@ jobs:
   upload_pypi:
     needs: [ dist ]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/download-artifact@v4
         with:
