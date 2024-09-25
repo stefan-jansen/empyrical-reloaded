@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
-
+from packaging.version import Version
 from empyrical.perf_attrib import perf_attrib
 
 TEST_DATA = Path(__file__).parent / "test_data"
@@ -183,11 +183,19 @@ class TestPerfAttrib:
             header=None,
         ).squeeze("columns")
 
-        factor_loadings = pd.read_csv(
-            TEST_DATA / "factor_loadings.csv",
-            index_col=[0, 1],
-            parse_dates=True,
-        )
+        if Version(pd.__version__) >= Version("2.0.0"):
+            factor_loadings = pd.read_csv(
+                TEST_DATA / "factor_loadings.csv",
+                index_col=[0, 1],
+                parse_dates=True,
+                date_format="%Y-%m-%d",
+            )
+        else:
+            factor_loadings = pd.read_csv(
+                TEST_DATA / "factor_loadings.csv",
+                index_col=[0, 1],
+                parse_dates=True,
+            )
 
         factor_returns = pd.read_csv(
             TEST_DATA / "factor_returns.csv",

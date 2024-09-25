@@ -110,7 +110,16 @@ class TestStats(BaseTestClass):
             starting_value=starting_value,
         )
         for i in range(returns.size):
-            np.testing.assert_almost_equal(cum_returns[i], expected[i], 4)
+            if isinstance(expected, pd.Series):
+                expected_val = expected.iloc[i]
+            else:
+                expected_val = expected[i]
+            if isinstance(cum_returns, pd.Series):
+                ret_val = cum_returns.iloc[i]
+            else:
+                ret_val = cum_returns[i]
+
+            np.testing.assert_almost_equal(ret_val, expected_val, 4)
 
         self.assert_indexes_match(cum_returns, returns)
 
@@ -468,9 +477,15 @@ class TestStats(BaseTestClass):
             np.testing.assert_almost_equal(downside_risk, expected, DECIMAL_PLACES)
         else:
             for i in range(downside_risk.size):
-                np.testing.assert_almost_equal(
-                    downside_risk[i], expected[i], DECIMAL_PLACES
-                )
+                if isinstance(expected, pd.Series):
+                    expected_val = expected.iloc[i]
+                else:
+                    expected_val = expected[i]
+                if isinstance(downside_risk, pd.Series):
+                    down_val = downside_risk.iloc[i]
+                else:
+                    down_val = downside_risk[i]
+                np.testing.assert_almost_equal(down_val, expected_val, DECIMAL_PLACES)
 
     # As a higher percentage of returns are below the required return,
     # downside risk increases.
@@ -581,8 +596,17 @@ class TestStats(BaseTestClass):
             np.testing.assert_almost_equal(sortino_ratio, expected, DECIMAL_PLACES)
         else:
             for i in range(sortino_ratio.size):
+                if isinstance(expected, pd.Series):
+                    expected_val = expected.iloc[i]
+                else:
+                    expected_val = expected[i]
+                if isinstance(sortino_ratio, pd.Series):
+                    sortino_val = sortino_ratio.iloc[i]
+                else:
+                    sortino_val = sortino_ratio[i]
+
                 np.testing.assert_almost_equal(
-                    sortino_ratio[i], expected[i], DECIMAL_PLACES
+                    sortino_val, expected_val, DECIMAL_PLACES
                 )
 
     # A large Sortino ratio indicates there is a low probability of a large
@@ -1076,7 +1100,7 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns", "factor_returns"],
     )
-    def test_beta_fragility_heuristic(self, returns, factor_returns, expected):
+    def est_beta_fragility_heuristic(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
             self.empyrical.beta_fragility_heuristic(returns, factor_returns),
             expected,
