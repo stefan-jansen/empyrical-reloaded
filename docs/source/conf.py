@@ -54,7 +54,7 @@ html_theme = "pydata_sphinx_theme"
 html_theme_path = pydata_sphinx_theme.get_html_theme_path()
 
 html_theme_options = {
-    "github_url": "https://github.com/stefan-jansen/emyrical-reloaded",
+    "github_url": "https://github.com/stefan-jansen/empyrical-reloaded",
     "twitter_url": "https://twitter.com/ml4trading",
     "external_links": [
         {"name": "ML for Trading", "url": "https://ml4trading.io"},
