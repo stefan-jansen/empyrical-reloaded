@@ -18,7 +18,7 @@ Common financial return and risk metrics in Python.
 
 ## Installation
 
-empyrical requires Python 3.9+. You can install it using `pip`:
+empyrical requires Python 3.10+. You can install it using `pip`:
 
 ```bash
 pip install empyrical-reloaded
