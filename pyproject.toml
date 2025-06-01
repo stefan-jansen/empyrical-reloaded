@@ -156,7 +156,7 @@ envlist =
     py310-pandas222-numpy2{0,1,2}
     py311-pandas222-numpy2{0,1,2}
     py312-pandas222-numpy2{0,1,2}
-    py313-pandas222-numpy2{0,1,2}
+    py313-pandas222-numpy2{1,2}
 
 isolated_build = True
 skip_missing_interpreters = True
