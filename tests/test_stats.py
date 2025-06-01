@@ -804,11 +804,28 @@ class TestStats(BaseTestClass):
             returns_arr = returns.values
             benchmark_arr = benchmark.values
             mask = ~np.isnan(returns_arr) & ~np.isnan(benchmark_arr)
-            slope, intercept, _, _, _ = stats.linregress(
-                benchmark_arr[mask], returns_arr[mask]
-            )
 
-            np.testing.assert_almost_equal(observed, intercept * 252, DECIMAL_PLACES)
+            masked_benchmark_data = benchmark_arr[mask]
+            masked_returns_data = returns_arr[mask]
+
+            if len(masked_benchmark_data) < 2:
+                with pytest.warns(
+                    RuntimeWarning,
+                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                ):
+                    slope, intercept, _, _, _ = stats.linregress(
+                        masked_benchmark_data, masked_returns_data
+                    )
+                    np.testing.assert_almost_equal(
+                        observed, intercept * 252, DECIMAL_PLACES
+                    )
+            else:
+                slope, intercept, _, _, _ = stats.linregress(
+                    masked_benchmark_data, masked_returns_data
+                )
+                np.testing.assert_almost_equal(
+                    observed, intercept * 252, DECIMAL_PLACES
+                )
 
     # Alpha/beta translation tests.
     @pytest.mark.parametrize(
@@ -954,18 +971,36 @@ class TestStats(BaseTestClass):
 
         if len(returns) == len(benchmark):
             # Compare to scipy linregress
-
+            effective_benchmark = benchmark
             if isinstance(benchmark, pd.DataFrame):
-                benchmark = benchmark["returns"]
+                effective_benchmark = benchmark["returns"]
 
             returns_arr = returns.values
-            benchmark_arr = benchmark.values
+            # Ensure benchmark_arr is derived from the potentially modified effective_benchmark
+            benchmark_arr = effective_benchmark.values
             mask = ~np.isnan(returns_arr) & ~np.isnan(benchmark_arr)
-            slope, intercept, _, _, _ = stats.linregress(
-                benchmark_arr[mask], returns_arr[mask]
-            )
 
-            np.testing.assert_almost_equal(observed, slope)
+            masked_benchmark_data = benchmark_arr[mask]
+            masked_returns_data = returns_arr[mask]
+
+            if len(masked_benchmark_data) < 2:
+                with pytest.warns(
+                    RuntimeWarning,
+                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                ):
+                    slope, intercept, _, _, _ = stats.linregress(
+                        masked_benchmark_data, masked_returns_data
+                    )
+                    np.testing.assert_almost_equal(
+                        observed, slope, decimal_places
+                    )  # Use decimal_places from params
+            else:
+                slope, intercept, _, _, _ = stats.linregress(
+                    masked_benchmark_data, masked_returns_data
+                )
+                np.testing.assert_almost_equal(
+                    observed, slope, decimal_places
+                )  # Use decimal_places from params
 
     @pytest.mark.parametrize(
         "returns, benchmark",
@@ -994,12 +1029,27 @@ class TestStats(BaseTestClass):
             returns_arr = returns.values
             benchmark_arr = benchmark.values
             mask = ~np.isnan(returns_arr) & ~np.isnan(benchmark_arr)
-            slope, intercept, _, _, _ = stats.linregress(
-                returns_arr[mask], benchmark_arr[mask]
-            )
 
-            np.testing.assert_almost_equal(alpha, intercept)
-            np.testing.assert_almost_equal(beta, slope)
+            # For this specific linregress call in the test: x = returns, y = benchmark
+            masked_returns_data_for_x = returns_arr[mask]
+            masked_benchmark_data_for_y = benchmark_arr[mask]
+
+            if len(masked_returns_data_for_x) < 2:
+                with pytest.warns(
+                    RuntimeWarning,
+                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                ):
+                    slope, intercept, _, _, _ = stats.linregress(
+                        masked_returns_data_for_x, masked_benchmark_data_for_y
+                    )
+                    np.testing.assert_almost_equal(alpha, intercept, DECIMAL_PLACES)
+                    np.testing.assert_almost_equal(beta, slope, DECIMAL_PLACES)
+            else:
+                slope, intercept, _, _, _ = stats.linregress(
+                    masked_returns_data_for_x, masked_benchmark_data_for_y
+                )
+                np.testing.assert_almost_equal(alpha, intercept, DECIMAL_PLACES)
+                np.testing.assert_almost_equal(beta, slope, DECIMAL_PLACES)
 
     @pytest.mark.parametrize(
         "returns, expected",
