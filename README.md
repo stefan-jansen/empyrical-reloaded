@@ -69,7 +69,7 @@ pip install empyrical-reloaded[yfinance,datreader]
 
 ### Simple Statistics
 
-Empyrical computes basic metrics from returns and volatility to alpha and beta, Value at Risk, and Shorpe or Sortino
+Empyrical computes basic metrics from returns and volatility to alpha and beta, Value at Risk, and Sharpe or Sortino
 ratios.
 
 ```python
