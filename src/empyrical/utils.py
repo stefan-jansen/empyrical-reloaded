@@ -176,15 +176,24 @@ def _roll_ndarray(func, window, *args, **kwargs):
 
 def _roll_pandas(func, window, *args, **kwargs):
     data = {}
-    index_values = []
+    positions = []
     for i in range(window, len(args[0]) + 1):
         rets = [s.iloc[i - window : i] for s in args]
         index_value = args[0].index[i - 1]
-        index_values.append(index_value)
+        positions.append(i - 1)
         data[index_value] = func(*rets, **kwargs)
+    # Index the result from a slice of the *original* index (by position,
+    # since positions is exactly the [window-1, window, ..., len-1] range)
+    # rather than reconstructing a fresh index from collected values.
+    # `type(args[0].index)(index_values)` drops dtype metadata like the
+    # datetime64 unit and freq when index_values is empty (an all-NaN or
+    # too-short input), producing an empty index with a different unit
+    # than the caller's - a real mismatch under pandas's per-call default
+    # datetime64 resolution, not just an empty-vs-empty formality.
+    result_index = args[0].index[positions]
     return pd.Series(
         data,
-        index=type(args[0].index)(index_values),
+        index=result_index,
         dtype=np.float64,
     )
 
