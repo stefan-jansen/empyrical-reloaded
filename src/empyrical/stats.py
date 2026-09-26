@@ -2080,6 +2080,14 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     CVaR : float
         The CVaR value.
     """
+    # Missing observations are excluded before the cutoff index is computed.
+    # Counted in len() and sorted to the top by np.partition, they would
+    # otherwise widen the averaged tail and pull CVaR towards zero.
+    returns = np.asarray(returns, dtype=float)
+    returns = returns[~np.isnan(returns)]
+    if len(returns) == 0:
+        return np.nan
+
     # PERF: Instead of using the 'value_at_risk' function to find the cutoff
     # value, which requires a call to numpy.percentile, determine the cutoff
     # index manually and partition out the lowest returns values. The value at
