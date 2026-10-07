@@ -1535,8 +1535,10 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
 
     # exclude any rows where returns are nan
     pairs = pairs.dropna()
-    # sort by beta
-    pairs = pairs.sort_values(by="factor_returns")
+    # Stable sort so tied factor returns keep chronological order.
+    # An unstable sort makes the three anchor points, and therefore the
+    # heuristic, depend on the pandas/numpy sort implementation.
+    pairs = pairs.sort_values(by="factor_returns", kind="mergesort")
 
     # find the three vectors, using median of 3
     start_index = 0

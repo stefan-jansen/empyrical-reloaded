@@ -1150,7 +1150,7 @@ class TestStats(BaseTestClass):
         ],
         indirect=["returns", "factor_returns"],
     )
-    def est_beta_fragility_heuristic(self, returns, factor_returns, expected):
+    def test_beta_fragility_heuristic(self, returns, factor_returns, expected):
         np.testing.assert_almost_equal(
             self.empyrical.beta_fragility_heuristic(returns, factor_returns),
             expected,
