@@ -1951,6 +1951,11 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
 
 
+def test_value_at_risk_empty_input_is_nan():
+    assert np.isnan(empyrical.value_at_risk(np.array([])))
+    assert np.isnan(empyrical.value_at_risk(pd.Series([], dtype=float)))
+
+
 def test_gpd_risk_estimates_accepts_scalar_tail_probability():
     """The public wrapper must forward var_p, not try to align it as a series."""
     returns = pd.Series(
