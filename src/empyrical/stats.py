@@ -234,7 +234,10 @@ def aggregate_returns(returns, convert_to):
         return cum_returns(x).iloc[-1]
 
     if convert_to == WEEKLY:
-        grouping = [lambda x: x.year, lambda x: x.isocalendar()[1]]
+        # ISO week numbers restart at the calendar year boundary, so pair
+        # them with the ISO year. Calendar year splits the week that
+        # contains 1 January.
+        grouping = [lambda x: x.isocalendar()[0], lambda x: x.isocalendar()[1]]
     elif convert_to == MONTHLY:
         grouping = [lambda x: x.year, lambda x: x.month]
     elif convert_to == QUARTERLY:
