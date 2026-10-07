@@ -1951,6 +1951,19 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
 
 
+def test_excess_sharpe_undefined_tracking_error_is_nan():
+    # One finite active return is not enough for a sample standard deviation.
+    returns = pd.Series([0.01, np.nan])
+    factor_returns = pd.Series([0.0, np.nan])
+    assert np.isnan(empyrical.excess_sharpe(returns, factor_returns))
+
+
+def test_excess_sharpe_zero_tracking_error_with_nonzero_active_is_inf():
+    returns = pd.Series([0.02, 0.02, 0.02])
+    factor_returns = pd.Series([0.01, 0.01, 0.01])
+    assert np.isinf(empyrical.excess_sharpe(returns, factor_returns))
+
+
 def test_aggregate_returns_weekly_keeps_iso_week_across_new_year():
     # 2019-12-30 is a Monday. That ISO week is 2020-W01 and includes 2 Jan.
     index = pd.to_datetime(["2019-12-30", "2019-12-31", "2020-01-02", "2020-01-03"])
