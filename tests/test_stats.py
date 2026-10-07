@@ -1951,6 +1951,24 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
 
 
+def test_roll_sharpe_ratio_window_longer_than_input_is_empty():
+    returns = pd.Series(
+        [0.01, -0.02, 0.03],
+        index=pd.date_range("2020-01-01", periods=3, freq="D"),
+    )
+    result = empyrical.roll_sharpe_ratio(returns, window=10)
+    assert len(result) == 0
+    pd.testing.assert_index_equal(result.index, returns.index[:0])
+    # The window that fits the series is still computed.
+    fitted = empyrical.roll_sharpe_ratio(returns, window=len(returns))
+    assert len(fitted) == 1
+    np.testing.assert_almost_equal(
+        fitted.iloc[0],
+        empyrical.sharpe_ratio(returns),
+        DECIMAL_PLACES,
+    )
+
+
 def test_drawdown_series_ndarray_has_one_value_per_return():
     values = np.array([0.10, -0.20, 0.05])
     as_array = empyrical.stats.drawdown_series(values)

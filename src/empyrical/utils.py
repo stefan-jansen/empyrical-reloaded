@@ -606,9 +606,11 @@ def _create_unary_vectorized_roll_function(function):
         """
         allocated_output = out is None
 
-        if len(arr):
+        # A window longer than the series is not a shorter window. Clamping
+        # it used to report a full-sample statistic under a longer label.
+        if window >= 1 and len(arr) >= window:
             out = function(
-                rolling_window(_flatten(arr), min(len(arr), window)).T,
+                rolling_window(_flatten(arr), window).T,
                 out=out,
                 **kwargs,
             )
@@ -616,7 +618,12 @@ def _create_unary_vectorized_roll_function(function):
             out = np.empty(0, dtype="float64")
 
         if allocated_output and isinstance(arr, pd.Series):
-            out = pd.Series(out, index=arr.index[-len(out) :])
+            # index[-0:] is index[0:], so an empty result must not use it.
+            if len(out) == 0:
+                index = arr.index[:0]
+            else:
+                index = arr.index[-len(out) :]
+            out = pd.Series(out, index=index)
 
         return out
 
@@ -655,10 +662,12 @@ def _create_binary_vectorized_roll_function(function):
         """
         allocated_output = out is None
 
-        if window >= 1 and len(lhs) and len(rhs):
+        # Both inputs must cover the requested window. Clamping each side
+        # independently produces windows of different lengths.
+        if window >= 1 and len(lhs) >= window and len(rhs) >= window:
             out = function(
-                rolling_window(_flatten(lhs), min(len(lhs), window)).T,
-                rolling_window(_flatten(rhs), min(len(rhs), window)).T,
+                rolling_window(_flatten(lhs), window).T,
+                rolling_window(_flatten(rhs), window).T,
                 out=out,
                 **kwargs,
             )
@@ -667,11 +676,15 @@ def _create_binary_vectorized_roll_function(function):
         else:
             out[()] = np.nan
 
-        if allocated_output:
-            if out.ndim == 1 and isinstance(lhs, pd.Series):
-                out = pd.Series(out, index=lhs.index[-len(out) :])
-            elif out.ndim == 2 and isinstance(lhs, pd.Series):
-                out = pd.DataFrame(out, index=lhs.index[-len(out) :])
+        if allocated_output and isinstance(lhs, pd.Series):
+            if len(out) == 0:
+                index = lhs.index[:0]
+            else:
+                index = lhs.index[-len(out) :]
+            if out.ndim == 1:
+                out = pd.Series(out, index=index)
+            elif out.ndim == 2:
+                out = pd.DataFrame(out, index=index)
         return out
 
     binary_vectorized_roll.__doc__ = binary_vectorized_roll.__doc__.format(
