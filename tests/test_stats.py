@@ -1951,6 +1951,23 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
 
 
+def test_sortino_ratio_dataframe_keeps_column_names():
+    returns = pd.DataFrame(
+        {
+            "a": [0.01, -0.02, 0.015, 0.01],
+            "b": [-0.01, 0.02, -0.03, 0.005],
+        }
+    )
+    result = empyrical.sortino_ratio(returns)
+    pd.testing.assert_index_equal(result.index, returns.columns)
+    np.testing.assert_almost_equal(
+        result["a"], empyrical.sortino_ratio(returns["a"]), DECIMAL_PLACES
+    )
+    np.testing.assert_almost_equal(
+        result["b"], empyrical.sortino_ratio(returns["b"]), DECIMAL_PLACES
+    )
+
+
 def test_downside_risk_aligns_required_return_by_index():
     index = pd.to_datetime(["2020-01-02", "2020-01-01"])
     returns = pd.Series([0.05, -0.04], index=index)
