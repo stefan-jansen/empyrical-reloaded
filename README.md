@@ -237,32 +237,9 @@ Please [open an issue](https://github.com/stefan-jansen/empyrical-reloaded/issue
 
 ## Contributing
 
-Empyrical Reloaded accepts bug, security, and compatibility fixes. Direct new feature
-requests to the current ML4T libraries.
-
-Search existing issues before opening one. Each issue should describe one problem.
-For bugs, include the package version, environment, expected and observed behavior,
-and a small, complete reproduction. Discuss substantial changes in the owning issue
-before implementing them.
-
-Use [Github Flow](https://guides.github.com/introduction/flow/). Create a branch and
-[open a focused pull request](https://github.com/stefan-jansen/empyrical-reloaded/compare/)
-with a closing reference to its issue, such as `Closes #123`. Keep unrelated fixes,
-refactors, and formatting changes separate. Automated dependency updates and
-administrative metadata changes do not require a separate issue.
-
-For a bug fix, include a regression through the public API or affected workflow
-that fails on the relevant base revision and passes with the fix. Report both
-revisions, commands, and results, including the repository's test and documentation
-checks relevant to the change. Correct verified numerical defects even when existing
-outputs change. Agree on changes to intended definitions or defaults in the owning
-issue and document their compatibility impact.
-
-Disclose whether you used AI tools and which parts they helped produce. Review and
-test the submission yourself, and be able to explain the code and evidence. Wait
-for feedback on your first focused contribution before opening a large series of
-similar PRs. Maintainers may ask for bundled changes to be split or incomplete
-submissions to be completed, or close them pending a focused resubmission.
+Empyrical Reloaded accepts bug, security, and compatibility fixes. Read the
+[contribution guide](https://github.com/stefan-jansen/empyrical-reloaded/blob/main/CONTRIBUTING.md)
+for issue scope, regression evidence, review checks, and AI disclosure requirements.
 
 ## Testing
 
