@@ -1,4 +1,5 @@
 from copy import copy
+import warnings
 from operator import attrgetter
 
 import numpy as np
@@ -1561,6 +1562,17 @@ class TestStats(BaseTestClass):
             )
 
         assert np.isnan(conditional_value_at_risk(np.array([np.nan, np.nan])))
+
+    def test_conditional_value_at_risk_empty(self):
+        conditional_value_at_risk = self.empyrical.conditional_value_at_risk
+
+        # Empty input returns NaN directly rather than through the mean of an
+        # empty slice, so no RuntimeWarning is raised.
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            for empty in (np.array([]), pd.Series([], dtype=float), []):
+                for cutoff in (0, 0.05, 1):
+                    assert np.isnan(conditional_value_at_risk(empty, cutoff))
 
     @property
     def empyrical(self):
