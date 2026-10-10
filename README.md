@@ -16,6 +16,13 @@
 
 Common financial return and risk metrics in Python.
 
+## Maintenance and new projects
+
+We continue to maintain Empyrical Reloaded for bug, security, and compatibility fixes.
+Our new development focuses on [ML4T Diagnostic](https://github.com/ml4t/diagnostic),
+part of the [ML4T libraries](https://www.ml4trading.io/).
+For new projects, start with the [Diagnostic documentation](https://www.ml4trading.io/docs/diagnostic/).
+
 ## Installation
 
 empyrical requires Python 3.10+. You can install it using `pip`:
