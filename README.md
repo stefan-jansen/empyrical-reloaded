@@ -237,8 +237,9 @@ Please [open an issue](https://github.com/stefan-jansen/empyrical-reloaded/issue
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits,
-and [open a pull request](https://github.com/stefan-jansen/empyrical-reloaded/compare/).
+Empyrical Reloaded accepts bug, security, and compatibility fixes. Read the
+[contribution guide](https://github.com/stefan-jansen/empyrical-reloaded/blob/main/CONTRIBUTING.md)
+for issue scope, regression evidence, review checks, and AI disclosure requirements.
 
 ## Testing
 
