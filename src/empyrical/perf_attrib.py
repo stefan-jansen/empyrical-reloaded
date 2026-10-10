@@ -120,7 +120,7 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
 
     return (
         risk_exposures_portfolio,
-        pd.concat([perf_attrib_by_factor, returns_df], axis="columns"),
+        pd.concat([perf_attrib_by_factor, returns_df], axis="columns", sort=False),
     )
 
 
