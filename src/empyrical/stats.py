@@ -1647,11 +1647,7 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         DEFAULT_THRESHOLD = 0.2
         MINIMUM_THRESHOLD = 0.000000001
 
-        try:
-            returns_array = pd.Series(returns).to_numpy()
-        except AttributeError:
-            # while zipline requires support for pandas < 0.25
-            returns_array = pd.Series(returns).as_matrix()
+        returns_array = pd.Series(returns).to_numpy()
 
         flipped_returns = -1 * returns_array
         losses = flipped_returns[flipped_returns > 0]
