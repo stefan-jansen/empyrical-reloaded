@@ -1607,7 +1607,8 @@ def gpd_risk_estimates(returns, var_p=0.01):
         if isinstance(returns, pd.Series):
             result = pd.Series(result)
         return result
-    return gpd_risk_estimates_aligned(*_aligned_series(returns, var_p))
+    # var_p is a scalar tail probability, not a second return series.
+    return gpd_risk_estimates_aligned(returns, var_p)
 
 
 def gpd_risk_estimates_aligned(returns, var_p=0.01):
