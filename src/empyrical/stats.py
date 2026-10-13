@@ -748,7 +748,7 @@ def sortino_ratio(
     if return_1d:
         out = out.item()
     elif isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     return out
 
