@@ -2117,3 +2117,10 @@ def test_drawdown_series_ndarray_has_one_value_per_return():
         empyrical.max_drawdown(pd.Series(values)),
         DECIMAL_PLACES,
     )
+
+
+def test_downside_risk_ndarray_accepts_series_thresholds():
+    returns = np.array([[0.05, 0.01], [-0.04, -0.03]])
+    thresholds = pd.Series([0.0, 0.02], index=["a", "b"])
+    actual = empyrical.downside_risk(returns, thresholds, annualization=1)
+    np.testing.assert_allclose(actual, [np.sqrt(0.0008), np.sqrt(0.0013)])

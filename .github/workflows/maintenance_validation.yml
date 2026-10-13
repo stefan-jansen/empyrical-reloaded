@@ -35,9 +35,20 @@ jobs:
         with:
           name: probe-${{ matrix.os }}-${{ matrix.python-version }}
           path: probe.txt
+
+  artifact-handoff:
+    needs: supported-tests
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/download-artifact@v7
         with:
-          name: probe-${{ matrix.os }}-${{ matrix.python-version }}
+          pattern: probe-*
           path: downloaded-probe
-      - name: Verify downloaded content
-        run: python -c "from pathlib import Path; assert Path('downloaded-probe/probe.txt').read_text() == 'empyrical-artifact-roundtrip\n'"
+      - name: Verify completed producer artifacts
+        run: |
+          python - <<'PYTHON'
+          from pathlib import Path
+          probes = list(Path("downloaded-probe").glob("probe-*/probe.txt"))
+          assert len(probes) == 10, probes
+          assert all(p.read_text() == "empyrical-artifact-roundtrip\n" for p in probes)
+          PYTHON

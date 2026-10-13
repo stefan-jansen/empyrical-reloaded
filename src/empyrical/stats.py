@@ -821,6 +821,9 @@ def downside_risk(
 
     ann_factor = annualization_factor(period, annualization)
 
+    if isinstance(returns, np.ndarray):
+        required_return = np.asanyarray(required_return)
+
     # Align a required-return series to the returns index before converting
     # to an array. Converting first subtracts by position, so a differently
     # ordered index silently pairs the wrong days. Sortino's numerator
