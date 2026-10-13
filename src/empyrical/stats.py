@@ -234,7 +234,10 @@ def aggregate_returns(returns, convert_to):
         return cum_returns(x).iloc[-1]
 
     if convert_to == WEEKLY:
-        grouping = [lambda x: x.year, lambda x: x.isocalendar()[1]]
+        # ISO week numbers restart at the calendar year boundary, so pair
+        # them with the ISO year. Calendar year splits the week that
+        # contains 1 January.
+        grouping = [lambda x: x.isocalendar()[0], lambda x: x.isocalendar()[1]]
     elif convert_to == MONTHLY:
         grouping = [lambda x: x.year, lambda x: x.month]
     elif convert_to == QUARTERLY:
@@ -294,6 +297,9 @@ def drawdown_series(returns, out=None):
 
     np.divide((out - max_return), max_return, out=out)
 
+    # out[0] is the starting point used to anchor the running peak. The
+    # drawdown series itself has one value per return. Series and DataFrame
+    # inputs already dropped that anchor; ndarray inputs returned it too.
     if returns.ndim == 1 and isinstance(returns, pd.Series):
         out = pd.Series(out[1:], index=returns.index)
     elif isinstance(returns, pd.DataFrame):
@@ -302,6 +308,8 @@ def drawdown_series(returns, out=None):
             index=returns.index,
             columns=returns.columns,
         )
+    else:
+        out = out[1:]
 
     return out
 
@@ -748,7 +756,7 @@ def sortino_ratio(
     if return_1d:
         out = out.item()
     elif isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     return out
 
@@ -813,11 +821,12 @@ def downside_risk(
 
     ann_factor = annualization_factor(period, annualization)
 
+    # Align a required-return series to the returns index before converting
+    # to an array. Converting first subtracts by position, so a differently
+    # ordered index silently pairs the wrong days. Sortino's numerator
+    # already aligns; the denominator has to use the same days.
     downside_diff = np.clip(
-        _adjust_returns(
-            np.asanyarray(returns),
-            np.asanyarray(required_return),
-        ),
+        np.asanyarray(_adjust_returns(returns, required_return)),
         -np.inf,
         0,
     )
@@ -884,9 +893,10 @@ def excess_sharpe(returns, factor_returns, out=None):
         return out
 
     active_return = _adjust_returns(returns, factor_returns)
-    tracking_error = np.nan_to_num(nanstd(active_return, ddof=1, axis=0))
+    tracking_error = nanstd(active_return, ddof=1, axis=0)
 
-    # Silence divide warnings
+    # Leave an undefined (NaN) tracking error as NaN. Replacing it with 0
+    # turns "not enough observations" into infinity.
     with np.errstate(divide="ignore", invalid="ignore"):
         out = np.divide(
             nanmean(active_return, axis=0, out=out),
@@ -1608,7 +1618,8 @@ def gpd_risk_estimates(returns, var_p=0.01):
         if isinstance(returns, pd.Series):
             result = pd.Series(result)
         return result
-    return gpd_risk_estimates_aligned(*_aligned_series(returns, var_p))
+    # var_p is a scalar tail probability, not a second return series.
+    return gpd_risk_estimates_aligned(returns, var_p)
 
 
 def gpd_risk_estimates_aligned(returns, var_p=0.01):
@@ -1649,11 +1660,7 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         DEFAULT_THRESHOLD = 0.2
         MINIMUM_THRESHOLD = 0.000000001
 
-        try:
-            returns_array = pd.Series(returns).to_numpy()
-        except AttributeError:
-            # while zipline requires support for pandas < 0.25
-            returns_array = pd.Series(returns).as_matrix()
+        returns_array = pd.Series(returns).to_numpy()
 
         flipped_returns = -1 * returns_array
         losses = flipped_returns[flipped_returns > 0]
@@ -2061,6 +2068,8 @@ def value_at_risk(returns, cutoff=0.05):
     VaR : float
         The VaR value.
     """
+    if len(returns) < 1:
+        return np.nan
     return np.percentile(returns, 100 * cutoff)
 
 
@@ -2075,7 +2084,9 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Parameters
     ----------
     returns : pandas.Series or 1-D numpy.array
-        Non-cumulative daily returns.
+        Non-cumulative daily returns. NaN values are omitted, including when
+        the size of the tail is chosen, so the result is the same as for the
+        returns with the NaNs removed.
     cutoff : float, optional
         Decimal representing the percentage cutoff for the bottom percentile of
         returns. Defaults to 0.05.
@@ -2083,8 +2094,16 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Returns
     -------
     CVaR : float
-        The CVaR value.
+        The CVaR value. NaN if ``returns`` is empty or contains only NaN.
     """
+    # Missing observations are excluded before the cutoff index is computed.
+    # Counted in len() and sorted to the top by np.partition, they would
+    # otherwise widen the averaged tail and pull CVaR towards zero.
+    returns = np.asarray(returns, dtype=float)
+    returns = returns[~np.isnan(returns)]
+    if len(returns) == 0:
+        return np.nan
+
     # PERF: Instead of using the 'value_at_risk' function to find the cutoff
     # value, which requires a call to numpy.percentile, determine the cutoff
     # index manually and partition out the lowest returns values. The value at

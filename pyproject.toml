@@ -43,7 +43,7 @@ dependencies = [
     "pandas >=1.5.0",
     "pytz",
     "scipy >=0.15.1",
-    "peewee<3.17.4" # awwaiting bugfix in latest version: https://github.com/coleifer/peewee/issues/2891
+    "peewee"
 ]
 
 [project.urls]
