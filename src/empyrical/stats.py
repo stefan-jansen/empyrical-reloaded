@@ -813,11 +813,12 @@ def downside_risk(
 
     ann_factor = annualization_factor(period, annualization)
 
+    # Align a required-return series to the returns index before converting
+    # to an array. Converting first subtracts by position, so a differently
+    # ordered index silently pairs the wrong days. Sortino's numerator
+    # already aligns; the denominator has to use the same days.
     downside_diff = np.clip(
-        _adjust_returns(
-            np.asanyarray(returns),
-            np.asanyarray(required_return),
-        ),
+        np.asanyarray(_adjust_returns(returns, required_return)),
         -np.inf,
         0,
     )
