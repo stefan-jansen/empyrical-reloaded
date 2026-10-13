@@ -294,6 +294,9 @@ def drawdown_series(returns, out=None):
 
     np.divide((out - max_return), max_return, out=out)
 
+    # out[0] is the starting point used to anchor the running peak. The
+    # drawdown series itself has one value per return. Series and DataFrame
+    # inputs already dropped that anchor; ndarray inputs returned it too.
     if returns.ndim == 1 and isinstance(returns, pd.Series):
         out = pd.Series(out[1:], index=returns.index)
     elif isinstance(returns, pd.DataFrame):
@@ -302,6 +305,8 @@ def drawdown_series(returns, out=None):
             index=returns.index,
             columns=returns.columns,
         )
+    else:
+        out = out[1:]
 
     return out
 
