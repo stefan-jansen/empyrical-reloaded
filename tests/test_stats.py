@@ -1581,6 +1581,34 @@ class TestStatsArrays(TestStats):
 
     """
 
+    @pytest.mark.parametrize(
+        "prices, dtype, expected",
+        [
+            ([100, 110, 121], np.int64, [0.1, 0.1]),
+            ([250, 5, 10], np.uint8, [-0.98, 1.0]),
+            ([-128, 127, -128], np.int8, [-255 / 128, -255 / 127]),
+            (
+                [[100, 200], [110, 180], [121, 162]],
+                np.int64,
+                [[0.1, -0.1], [0.1, -0.1]],
+            ),
+            ([0, 0, 10, 0], np.int64, [np.nan, np.inf, -1.0]),
+        ],
+    )
+    def test_simple_returns_integer_prices(self, prices, dtype, expected):
+        prices = np.array(prices, dtype=dtype)
+        result = self.empyrical.simple_returns(prices)
+        np.testing.assert_allclose(result, expected)
+        assert np.issubdtype(result.dtype, np.floating)
+
+    @pytest.mark.parametrize("shape", [(0,), (1,), (0, 2), (1, 2)])
+    def test_simple_returns_integer_prices_no_periods(self, shape):
+        prices = np.ones(shape, dtype=np.int64)
+        result = self.empyrical.simple_returns(prices)
+        expected = np.empty((0,) + shape[1:])
+        np.testing.assert_array_equal(result, expected)
+        assert np.issubdtype(result.dtype, np.floating)
+
     @property
     def empyrical(self):
         return PassArraysEmpyricalProxy(self, (np.ndarray, float))
