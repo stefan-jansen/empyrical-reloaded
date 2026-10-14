@@ -1601,6 +1601,27 @@ class TestStatsArrays(TestStats):
         np.testing.assert_allclose(result, expected)
         assert np.issubdtype(result.dtype, np.floating)
 
+    @pytest.mark.parametrize(
+        "prices, dtype, expected",
+        [
+            ([2**53, 2**53 + 1], np.int64, [1 / 2**53]),
+            ([2**63 - 2, 2**63 - 1], np.int64, [1 / (2**63 - 2)]),
+            ([2**64 - 2, 2**64 - 1], np.uint64, [1 / (2**64 - 2)]),
+            ([2**64 - 1, 2**64 - 2], np.uint64, [-1 / (2**64 - 1)]),
+            (
+                [[2**53, 2**53 + 1], [2**53 + 1, 2**53]],
+                np.int64,
+                [[1 / 2**53, -1 / (2**53 + 1)]],
+            ),
+        ],
+    )
+    def test_simple_returns_integer_prices_preserve_one_tick_changes(
+        self, prices, dtype, expected
+    ):
+        prices = np.array(prices, dtype=dtype)
+        result = self.empyrical.simple_returns(prices)
+        np.testing.assert_allclose(result, expected, rtol=1e-15, atol=0)
+
     @pytest.mark.parametrize("shape", [(0,), (1,), (0, 2), (1, 2)])
     def test_simple_returns_integer_prices_no_periods(self, shape):
         prices = np.ones(shape, dtype=np.int64)

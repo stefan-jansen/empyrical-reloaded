@@ -94,7 +94,7 @@ def simple_returns(prices):
     prices : pd.Series, pd.DataFrame or np.ndarray
         Prices of assets in wide-format, with assets as columns,
         and indexed by datetimes. Integer ndarray prices are supported;
-        their differences and returns are computed in floating point.
+        their differences are computed exactly before conversion to floating point.
 
     Returns
     -------
@@ -108,7 +108,7 @@ def simple_returns(prices):
     else:
         # Assume np.ndarray
         if isinstance(prices, np.ndarray) and np.issubdtype(prices.dtype, np.integer):
-            out = np.subtract(prices[1:], prices[:-1], dtype=np.float64)
+            out = np.diff(prices.astype(object), axis=0).astype(np.float64)
         else:
             out = np.diff(prices, axis=0)
 
