@@ -27,7 +27,9 @@ which includes a runnable metric comparison and explains differences in defaults
 
 ## Installation
 
-empyrical requires Python 3.10+. You can install it using `pip`:
+Empyrical Reloaded supports Python 3.11 through 3.15. Python 3.9 and 3.10 are retired
+for this release; historical packages retain their original Python requirements.
+You can install it using `pip`:
 
 ```bash
 pip install empyrical-reloaded
@@ -39,11 +41,7 @@ or `conda` from the `conda-forge` channel
 conda install empyrical-reloaded -c conda-forge
 ```
 
-empyrical requires and installs the following packages while executing the above commands:
-
-- numpy>=1.23.5
-- pandas>=1.3.0
-- scipy>=0.15.1
+The installer provides NumPy, pandas, SciPy and the other declared runtime dependencies.
 
 > Note that Numpy>=2.0 requires pandas>=2.2.2. If you are using an older version of pandas, you may need to upgrade
 > accordingly, otherwise you may encounter compatibility issues.
@@ -65,13 +63,13 @@ pip install empyrical-reloaded[yfinance]
 or
 
 ```bash
-pip install empyrical-reloaded[datreader]
+pip install empyrical-reloaded[datareader]
 ```
 
 or
 
 ```bash
-pip install empyrical-reloaded[yfinance,datreader]
+pip install empyrical-reloaded[yfinance,datareader]
 ```
 
 ## Usage
