@@ -38,8 +38,12 @@ def test_batting_average_excludes_missing_return_pairs(as_array):
 
 
 def test_batting_average_aligns_strategy_and_benchmark_dates():
-    returns = pd.Series([0.02, 0.03], index=pd.to_datetime(["2024-01-02", "2024-01-03"]))
-    benchmark = pd.Series([0.01, -0.02], index=pd.to_datetime(["2024-01-02", "2024-01-04"]))
+    returns = pd.Series(
+        [0.02, 0.03], index=pd.to_datetime(["2024-01-02", "2024-01-03"])
+    )
+    benchmark = pd.Series(
+        [0.01, -0.02], index=pd.to_datetime(["2024-01-02", "2024-01-04"])
+    )
 
     result = empyrical.batting_average(returns, benchmark)
 
