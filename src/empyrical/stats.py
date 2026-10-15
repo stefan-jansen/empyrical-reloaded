@@ -1199,7 +1199,7 @@ def alpha_aligned(
     )
 
     if allocated_output and isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     if returns.ndim == 1:
         out = out.item()
