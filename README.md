@@ -52,8 +52,6 @@ and [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/) to
 access [Fama-French](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) risk factors and FRED
 treasury yields.
 
-> Note that `pandas-datareader` is not compatible with Python>=3.12.
-
 To install the optional dependencies, use:
 
 ```bash
