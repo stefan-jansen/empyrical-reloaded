@@ -22,3 +22,19 @@ def test_downside_risk_ndarray_accepts_series_thresholds():
     thresholds = pd.Series([0.0, 0.02], index=["a", "b"])
     actual = empyrical.downside_risk(returns, thresholds, annualization=1)
     np.testing.assert_allclose(actual, [np.sqrt(0.0008), np.sqrt(0.0013)])
+
+
+def test_downside_risk_omits_dates_without_a_required_return():
+    dates = pd.date_range("2020-01-01", periods=3)
+    returns = pd.Series([-0.03, 0.04, -0.02], index=dates)
+    required_return = pd.Series([0.02, 0.04], index=dates[:2])
+    result = empyrical.downside_risk(
+        returns, required_return=required_return, annualization=1
+    )
+    np.testing.assert_allclose(result, np.sqrt(0.0025 / 2))
+    control = empyrical.downside_risk(
+        np.array([-0.03, 0.04, np.nan]),
+        required_return=np.array([0.02, 0.04, np.nan]),
+        annualization=1,
+    )
+    np.testing.assert_allclose(result, control)
