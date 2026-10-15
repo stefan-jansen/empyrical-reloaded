@@ -1919,12 +1919,13 @@ def batting_average(returns, factor_returns):
     Returns
     -------
     batting_average : pd.Series
-        Batting average, up market and down market averages.
-        Nonfinite active or benchmark returns are omitted. Series are aligned
-        by date. An empty subset produces NaN.
+        batting average, up market, down market
 
     Note
     ----
+    Observations with nonfinite active or benchmark returns are omitted.
+    Series are aligned by date. An empty subset produces NaN.
+
     See https://www.investopedia.com/terms/b/batting-average.asp for
     more information.
     """

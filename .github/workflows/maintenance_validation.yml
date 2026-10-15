@@ -2,7 +2,7 @@ name: Maintenance candidate validation
 
 on:
   push:
-    branches: [codex/maintenance-release-candidate, codex/python311-support]
+    branches: [codex/maintenance-release-candidate, codex/python311-support, codex/maintenance-validation]
 
 jobs:
   supported-tests:
