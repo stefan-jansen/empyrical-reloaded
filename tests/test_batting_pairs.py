@@ -23,7 +23,7 @@ def test_mixed_series_and_array_excludes_missing_pairs():
 
 
 def test_nonfinite_returns_from_price_pipeline_do_not_count_as_wins():
-    with pytest.warns(RuntimeWarning, match="divide by zero"):
-        returns = empyrical.simple_returns(np.array([1.0, 1.0, 0.0, 1.0, 1.0]))
+    returns = empyrical.simple_returns(np.array([1.0, 1.0, 0.0, 1.0, 1.0]))
+    assert np.isinf(returns[2])
     result = empyrical.batting_average(returns, np.array([0.01, -1.0, 0.01, -0.01]))
     np.testing.assert_allclose(result.to_numpy(), [1.0 / 3.0, 0.0, 0.5])
