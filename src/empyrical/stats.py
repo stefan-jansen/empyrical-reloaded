@@ -269,7 +269,8 @@ def drawdown_series(returns, out=None):
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     out : array-like, optional
-        Array to use as output buffer.
+        Array with shape (len(returns) + 1,) + returns.shape[1:]. The first
+        row stores the initial anchor; the returned series omits that row.
         If not passed, a new array will be created.
 
     Returns
