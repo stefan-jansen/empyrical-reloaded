@@ -838,7 +838,10 @@ class TestStats(BaseTestClass):
             if len(masked_benchmark_data) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_benchmark_data, masked_returns_data
@@ -1013,7 +1016,10 @@ class TestStats(BaseTestClass):
             if len(masked_benchmark_data) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_benchmark_data, masked_returns_data
@@ -1064,7 +1070,10 @@ class TestStats(BaseTestClass):
             if len(masked_returns_data_for_x) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_returns_data_for_x, masked_benchmark_data_for_y
