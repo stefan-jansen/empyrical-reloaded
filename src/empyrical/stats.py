@@ -1535,6 +1535,8 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
 
     # exclude any rows where returns are nan
     pairs = pairs.dropna()
+    if len(pairs) < 3:
+        return np.nan
     # sort by beta
     pairs = pairs.sort_values(by="factor_returns")
 
