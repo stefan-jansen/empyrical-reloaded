@@ -441,6 +441,11 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
         Returns of symbol in requested period.
     """
 
+    if yf is None:
+        raise ImportError(
+            "Install empyrical-reloaded[yfinance] to fetch Yahoo Finance data"
+        )
+
     try:
 
         px = yf.download(symbol, start=start, end=end)
@@ -450,6 +455,7 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
             "Yahoo Finance read failed: {}".format(e),
             UserWarning,
         )
+        raise
 
     rets.index = rets.index.tz_localize("UTC")
     rets.columns = [symbol]
