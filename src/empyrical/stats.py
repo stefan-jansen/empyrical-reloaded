@@ -228,6 +228,8 @@ def aggregate_returns(returns, convert_to):
     Returns
     -------
     aggregated_returns : pd.Series
+        Weekly result keys are (ISO year, ISO week), including weeks that
+        cross a calendar-year boundary.
     """
 
     def cumulate_returns(x):
