@@ -1540,7 +1540,7 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
 
     # find the three vectors, using median of 3
     start_index = 0
-    mid_index = int(np.around(len(pairs) / 2, 0))
+    mid_index = len(pairs) // 2
     end_index = len(pairs) - 1
 
     (start_returns, start_factor_returns) = pairs.iloc[start_index]
@@ -1555,10 +1555,10 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
     # using a convex combination
     if not factor_returns_range == 0:
         start_returns_weight = (
-            mid_factor_returns - start_factor_returns
+            end_factor_returns - mid_factor_returns
         ) / factor_returns_range
         end_returns_weight = (
-            end_factor_returns - mid_factor_returns
+            mid_factor_returns - start_factor_returns
         ) / factor_returns_range
 
     # calculate fragility heuristic
