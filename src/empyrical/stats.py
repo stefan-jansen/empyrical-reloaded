@@ -1888,9 +1888,6 @@ def up_down_capture(returns, factor_returns, **kwargs):
 def batting_average(returns, factor_returns):
     """
     Computes the batting average.
-    Observations with nonfinite active or benchmark returns are omitted.
-    Series are aligned by date. Each average is NaN when its subset is empty.
-
     Parameters
     ----------
     returns : pd.Series or np.ndarray
@@ -1903,7 +1900,9 @@ def batting_average(returns, factor_returns):
     Returns
     -------
     batting_average : pd.Series
-        batting average, up market, down market
+        Batting average, up market and down market averages.
+        Nonfinite active or benchmark returns are omitted. Series are aligned
+        by date. An empty subset produces NaN.
     Note
     ----
     See https://www.investopedia.com/terms/b/batting-average.asp for
