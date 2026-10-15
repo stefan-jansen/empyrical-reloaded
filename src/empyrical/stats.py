@@ -784,7 +784,9 @@ def downside_risk(
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     required_return: float / series
-        minimum acceptable return
+        Minimum acceptable return. For Series returns, a Series threshold
+        aligns by date. Dates missing from either series are omitted, as
+        with other missing observations.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
