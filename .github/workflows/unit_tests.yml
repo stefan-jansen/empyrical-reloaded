@@ -33,4 +33,4 @@ jobs:
 
       - name: Unittests with tox & pytest
         run: |
-          tox -e ci_full_tests
+          tox
