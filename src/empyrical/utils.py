@@ -441,7 +441,7 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
 
     try:
 
-        px = yf.download(symbol, start=start, end=end)
+        px = yf.download(symbol, start=start, end=end, auto_adjust=False)
         rets = px[["Adj Close"]].pct_change().dropna()
     except Exception as e:
         warnings.warn(
