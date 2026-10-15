@@ -284,6 +284,8 @@ def get_fama_french(
     df = [ff_function(dataset)[0] for dataset in datasets]
     df = pd.concat(df, axis=1).dropna().div(100).rename(columns=str.strip)
 
+    if isinstance(df.index, pd.PeriodIndex):
+        df.index = df.index.to_timestamp()
     df.index = df.index.tz_localize("utc")
     return df
 
