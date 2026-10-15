@@ -25,7 +25,7 @@ from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
 from pytz import UTC
 
-try:  # incompatible with Python 3.12
+try:
     from pandas_datareader import data as web
 except ImportError:
     web = None
