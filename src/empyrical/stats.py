@@ -1934,6 +1934,11 @@ def batting_average(returns, factor_returns):
         }
     )
     active_return = _adjust_returns(returns, factor_returns)
+    if isinstance(active_return, pd.Series) and isinstance(factor_returns, pd.Series):
+        factor_returns = factor_returns.reindex(active_return.index)
+    valid = np.isfinite(active_return) & np.isfinite(factor_returns)
+    active_return = active_return[valid]
+    factor_returns = factor_returns[valid]
     bt = active_return > 0
     up = active_return[factor_returns >= 0.0] > 0
     down = active_return[factor_returns < 0.0] > 0
