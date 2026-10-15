@@ -1888,6 +1888,9 @@ def up_down_capture(returns, factor_returns, **kwargs):
 def batting_average(returns, factor_returns):
     """
     Computes the batting average.
+    Observations with nonfinite active or benchmark returns are omitted.
+    Series are aligned by date. Each average is NaN when its subset is empty.
+
     Parameters
     ----------
     returns : pd.Series or np.ndarray
