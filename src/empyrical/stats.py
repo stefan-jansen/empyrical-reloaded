@@ -2062,6 +2062,8 @@ def value_at_risk(returns, cutoff=0.05):
     VaR : float
         The VaR value.
     """
+    if np.size(returns) < 1:
+        return np.nan
     return np.percentile(returns, 100 * cutoff)
 
 
