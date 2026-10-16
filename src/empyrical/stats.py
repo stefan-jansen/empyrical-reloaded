@@ -773,7 +773,9 @@ def downside_risk(
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     required_return: float / series
-        minimum acceptable return
+        Minimum acceptable return. For Series returns, a Series threshold
+        aligns by date. Dates missing from either series are omitted, as
+        with other missing observations.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
@@ -818,11 +820,15 @@ def downside_risk(
 
     ann_factor = annualization_factor(period, annualization)
 
+    if isinstance(returns, np.ndarray):
+        required_return = np.asanyarray(required_return)
+
+    # Align a required-return series to the returns index before converting
+    # to an array. Converting first subtracts by position, so a differently
+    # ordered index silently pairs the wrong days. Sortino's numerator
+    # already aligns; the denominator has to use the same days.
     downside_diff = np.clip(
-        _adjust_returns(
-            np.asanyarray(returns),
-            np.asanyarray(required_return),
-        ),
+        np.asanyarray(_adjust_returns(returns, required_return)),
         -np.inf,
         0,
     )
