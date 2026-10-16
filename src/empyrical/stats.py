@@ -889,9 +889,10 @@ def excess_sharpe(returns, factor_returns, out=None):
         return out
 
     active_return = _adjust_returns(returns, factor_returns)
-    tracking_error = np.nan_to_num(nanstd(active_return, ddof=1, axis=0))
+    tracking_error = nanstd(active_return, ddof=1, axis=0)
 
-    # Silence divide warnings
+    # Leave an undefined (NaN) tracking error as NaN. Replacing it with 0
+    # turns "not enough observations" into infinity.
     with np.errstate(divide="ignore", invalid="ignore"):
         out = np.divide(
             nanmean(active_return, axis=0, out=out),
