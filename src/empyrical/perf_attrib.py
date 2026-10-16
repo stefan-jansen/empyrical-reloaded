@@ -18,14 +18,18 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
     ----------
     returns : pd.Series
         Returns for each day in the date range.
-        - Example:
+
+        Example::
+
             2017-01-01   -0.017098
             2017-01-02    0.002683
             2017-01-03   -0.008669
 
     positions: pd.Series
         Daily holdings in percentages, indexed by date.
-        - Examples:
+
+        Example::
+
             dt          ticker
             2017-01-01  AAPL      0.417582
                         TLT       0.010989
@@ -36,7 +40,9 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
 
     factor_returns : pd.DataFrame
         Returns by factor, with date as index and factors as columns
-        - Example:
+
+        Example::
+
                         momentum  reversal
             2017-01-01  0.002779 -0.005453
             2017-01-02  0.001096  0.010290
@@ -44,7 +50,9 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
     factor_loadings : pd.DataFrame
         Factor loadings for all days in the date range, with date and ticker as
         index, and factors as columns.
-        - Example:
+
+        Example::
+
                                momentum  reversal
             dt         ticker
             2017-01-01 AAPL   -1.592914  0.852830
@@ -60,7 +68,9 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
 
     risk_exposures_portfolio : pd.DataFrame
         df indexed by datetime, with factors as columns
-        - Example:
+
+        Example::
+
                         momentum  reversal
             dt
             2017-01-01 -0.238655  0.077123
@@ -69,7 +79,9 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
     perf_attribution : pd.DataFrame
         df with factors, common returns, and specific returns as columns,
         and datetimes as index
-        - Example:
+
+        Example::
+
                         momentum  reversal  common_returns  specific_returns
             dt
             2017-01-01  0.249087  0.935925        1.185012          1.185012
@@ -120,7 +132,7 @@ def perf_attrib(returns, positions, factor_returns, factor_loadings):
 
     return (
         risk_exposures_portfolio,
-        pd.concat([perf_attrib_by_factor, returns_df], axis="columns"),
+        pd.concat([perf_attrib_by_factor, returns_df], axis="columns", sort=False),
     )
 
 
@@ -132,7 +144,9 @@ def compute_exposures(positions, factor_loadings):
     ----------
     positions: pd.Series
         A series of holdings as percentages indexed by date and ticker.
-        - Examples:
+
+        Example::
+
             dt          ticker
             2017-01-01  AAPL      0.417582
                         TLT       0.010989
@@ -144,7 +158,9 @@ def compute_exposures(positions, factor_loadings):
     factor_loadings : pd.DataFrame
         Factor loadings for all days in the date range, with date and ticker as
         index, and factors as columns.
-        - Example:
+
+        Example::
+
                                momentum  reversal
             dt         ticker
             2017-01-01 AAPL   -1.592914  0.852830
@@ -158,7 +174,9 @@ def compute_exposures(positions, factor_loadings):
     -------
     risk_exposures_portfolio : pd.DataFrame
         df indexed by datetime, with factors as columns
-        - Example:
+
+        Example::
+
                         momentum  reversal
             dt
             2017-01-01 -0.238655  0.077123

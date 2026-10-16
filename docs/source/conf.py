@@ -40,7 +40,7 @@ copyright = "2016, Quantopian, Inc."
 author = "Quantopian, Inc."
 
 release = version
-language = None
+language = "en"
 
 exclude_patterns = []
 
