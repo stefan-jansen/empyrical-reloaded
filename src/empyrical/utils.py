@@ -267,7 +267,7 @@ def get_fama_french(
 
     if not isinstance(start, datetime):
         start = pd.Timestamp(start).date()
-    if not isinstance(end, datetime):
+    if end is not None and not isinstance(end, datetime):
         end = pd.Timestamp(end).date()
 
     ff_function = partial(
@@ -280,6 +280,8 @@ def get_fama_french(
     df = [ff_function(dataset)[0] for dataset in datasets]
     df = pd.concat(df, axis=1).dropna().div(100).rename(columns=str.strip)
 
+    if isinstance(df.index, pd.PeriodIndex):
+        df.index = df.index.to_timestamp()
     df.index = df.index.tz_localize("utc")
     return df
 
@@ -438,15 +440,21 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
         Returns of symbol in requested period.
     """
 
+    if yf is None:
+        raise ImportError(
+            "Install empyrical-reloaded[yfinance] to fetch Yahoo Finance data"
+        )
+
     try:
 
-        px = yf.download(symbol, start=start, end=end)
+        px = yf.download(symbol, start=start, end=end, auto_adjust=False)
         rets = px[["Adj Close"]].pct_change().dropna()
     except Exception as e:
         warnings.warn(
             "Yahoo Finance read failed: {}".format(e),
             UserWarning,
         )
+        raise
 
     rets.index = rets.index.tz_localize("UTC")
     rets.columns = [symbol]

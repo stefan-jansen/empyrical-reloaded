@@ -93,24 +93,19 @@ def simple_returns(prices):
     ----------
     prices : pd.Series, pd.DataFrame or np.ndarray
         Prices of assets in wide-format, with assets as columns,
-        and indexed by datetimes. Integer ndarray prices are supported;
-        their differences are computed exactly before conversion to floating point.
+        and indexed by datetimes.
 
     Returns
     -------
     returns : array-like
         Returns of assets in wide-format, with assets as columns,
-        and index coerced to be tz-aware. For integer ndarray prices,
-        the result is a floating-point array with one fewer row.
+        and index coerced to be tz-aware.
     """
     if isinstance(prices, (pd.DataFrame, pd.Series)):
         out = prices.pct_change().iloc[1:]
     else:
         # Assume np.ndarray
-        if isinstance(prices, np.ndarray) and np.issubdtype(prices.dtype, np.integer):
-            out = np.diff(prices.astype(object), axis=0).astype(np.float64)
-        else:
-            out = np.diff(prices, axis=0)
+        out = np.diff(prices, axis=0)
 
         # Silence divide error warnings
         with np.errstate(divide="ignore", invalid="ignore"):
@@ -233,6 +228,8 @@ def aggregate_returns(returns, convert_to):
     Returns
     -------
     aggregated_returns : pd.Series
+        Weekly result keys are (ISO year, ISO week), including weeks that
+        cross a calendar-year boundary.
     """
 
     def cumulate_returns(x):
@@ -267,7 +264,8 @@ def drawdown_series(returns, out=None):
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     out : array-like, optional
-        Array to use as output buffer.
+        Array with shape (len(returns) + 1,) + returns.shape[1:]. The first
+        row stores the initial anchor; the returned series omits that row.
         If not passed, a new array will be created.
 
     Returns
@@ -781,7 +779,9 @@ def downside_risk(
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     required_return: float / series
-        minimum acceptable return
+        Minimum acceptable return. For Series returns, a Series threshold
+        aligns by date. Dates missing from either series are omitted, as
+        with other missing observations.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
@@ -1217,7 +1217,7 @@ def alpha_aligned(
     )
 
     if allocated_output and isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     if returns.ndim == 1:
         out = out.item()
@@ -1553,12 +1553,14 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
 
     # exclude any rows where returns are nan
     pairs = pairs.dropna()
+    if len(pairs) < 3:
+        return np.nan
     # sort by beta
     pairs = pairs.sort_values(by="factor_returns")
 
     # find the three vectors, using median of 3
     start_index = 0
-    mid_index = int(np.around(len(pairs) / 2, 0))
+    mid_index = len(pairs) // 2
     end_index = len(pairs) - 1
 
     (start_returns, start_factor_returns) = pairs.iloc[start_index]
@@ -1573,10 +1575,10 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
     # using a convex combination
     if not factor_returns_range == 0:
         start_returns_weight = (
-            mid_factor_returns - start_factor_returns
+            end_factor_returns - mid_factor_returns
         ) / factor_returns_range
         end_returns_weight = (
-            end_factor_returns - mid_factor_returns
+            mid_factor_returns - start_factor_returns
         ) / factor_returns_range
 
     # calculate fragility heuristic
@@ -1668,7 +1670,11 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         DEFAULT_THRESHOLD = 0.2
         MINIMUM_THRESHOLD = 0.000000001
 
-        returns_array = pd.Series(returns).to_numpy()
+        try:
+            returns_array = pd.Series(returns).to_numpy()
+        except AttributeError:
+            # while zipline requires support for pandas < 0.25
+            returns_array = pd.Series(returns).as_matrix()
 
         flipped_returns = -1 * returns_array
         losses = flipped_returns[flipped_returns > 0]
@@ -2076,7 +2082,7 @@ def value_at_risk(returns, cutoff=0.05):
     VaR : float
         The VaR value.
     """
-    if len(returns) < 1:
+    if np.size(returns) < 1:
         return np.nan
     return np.percentile(returns, 100 * cutoff)
 
@@ -2092,9 +2098,7 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Parameters
     ----------
     returns : pandas.Series or 1-D numpy.array
-        Non-cumulative daily returns. NaN values are omitted, including when
-        the size of the tail is chosen, so the result is the same as for the
-        returns with the NaNs removed.
+        Non-cumulative daily returns.
     cutoff : float, optional
         Decimal representing the percentage cutoff for the bottom percentile of
         returns. Defaults to 0.05.
@@ -2102,16 +2106,8 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Returns
     -------
     CVaR : float
-        The CVaR value. NaN if ``returns`` is empty or contains only NaN.
+        The CVaR value.
     """
-    # Missing observations are excluded before the cutoff index is computed.
-    # Counted in len() and sorted to the top by np.partition, they would
-    # otherwise widen the averaged tail and pull CVaR towards zero.
-    returns = np.asarray(returns, dtype=float)
-    returns = returns[~np.isnan(returns)]
-    if len(returns) == 0:
-        return np.nan
-
     # PERF: Instead of using the 'value_at_risk' function to find the cutoff
     # value, which requires a call to numpy.percentile, determine the cutoff
     # index manually and partition out the lowest returns values. The value at

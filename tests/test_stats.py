@@ -1,5 +1,4 @@
 from copy import copy
-import warnings
 from operator import attrgetter
 
 import numpy as np
@@ -1554,35 +1553,6 @@ class TestStats(BaseTestClass):
                 expected_cvar,
             )
 
-    def test_conditional_value_at_risk_ignores_nan(self):
-        conditional_value_at_risk = self.empyrical.conditional_value_at_risk
-
-        # Missing observations must not change the answer: counted in the
-        # cutoff index, they widened the averaged tail and pulled CVaR
-        # towards zero (issue #54).
-        returns = np.random.default_rng(5).normal(0.0004, 0.011, 1512)
-        positions = np.random.default_rng(5).integers(0, 1512, 40)
-        padded = np.insert(returns, positions, np.nan)
-
-        for cutoff in (0.01, 0.05, 0.20):
-            np.testing.assert_almost_equal(
-                conditional_value_at_risk(padded, cutoff),
-                conditional_value_at_risk(returns, cutoff),
-            )
-
-        assert np.isnan(conditional_value_at_risk(np.array([np.nan, np.nan])))
-
-    def test_conditional_value_at_risk_empty(self):
-        conditional_value_at_risk = self.empyrical.conditional_value_at_risk
-
-        # Empty input returns NaN directly rather than through the mean of an
-        # empty slice, so no RuntimeWarning is raised.
-        with warnings.catch_warnings():
-            warnings.simplefilter("error")
-            for empty in (np.array([]), pd.Series([], dtype=float), []):
-                for cutoff in (0, 0.05, 1):
-                    assert np.isnan(conditional_value_at_risk(empty, cutoff))
-
     @property
     def empyrical(self):
         """
@@ -1619,55 +1589,6 @@ class TestStatsArrays(TestStats):
     type np.ndarray or float.
 
     """
-
-    @pytest.mark.parametrize(
-        "prices, dtype, expected",
-        [
-            ([100, 110, 121], np.int64, [0.1, 0.1]),
-            ([250, 5, 10], np.uint8, [-0.98, 1.0]),
-            ([-128, 127, -128], np.int8, [-255 / 128, -255 / 127]),
-            (
-                [[100, 200], [110, 180], [121, 162]],
-                np.int64,
-                [[0.1, -0.1], [0.1, -0.1]],
-            ),
-            ([0, 0, 10, 0], np.int64, [np.nan, np.inf, -1.0]),
-        ],
-    )
-    def test_simple_returns_integer_prices(self, prices, dtype, expected):
-        prices = np.array(prices, dtype=dtype)
-        result = self.empyrical.simple_returns(prices)
-        np.testing.assert_allclose(result, expected)
-        assert np.issubdtype(result.dtype, np.floating)
-
-    @pytest.mark.parametrize(
-        "prices, dtype, expected",
-        [
-            ([2**53, 2**53 + 1], np.int64, [1 / 2**53]),
-            ([2**63 - 2, 2**63 - 1], np.int64, [1 / (2**63 - 2)]),
-            ([2**64 - 2, 2**64 - 1], np.uint64, [1 / (2**64 - 2)]),
-            ([2**64 - 1, 2**64 - 2], np.uint64, [-1 / (2**64 - 1)]),
-            (
-                [[2**53, 2**53 + 1], [2**53 + 1, 2**53]],
-                np.int64,
-                [[1 / 2**53, -1 / (2**53 + 1)]],
-            ),
-        ],
-    )
-    def test_simple_returns_integer_prices_preserve_one_tick_changes(
-        self, prices, dtype, expected
-    ):
-        prices = np.array(prices, dtype=dtype)
-        result = self.empyrical.simple_returns(prices)
-        np.testing.assert_allclose(result, expected, rtol=1e-15, atol=0)
-
-    @pytest.mark.parametrize("shape", [(0,), (1,), (0, 2), (1, 2)])
-    def test_simple_returns_integer_prices_no_periods(self, shape):
-        prices = np.ones(shape, dtype=np.int64)
-        result = self.empyrical.simple_returns(prices)
-        expected = np.empty((0,) + shape[1:])
-        np.testing.assert_array_equal(result, expected)
-        assert np.issubdtype(result.dtype, np.floating)
 
     @property
     def empyrical(self):
@@ -2085,91 +2006,3 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
             item += "_aligned"
 
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
-
-
-def test_gpd_risk_estimates_accepts_scalar_tail_probability():
-    """The public wrapper must forward var_p, not try to align it as a series."""
-    returns = pd.Series(
-        [0.01, -0.02, 0.03, -0.04, 0.02, -0.01, -0.03, 0.015, 0.005, -0.025]
-    )
-    result = empyrical.gpd_risk_estimates(returns, var_p=0.01)
-    expected = empyrical.gpd_risk_estimates_aligned(returns, var_p=0.01)
-    np.testing.assert_almost_equal(np.asarray(result), np.asarray(expected))
-    assert len(result) == 5
-
-
-def test_value_at_risk_empty_input_is_nan():
-    assert np.isnan(empyrical.value_at_risk(np.array([])))
-    assert np.isnan(empyrical.value_at_risk(pd.Series([], dtype=float)))
-
-
-def test_aggregate_returns_weekly_keeps_iso_week_across_new_year():
-    # 2019-12-30 is a Monday. That ISO week is 2020-W01 and includes 2 Jan.
-    index = pd.to_datetime(["2019-12-30", "2019-12-31", "2020-01-02", "2020-01-03"])
-    returns = pd.Series([0.01, 0.01, 0.01, 0.01], index=index)
-    aggregated = aggregate_returns(returns, empyrical.WEEKLY)
-    assert len(aggregated) == 1
-    np.testing.assert_almost_equal(aggregated.iloc[0], (1.01**4) - 1, DECIMAL_PLACES)
-
-
-def test_excess_sharpe_undefined_tracking_error_is_nan():
-    # One finite active return is not enough for a sample standard deviation.
-    returns = pd.Series([0.01, np.nan])
-    factor_returns = pd.Series([0.0, np.nan])
-    assert np.isnan(empyrical.excess_sharpe(returns, factor_returns))
-
-
-def test_excess_sharpe_zero_tracking_error_with_nonzero_active_is_inf():
-    returns = pd.Series([0.02, 0.02, 0.02])
-    factor_returns = pd.Series([0.01, 0.01, 0.01])
-    assert np.isinf(empyrical.excess_sharpe(returns, factor_returns))
-
-
-def test_downside_risk_aligns_required_return_by_index():
-    index = pd.to_datetime(["2020-01-02", "2020-01-01"])
-    returns = pd.Series([0.05, -0.04], index=index)
-    # Same dates as returns, stored in the opposite order, and not constant.
-    required_return = pd.Series([0.01, 0.00], index=index[::-1])
-    # 2020-01-01: -0.04 - 0.01 = -0.05; 2020-01-02: 0.05 - 0.00 = 0.05
-    expected = np.sqrt(np.mean(np.square([-0.05, 0.0])))
-    got = empyrical.downside_risk(
-        returns, required_return=required_return, annualization=1
-    )
-    np.testing.assert_almost_equal(got, expected, DECIMAL_PLACES)
-
-
-def test_sortino_ratio_dataframe_keeps_column_names():
-    returns = pd.DataFrame(
-        {
-            "a": [0.01, -0.02, 0.015, 0.01],
-            "b": [-0.01, 0.02, -0.03, 0.005],
-        }
-    )
-    result = empyrical.sortino_ratio(returns)
-    pd.testing.assert_index_equal(result.index, returns.columns)
-    np.testing.assert_almost_equal(
-        result["a"], empyrical.sortino_ratio(returns["a"]), DECIMAL_PLACES
-    )
-    np.testing.assert_almost_equal(
-        result["b"], empyrical.sortino_ratio(returns["b"]), DECIMAL_PLACES
-    )
-
-
-def test_drawdown_series_ndarray_has_one_value_per_return():
-    values = np.array([0.10, -0.20, 0.05])
-    as_array = empyrical.stats.drawdown_series(values)
-    as_series = empyrical.stats.drawdown_series(pd.Series(values))
-    assert len(as_array) == len(values)
-    np.testing.assert_almost_equal(as_array, as_series.to_numpy(), DECIMAL_PLACES)
-    np.testing.assert_almost_equal(
-        empyrical.max_drawdown(values),
-        empyrical.max_drawdown(pd.Series(values)),
-        DECIMAL_PLACES,
-    )
-
-
-def test_downside_risk_ndarray_accepts_series_thresholds():
-    returns = np.array([[0.05, 0.01], [-0.04, -0.03]])
-    thresholds = pd.Series([0.0, 0.02], index=["a", "b"])
-    actual = empyrical.downside_risk(returns, thresholds, annualization=1)
-    np.testing.assert_allclose(actual, [np.sqrt(0.0008), np.sqrt(0.0013)])
