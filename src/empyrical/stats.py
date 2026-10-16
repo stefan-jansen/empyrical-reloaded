@@ -1584,23 +1584,24 @@ def gpd_risk_estimates(returns, var_p=0.01):
 
     Returns
     -------
-    [threshold, scale_param, shape_param, var_estimate, es_estimate]
-        : list[float]
-        threshold - the threshold use to cut off exception tail losses
-        scale_param - a parameter (often denoted by sigma, capturing the
-            scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape
-         or type of the distribution)
-        var_estimate - an estimate for the VaR for the given percentile
-        es_estimate - an estimate for the ES for the given percentile
+    estimates : numpy.ndarray or pandas.Series
+        Values in order: threshold, scale_param, shape_param, var_estimate,
+        es_estimate.
+
+        * threshold - the threshold use to cut off exception tail losses
+        * scale_param - a parameter (often denoted by sigma, capturing the
+          scale, related to variance)
+        * shape_param - a parameter (often denoted by xi, capturing the shape
+          or type of the distribution)
+        * var_estimate - an estimate for the VaR for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
-    see also::
     `An Application of Extreme Value Theory for Measuring Risk
-    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
-        A paper describing how to use the Generalized Pareto
-        Distribution to estimate VaR and ES.
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`_
+    describes how to use the Generalized Pareto Distribution to estimate
+    VaR and ES.
     """
     if len(returns) < 3:
         result = np.zeros(5)
@@ -1623,23 +1624,24 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
 
     Returns
     -------
-    [threshold, scale_param, shape_param, var_estimate, es_estimate]
-        : list[float]
-        threshold - the threshold use to cut off exception tail losses
-        scale_param - a parameter (often denoted by sigma, capturing the
-            scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape
-        or type of the distribution)
-        var_estimate - an estimate for the VaR for the given percentile
-        es_estimate - an estimate for the ES for the given percentile
+    estimates : numpy.ndarray or pandas.Series
+        Values in order: threshold, scale_param, shape_param, var_estimate,
+        es_estimate.
+
+        * threshold - the threshold use to cut off exception tail losses
+        * scale_param - a parameter (often denoted by sigma, capturing the
+          scale, related to variance)
+        * shape_param - a parameter (often denoted by xi, capturing the shape
+          or type of the distribution)
+        * var_estimate - an estimate for the VaR for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
-    seealso::
     `An Application of Extreme Value Theory for Measuring Risk
-    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
-        A paper describing how to use the Generalized Pareto
-        Distribution to estimate VaR and ES.
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`_
+    describes how to use the Generalized Pareto Distribution to estimate
+    VaR and ES.
     """
     result = np.zeros(5)
     if not len(returns) < 3:
@@ -1888,6 +1890,7 @@ def up_down_capture(returns, factor_returns, **kwargs):
 def batting_average(returns, factor_returns):
     """
     Computes the batting average.
+
     Parameters
     ----------
     returns : pd.Series or np.ndarray
@@ -1897,10 +1900,12 @@ def batting_average(returns, factor_returns):
         Noncumulative returns of the factor to which beta is
         computed. Usually a benchmark such as the market.
         - This is in the same style as returns.
+
     Returns
     -------
     batting_average : pd.Series
         batting average, up market, down market
+
     Note
     ----
     See https://www.investopedia.com/terms/b/batting-average.asp for

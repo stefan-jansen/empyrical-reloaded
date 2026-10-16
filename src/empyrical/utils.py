@@ -256,11 +256,13 @@ def get_fama_french(
 ):
     """
     Retrieve Fama-French factors via pandas-datareader
+
     Parameters
     ----------
     start: str or datetime or Timestamp, start date
     end: str or datetime or Timestamp, end date
     datasets: list of factors (default is the five factors)
+
     Returns
     -------
     pandas.DataFrame
@@ -295,6 +297,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     Get returns from a cached file if the cache is recent enough,
     otherwise, try to retrieve via a provided update function and
     update the cache file.
+
     Parameters
     ----------
     filepath : str
@@ -305,6 +308,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
         Latest datetime required in csv file.
     **kwargs : Keyword arguments
         Optional keyword arguments will be passed to update_func()
+
     Returns
     -------
     pandas.DataFrame
@@ -367,6 +371,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
     Data is stored in HDF5 file. If the data is more than 2
     days old, redownload from Dartmouth.
+
     Returns
     -------
     five_factors : pd.DataFrame
