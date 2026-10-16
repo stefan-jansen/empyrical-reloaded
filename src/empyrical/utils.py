@@ -175,18 +175,12 @@ def _roll_ndarray(func, window, *args, **kwargs):
 
 
 def _roll_pandas(func, window, *args, **kwargs):
-    data = {}
-    index_values = []
+    data = []
     for i in range(window, len(args[0]) + 1):
         rets = [s.iloc[i - window : i] for s in args]
-        index_value = args[0].index[i - 1]
-        index_values.append(index_value)
-        data[index_value] = func(*rets, **kwargs)
-    return pd.Series(
-        data,
-        index=type(args[0].index)(index_values),
-        dtype=np.float64,
-    )
+        data.append(func(*rets, **kwargs))
+    index = args[0].index[window - 1 :]
+    return pd.Series(data, index=index, dtype=np.float64)
 
 
 def cache_dir(environ=environ):
