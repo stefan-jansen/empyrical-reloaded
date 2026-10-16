@@ -267,7 +267,7 @@ def get_fama_french(
 
     if not isinstance(start, datetime):
         start = pd.Timestamp(start).date()
-    if not isinstance(end, datetime):
+    if end is not None and not isinstance(end, datetime):
         end = pd.Timestamp(end).date()
 
     ff_function = partial(
