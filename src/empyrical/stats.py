@@ -93,19 +93,24 @@ def simple_returns(prices):
     ----------
     prices : pd.Series, pd.DataFrame or np.ndarray
         Prices of assets in wide-format, with assets as columns,
-        and indexed by datetimes.
+        and indexed by datetimes. Integer ndarray prices are supported;
+        their differences are computed exactly before conversion to floating point.
 
     Returns
     -------
     returns : array-like
         Returns of assets in wide-format, with assets as columns,
-        and index coerced to be tz-aware.
+        and index coerced to be tz-aware. For integer ndarray prices,
+        the result is a floating-point array with one fewer row.
     """
     if isinstance(prices, (pd.DataFrame, pd.Series)):
         out = prices.pct_change().iloc[1:]
     else:
         # Assume np.ndarray
-        out = np.diff(prices, axis=0)
+        if isinstance(prices, np.ndarray) and np.issubdtype(prices.dtype, np.integer):
+            out = np.diff(prices.astype(object), axis=0).astype(np.float64)
+        else:
+            out = np.diff(prices, axis=0)
 
         # Silence divide error warnings
         with np.errstate(divide="ignore", invalid="ignore"):
@@ -1929,6 +1934,9 @@ def batting_average(returns, factor_returns):
 
     Note
     ----
+    Observations with nonfinite active or benchmark returns are omitted.
+    Series are aligned by date. An empty subset produces NaN.
+
     See https://www.investopedia.com/terms/b/batting-average.asp for
     more information.
     """
@@ -1940,6 +1948,11 @@ def batting_average(returns, factor_returns):
         }
     )
     active_return = _adjust_returns(returns, factor_returns)
+    if isinstance(active_return, pd.Series) and isinstance(factor_returns, pd.Series):
+        factor_returns = factor_returns.reindex(active_return.index)
+    valid = np.isfinite(active_return) & np.isfinite(factor_returns)
+    active_return = active_return[valid]
+    factor_returns = factor_returns[valid]
     bt = active_return > 0
     up = active_return[factor_returns >= 0.0] > 0
     down = active_return[factor_returns < 0.0] > 0

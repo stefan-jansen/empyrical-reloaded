@@ -21,6 +21,37 @@ DECIMAL_PLACES = 8
 rand = np.random.RandomState(1337)
 
 
+@pytest.mark.parametrize("as_array", [False, True])
+def test_batting_average_excludes_missing_return_pairs(as_array):
+    index = pd.date_range("2024-01-02", periods=4, freq="B")
+    returns = pd.Series([0.02, 0.03, np.nan, 0.01], index=index)
+    benchmark = pd.Series([0.01, np.nan, -0.02, -0.01], index=index)
+    if as_array:
+        returns = returns.to_numpy()
+        benchmark = benchmark.to_numpy()
+
+    result = empyrical.batting_average(returns, benchmark)
+
+    assert result["batting average"] == 1.0
+    assert result["up market"] == 1.0
+    assert result["down market"] == 1.0
+
+
+def test_batting_average_aligns_strategy_and_benchmark_dates():
+    returns = pd.Series(
+        [0.02, 0.03], index=pd.to_datetime(["2024-01-02", "2024-01-03"])
+    )
+    benchmark = pd.Series(
+        [0.01, -0.02], index=pd.to_datetime(["2024-01-02", "2024-01-04"])
+    )
+
+    result = empyrical.batting_average(returns, benchmark)
+
+    assert result["batting average"] == 1.0
+    assert result["up market"] == 1.0
+    assert np.isnan(result["down market"])
+
+
 class BaseTestClass:
     def assert_indexes_match(self, result, expected):
         """
@@ -1589,6 +1620,55 @@ class TestStatsArrays(TestStats):
     type np.ndarray or float.
 
     """
+
+    @pytest.mark.parametrize(
+        "prices, dtype, expected",
+        [
+            ([100, 110, 121], np.int64, [0.1, 0.1]),
+            ([250, 5, 10], np.uint8, [-0.98, 1.0]),
+            ([-128, 127, -128], np.int8, [-255 / 128, -255 / 127]),
+            (
+                [[100, 200], [110, 180], [121, 162]],
+                np.int64,
+                [[0.1, -0.1], [0.1, -0.1]],
+            ),
+            ([0, 0, 10, 0], np.int64, [np.nan, np.inf, -1.0]),
+        ],
+    )
+    def test_simple_returns_integer_prices(self, prices, dtype, expected):
+        prices = np.array(prices, dtype=dtype)
+        result = self.empyrical.simple_returns(prices)
+        np.testing.assert_allclose(result, expected)
+        assert np.issubdtype(result.dtype, np.floating)
+
+    @pytest.mark.parametrize(
+        "prices, dtype, expected",
+        [
+            ([2**53, 2**53 + 1], np.int64, [1 / 2**53]),
+            ([2**63 - 2, 2**63 - 1], np.int64, [1 / (2**63 - 2)]),
+            ([2**64 - 2, 2**64 - 1], np.uint64, [1 / (2**64 - 2)]),
+            ([2**64 - 1, 2**64 - 2], np.uint64, [-1 / (2**64 - 1)]),
+            (
+                [[2**53, 2**53 + 1], [2**53 + 1, 2**53]],
+                np.int64,
+                [[1 / 2**53, -1 / (2**53 + 1)]],
+            ),
+        ],
+    )
+    def test_simple_returns_integer_prices_preserve_one_tick_changes(
+        self, prices, dtype, expected
+    ):
+        prices = np.array(prices, dtype=dtype)
+        result = self.empyrical.simple_returns(prices)
+        np.testing.assert_allclose(result, expected, rtol=1e-15, atol=0)
+
+    @pytest.mark.parametrize("shape", [(0,), (1,), (0, 2), (1, 2)])
+    def test_simple_returns_integer_prices_no_periods(self, shape):
+        prices = np.ones(shape, dtype=np.int64)
+        result = self.empyrical.simple_returns(prices)
+        expected = np.empty((0,) + shape[1:])
+        np.testing.assert_array_equal(result, expected)
+        assert np.issubdtype(result.dtype, np.floating)
 
     @property
     def empyrical(self):
