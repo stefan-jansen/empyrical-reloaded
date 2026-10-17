@@ -2098,7 +2098,9 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Parameters
     ----------
     returns : pandas.Series or 1-D numpy.array
-        Non-cumulative daily returns.
+        Non-cumulative daily returns. NaN values are omitted, including when
+        the size of the tail is chosen, so the result is the same as for the
+        returns with the NaNs removed.
     cutoff : float, optional
         Decimal representing the percentage cutoff for the bottom percentile of
         returns. Defaults to 0.05.
@@ -2106,8 +2108,16 @@ def conditional_value_at_risk(returns, cutoff=0.05):
     Returns
     -------
     CVaR : float
-        The CVaR value.
+        The CVaR value. NaN if ``returns`` is empty or contains only NaN.
     """
+    # Missing observations are excluded before the cutoff index is computed.
+    # Counted in len() and sorted to the top by np.partition, they would
+    # otherwise widen the averaged tail and pull CVaR towards zero.
+    returns = np.asarray(returns, dtype=float)
+    returns = returns[~np.isnan(returns)]
+    if len(returns) == 0:
+        return np.nan
+
     # PERF: Instead of using the 'value_at_risk' function to find the cutoff
     # value, which requires a call to numpy.percentile, determine the cutoff
     # index manually and partition out the lowest returns values. The value at
