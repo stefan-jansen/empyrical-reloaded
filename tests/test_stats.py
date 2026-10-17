@@ -21,6 +21,37 @@ DECIMAL_PLACES = 8
 rand = np.random.RandomState(1337)
 
 
+@pytest.mark.parametrize("as_array", [False, True])
+def test_batting_average_excludes_missing_return_pairs(as_array):
+    index = pd.date_range("2024-01-02", periods=4, freq="B")
+    returns = pd.Series([0.02, 0.03, np.nan, 0.01], index=index)
+    benchmark = pd.Series([0.01, np.nan, -0.02, -0.01], index=index)
+    if as_array:
+        returns = returns.to_numpy()
+        benchmark = benchmark.to_numpy()
+
+    result = empyrical.batting_average(returns, benchmark)
+
+    assert result["batting average"] == 1.0
+    assert result["up market"] == 1.0
+    assert result["down market"] == 1.0
+
+
+def test_batting_average_aligns_strategy_and_benchmark_dates():
+    returns = pd.Series(
+        [0.02, 0.03], index=pd.to_datetime(["2024-01-02", "2024-01-03"])
+    )
+    benchmark = pd.Series(
+        [0.01, -0.02], index=pd.to_datetime(["2024-01-02", "2024-01-04"])
+    )
+
+    result = empyrical.batting_average(returns, benchmark)
+
+    assert result["batting average"] == 1.0
+    assert result["up market"] == 1.0
+    assert np.isnan(result["down market"])
+
+
 class BaseTestClass:
     def assert_indexes_match(self, result, expected):
         """
