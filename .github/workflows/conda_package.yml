@@ -1,81 +1,47 @@
 name: Anaconda
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Published source version
+        required: true
+        type: string
+      sdist_sha256:
+        description: SHA256 of the published source distribution
+        required: true
+        type: string
 
 jobs:
-  build_wheels:
-    name: py${{ matrix.python }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  build:
+    name: Build Python 3.11+ noarch package
+    runs-on: ubuntu-latest
     env:
+      EMPYRICAL_VERSION: ${{ inputs.version }}
+      EMPYRICAL_SDIST_SHA256: ${{ inputs.sdist_sha256 }}
       ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
     defaults:
       run:
         shell: bash -l {0}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
-        python: [ '3.7', '3.8', '3.9' ]
-#        python: [ '3.9' ]
-
     steps:
-      - name: Checkout empyrical-reloaded
-        uses: actions/checkout@v4
-
-      - name: Setup miniconda3
+      - uses: actions/checkout@v6
+      - name: Setup build environment
         uses: conda-incubator/setup-miniconda@v3
         with:
           miniconda-version: latest
           auto-update-conda: true
           channel-priority: true
           mamba-version: "*"
-          python-version: ${{ matrix.python }}
+          python-version: "3.11"
           activate-environment: recipe
           channels: ml4t, conda-forge, defaults, anaconda, ranaroussi
-
-      - name: create uploader
-        # address broken client under py3.9
-        if: ${{ matrix.python == '3.9' }}
-        run: conda create -n up python=3.7 anaconda-client
-
-      - name: conda build for ${{ matrix.os }}
+      - name: Build from the pinned published source
         run: |
-          conda activate recipe
           mamba install -n recipe boa conda-verify anaconda-client
-          conda mambabuild --output-folder . --python ${{ matrix.python }} conda/recipe
-
-      - name: activate uploader
-        # address broken client under py3.9
-        if: ${{ matrix.python == '3.9' }}
-        run: conda activate up
-
-      - name: store windows result
-        uses: actions/upload-artifact@v4
-        if: ${{ matrix.os == 'windows-latest' }}
+          conda mambabuild --output-folder . --python 3.11 conda/recipe
+      - uses: actions/upload-artifact@v6
         with:
-          path: win-64/*.tar.bz2
-
-      - name: upload windows
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: anaconda upload -l main -u ml4t win-64/*.tar.bz2
-
-      - name: store linux result
-        uses: actions/upload-artifact@v4
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        with:
-          path: linux-64/*.tar.bz2
-
-      - name: upload linux
-        if: ${{ matrix.os  == 'ubuntu-latest' }}
-        run: anaconda upload -l main -u ml4t linux-64/*.tar.bz2
-
-      - name: store macos result
-        uses: actions/upload-artifact@v4
-        if: ${{ matrix.os == 'macos-latest' }}
-        with:
-          path: osx-64/*.tar.bz2
-
-      - name: upload macos
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: anaconda upload -l main -u ml4t osx-64/*.tar.bz2
+          name: empyrical-conda
+          path: noarch/*
+      - name: Upload package
+        run: anaconda upload -l main -u ml4t noarch/*

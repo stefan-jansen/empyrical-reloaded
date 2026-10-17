@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 from pathlib import Path
 from packaging.version import Version
 from empyrical.perf_attrib import perf_attrib
@@ -7,6 +8,7 @@ from empyrical.perf_attrib import perf_attrib
 TEST_DATA = Path(__file__).parent / "test_data"
 
 
+@pytest.mark.filterwarnings("error:Sorting by default when concatenating")
 class TestPerfAttrib:
     def test_perf_attrib_simple(self):
         start_date = "2017-01-01"
@@ -162,7 +164,7 @@ class TestPerfAttrib:
 
         pd.testing.assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
-    def test_perf_attrib_regression(self):
+    def test_perf_attrib_preserves_alignment_without_implicit_sorting(self):
         positions = pd.read_csv(
             TEST_DATA / "positions.csv",
             index_col=0,

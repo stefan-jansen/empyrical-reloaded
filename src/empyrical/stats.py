@@ -233,13 +233,18 @@ def aggregate_returns(returns, convert_to):
     Returns
     -------
     aggregated_returns : pd.Series
+        Weekly result keys are (ISO year, ISO week), including weeks that
+        cross a calendar-year boundary.
     """
 
     def cumulate_returns(x):
         return cum_returns(x).iloc[-1]
 
     if convert_to == WEEKLY:
-        grouping = [lambda x: x.year, lambda x: x.isocalendar()[1]]
+        # ISO week numbers restart at the calendar year boundary, so pair
+        # them with the ISO year. Calendar year splits the week that
+        # contains 1 January.
+        grouping = [lambda x: x.isocalendar()[0], lambda x: x.isocalendar()[1]]
     elif convert_to == MONTHLY:
         grouping = [lambda x: x.year, lambda x: x.month]
     elif convert_to == QUARTERLY:
@@ -264,7 +269,8 @@ def drawdown_series(returns, out=None):
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     out : array-like, optional
-        Array to use as output buffer.
+        Array with shape (len(returns) + 1,) + returns.shape[1:]. The first
+        row stores the initial anchor; the returned series omits that row.
         If not passed, a new array will be created.
 
     Returns
@@ -299,6 +305,9 @@ def drawdown_series(returns, out=None):
 
     np.divide((out - max_return), max_return, out=out)
 
+    # out[0] is the starting point used to anchor the running peak. The
+    # drawdown series itself has one value per return. Series and DataFrame
+    # inputs already dropped that anchor; ndarray inputs returned it too.
     if returns.ndim == 1 and isinstance(returns, pd.Series):
         out = pd.Series(out[1:], index=returns.index)
     elif isinstance(returns, pd.DataFrame):
@@ -307,6 +316,8 @@ def drawdown_series(returns, out=None):
             index=returns.index,
             columns=returns.columns,
         )
+    else:
+        out = out[1:]
 
     return out
 
@@ -753,7 +764,7 @@ def sortino_ratio(
     if return_1d:
         out = out.item()
     elif isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     return out
 
@@ -773,7 +784,9 @@ def downside_risk(
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     required_return: float / series
-        minimum acceptable return
+        Minimum acceptable return. For Series returns, a Series threshold
+        aligns by date. Dates missing from either series are omitted, as
+        with other missing observations.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
         annualizing. Value ignored if `annualization` parameter is specified.
@@ -818,11 +831,15 @@ def downside_risk(
 
     ann_factor = annualization_factor(period, annualization)
 
+    if isinstance(returns, np.ndarray):
+        required_return = np.asanyarray(required_return)
+
+    # Align a required-return series to the returns index before converting
+    # to an array. Converting first subtracts by position, so a differently
+    # ordered index silently pairs the wrong days. Sortino's numerator
+    # already aligns; the denominator has to use the same days.
     downside_diff = np.clip(
-        _adjust_returns(
-            np.asanyarray(returns),
-            np.asanyarray(required_return),
-        ),
+        np.asanyarray(_adjust_returns(returns, required_return)),
         -np.inf,
         0,
     )
@@ -889,9 +906,10 @@ def excess_sharpe(returns, factor_returns, out=None):
         return out
 
     active_return = _adjust_returns(returns, factor_returns)
-    tracking_error = np.nan_to_num(nanstd(active_return, ddof=1, axis=0))
+    tracking_error = nanstd(active_return, ddof=1, axis=0)
 
-    # Silence divide warnings
+    # Leave an undefined (NaN) tracking error as NaN. Replacing it with 0
+    # turns "not enough observations" into infinity.
     with np.errstate(divide="ignore", invalid="ignore"):
         out = np.divide(
             nanmean(active_return, axis=0, out=out),
@@ -1204,7 +1222,7 @@ def alpha_aligned(
     )
 
     if allocated_output and isinstance(returns, pd.DataFrame):
-        out = pd.Series(out)
+        out = pd.Series(out, index=returns.columns)
 
     if returns.ndim == 1:
         out = out.item()
@@ -1540,12 +1558,14 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
 
     # exclude any rows where returns are nan
     pairs = pairs.dropna()
+    if len(pairs) < 3:
+        return np.nan
     # sort by beta
     pairs = pairs.sort_values(by="factor_returns")
 
     # find the three vectors, using median of 3
     start_index = 0
-    mid_index = int(np.around(len(pairs) / 2, 0))
+    mid_index = len(pairs) // 2
     end_index = len(pairs) - 1
 
     (start_returns, start_factor_returns) = pairs.iloc[start_index]
@@ -1560,10 +1580,10 @@ def beta_fragility_heuristic_aligned(returns, factor_returns):
     # using a convex combination
     if not factor_returns_range == 0:
         start_returns_weight = (
-            mid_factor_returns - start_factor_returns
+            end_factor_returns - mid_factor_returns
         ) / factor_returns_range
         end_returns_weight = (
-            end_factor_returns - mid_factor_returns
+            mid_factor_returns - start_factor_returns
         ) / factor_returns_range
 
     # calculate fragility heuristic
@@ -1589,30 +1609,32 @@ def gpd_risk_estimates(returns, var_p=0.01):
 
     Returns
     -------
-    [threshold, scale_param, shape_param, var_estimate, es_estimate]
-        : list[float]
-        threshold - the threshold use to cut off exception tail losses
-        scale_param - a parameter (often denoted by sigma, capturing the
-            scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape
-         or type of the distribution)
-        var_estimate - an estimate for the VaR for the given percentile
-        es_estimate - an estimate for the ES for the given percentile
+    estimates : numpy.ndarray or pandas.Series
+        Values in order: threshold, scale_param, shape_param, var_estimate,
+        es_estimate.
+
+        * threshold - the threshold use to cut off exception tail losses
+        * scale_param - a parameter (often denoted by sigma, capturing the
+          scale, related to variance)
+        * shape_param - a parameter (often denoted by xi, capturing the shape
+          or type of the distribution)
+        * var_estimate - an estimate for the VaR for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
-    see also::
     `An Application of Extreme Value Theory for Measuring Risk
-    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
-        A paper describing how to use the Generalized Pareto
-        Distribution to estimate VaR and ES.
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`_
+    describes how to use the Generalized Pareto Distribution to estimate
+    VaR and ES.
     """
     if len(returns) < 3:
         result = np.zeros(5)
         if isinstance(returns, pd.Series):
             result = pd.Series(result)
         return result
-    return gpd_risk_estimates_aligned(*_aligned_series(returns, var_p))
+    # var_p is a scalar tail probability, not a second return series.
+    return gpd_risk_estimates_aligned(returns, var_p)
 
 
 def gpd_risk_estimates_aligned(returns, var_p=0.01):
@@ -1628,23 +1650,24 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
 
     Returns
     -------
-    [threshold, scale_param, shape_param, var_estimate, es_estimate]
-        : list[float]
-        threshold - the threshold use to cut off exception tail losses
-        scale_param - a parameter (often denoted by sigma, capturing the
-            scale, related to variance)
-        shape_param - a parameter (often denoted by xi, capturing the shape
-        or type of the distribution)
-        var_estimate - an estimate for the VaR for the given percentile
-        es_estimate - an estimate for the ES for the given percentile
+    estimates : numpy.ndarray or pandas.Series
+        Values in order: threshold, scale_param, shape_param, var_estimate,
+        es_estimate.
+
+        * threshold - the threshold use to cut off exception tail losses
+        * scale_param - a parameter (often denoted by sigma, capturing the
+          scale, related to variance)
+        * shape_param - a parameter (often denoted by xi, capturing the shape
+          or type of the distribution)
+        * var_estimate - an estimate for the VaR for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile
 
     Note
     ----
-    seealso::
     `An Application of Extreme Value Theory for Measuring Risk
-    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`
-        A paper describing how to use the Generalized Pareto
-        Distribution to estimate VaR and ES.
+    <https://link.springer.com/article/10.1007/s10614-006-9025-7>`_
+    describes how to use the Generalized Pareto Distribution to estimate
+    VaR and ES.
     """
     result = np.zeros(5)
     if not len(returns) < 3:
@@ -1893,6 +1916,7 @@ def up_down_capture(returns, factor_returns, **kwargs):
 def batting_average(returns, factor_returns):
     """
     Computes the batting average.
+
     Parameters
     ----------
     returns : pd.Series or np.ndarray
@@ -1902,10 +1926,12 @@ def batting_average(returns, factor_returns):
         Noncumulative returns of the factor to which beta is
         computed. Usually a benchmark such as the market.
         - This is in the same style as returns.
+
     Returns
     -------
     batting_average : pd.Series
         batting average, up market, down market
+
     Note
     ----
     See https://www.investopedia.com/terms/b/batting-average.asp for
@@ -2061,6 +2087,8 @@ def value_at_risk(returns, cutoff=0.05):
     VaR : float
         The VaR value.
     """
+    if np.size(returns) < 1:
+        return np.nan
     return np.percentile(returns, 100 * cutoff)
 
 

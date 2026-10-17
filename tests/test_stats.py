@@ -811,7 +811,10 @@ class TestStats(BaseTestClass):
             if len(masked_benchmark_data) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_benchmark_data, masked_returns_data
@@ -986,7 +989,10 @@ class TestStats(BaseTestClass):
             if len(masked_benchmark_data) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_benchmark_data, masked_returns_data
@@ -1037,7 +1043,10 @@ class TestStats(BaseTestClass):
             if len(masked_returns_data_for_x) < 2:
                 with pytest.warns(
                     RuntimeWarning,
-                    match="invalid value encountered in (?:scalar divide|sqrt)",
+                    match=(
+                        "invalid value encountered in (?:scalar divide|sqrt)"
+                        "|One or more sample arguments is too small"
+                    ),
                 ):
                     slope, intercept, _, _, _ = stats.linregress(
                         masked_returns_data_for_x, masked_benchmark_data_for_y
@@ -1729,6 +1738,54 @@ class TestHelpers(BaseTestClass):
             function=empyrical.max_drawdown,
         )
         assert res.size == 0
+
+
+class TestRollingIndex:
+    @pytest.mark.parametrize(
+        "index",
+        [
+            pd.Index([0, 0, 1], name="date"),
+            pd.DatetimeIndex(["2024-01-01", "2024-01-01", "2024-01-02"], name="date"),
+        ],
+    )
+    def test_rolling_capture_keeps_distinct_values_at_duplicate_labels(self, index):
+        returns = pd.Series([0.1, 0.2, 0.3], index=index)
+        benchmark = pd.Series([0.1, 0.1, 0.1], index=index)
+
+        result = empyrical.roll_up_capture(
+            returns, benchmark, window=1, period="yearly"
+        )
+
+        pd.testing.assert_series_equal(result, pd.Series([1.0, 2.0, 3.0], index=index))
+
+    @pytest.mark.parametrize("length", [0, 1])
+    def test_empty_rolling_capture_preserves_datetime_metadata(self, length):
+        index = pd.date_range("2024-01-01", periods=length, tz="UTC", name="date")
+        returns = pd.Series(0.1, index=index)
+
+        result = empyrical.roll_up_capture(returns, returns, window=2)
+
+        expected_index = pd.date_range("2024-01-01", periods=0, tz="UTC", name="date")
+        pd.testing.assert_series_equal(
+            result, pd.Series([], index=expected_index, dtype=float)
+        )
+
+    @pytest.mark.parametrize(
+        "index",
+        [
+            pd.RangeIndex(3, name="observation"),
+            pd.date_range("2024-01-01", periods=3, tz="UTC", name="date"),
+        ],
+    )
+    def test_rolling_capture_preserves_index_type_name_and_frequency(self, index):
+        returns = pd.Series([0.1, 0.2, 0.3], index=index)
+        benchmark = pd.Series([0.1, 0.1, 0.1], index=index)
+
+        result = empyrical.roll_up_capture(
+            returns, benchmark, window=1, period="yearly"
+        )
+
+        pd.testing.assert_series_equal(result, pd.Series([1.0, 2.0, 3.0], index=index))
 
 
 class Test2DStats:
