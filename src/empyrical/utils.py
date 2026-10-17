@@ -114,12 +114,13 @@ def roll(*args, **kwargs):
 
 
 def _paired_mask(returns, factor_returns):
-    """True where both the strategy and the factor return are present.
+    """Select present pairs for one-dimensional return streams.
 
-    Dropping only one side of a missing pair makes the filtered strategy and
-    factor series cover different periods (e.g. a missing strategy return on a
-    down-market day still counts in the benchmark's annual return).
+    Multicolumn callers retain benchmark row selection: column-specific
+    missingness cannot be represented by a shared one-dimensional row mask.
     """
+    if np.ndim(returns) != 1 or np.ndim(factor_returns) != 1:
+        return np.ones_like(factor_returns, dtype=bool)
     return ~(pd.isnull(returns) | pd.isnull(factor_returns))
 
 
