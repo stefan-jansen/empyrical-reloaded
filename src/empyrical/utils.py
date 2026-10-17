@@ -114,6 +114,16 @@ def roll(*args, **kwargs):
     return _roll_pandas(func, window, *args, **kwargs)
 
 
+def _paired_mask(returns, factor_returns):
+    """True where both the strategy and the factor return are present.
+
+    Dropping only one side of a missing pair makes the filtered strategy and
+    factor series cover different periods (e.g. a missing strategy return on a
+    down-market day still counts in the benchmark's annual return).
+    """
+    return ~(pd.isnull(returns) | pd.isnull(factor_returns))
+
+
 def up(returns, factor_returns, **kwargs):
     """
     Calculates a given statistic filtering only positive factor return periods.
@@ -135,8 +145,9 @@ def up(returns, factor_returns, **kwargs):
     Same as the return of the function
     """
     func = kwargs.pop("function")
-    returns = returns[factor_returns > 0]
-    factor_returns = factor_returns[factor_returns > 0]
+    mask = _paired_mask(returns, factor_returns) & (factor_returns > 0)
+    returns = returns[mask]
+    factor_returns = factor_returns[mask]
     return func(returns, factor_returns, **kwargs)
 
 
@@ -161,8 +172,9 @@ def down(returns, factor_returns, **kwargs):
     Same as the return of the 'function'
     """
     func = kwargs.pop("function")
-    returns = returns[factor_returns < 0]
-    factor_returns = factor_returns[factor_returns < 0]
+    mask = _paired_mask(returns, factor_returns) & (factor_returns < 0)
+    returns = returns[mask]
+    factor_returns = factor_returns[mask]
     return func(returns, factor_returns, **kwargs)
 
 

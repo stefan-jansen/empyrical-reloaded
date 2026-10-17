@@ -2006,3 +2006,21 @@ class PassArraysEmpyricalProxy(ConvertPandasEmpyricalProxy):
             item += "_aligned"
 
         return super(PassArraysEmpyricalProxy, self).__getattr__(item)
+
+
+def _capture_pair_inputs():
+    idx = pd.date_range("2024-01-02", periods=6, freq="B")
+    returns = pd.Series([0.02, 0.03, np.nan, -0.01, 0.01, -0.02], index=idx)
+    factor = pd.Series([0.01, np.nan, -0.02, -0.01, 0.02, -0.03], index=idx)
+    valid = returns.notna() & factor.notna()
+    return returns, factor, valid
+
+
+def test_up_down_capture_ignore_unpaired_observations():
+    import empyrical
+
+    returns, factor, valid = _capture_pair_inputs()
+    for fn in (empyrical.up_capture, empyrical.down_capture, empyrical.up_down_capture):
+        expected = fn(returns[valid], factor[valid])
+        assert np.isclose(fn(returns, factor), expected), fn.__name__
+        assert np.isclose(fn(returns.values, factor.values), expected), fn.__name__
