@@ -23,7 +23,6 @@ import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
-from pytz import UTC
 
 try:
     from pandas_datareader import data as web
@@ -327,9 +326,8 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
         if file_dt < latest_dt:
             update_cache = True
         else:
-            returns = pd.read_csv(filepath, index_col=0, parse_dates=True)
-            if returns.index.tz != UTC:
-                returns.index = returns.index.tz_localize("UTC")
+            returns = pd.read_csv(filepath, index_col=0)
+            returns.index = pd.to_datetime(returns.index, utc=True)
 
     if update_cache:
         returns = update_func(**kwargs)
