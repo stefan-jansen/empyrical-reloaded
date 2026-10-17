@@ -24,6 +24,9 @@ part of the [ML4T libraries](https://www.ml4trading.io/).
 For new projects, evaluate it through the [Diagnostic documentation](https://www.ml4trading.io/docs/diagnostic/)
 and [Empyrical migration guide](https://github.com/ml4t/diagnostic/blob/942f367f2f6aff269804d2600ba34814c661bf61/docs/user-guide/empyrical-migration.md),
 which includes a runnable metric comparison and explains differences in defaults and results.
+The [source migration recipe](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration.rst)
+and [capability reference](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration-reference.rst)
+identify tested versions, adapters and remaining gaps.
 
 ## Installation
 
@@ -127,7 +130,7 @@ capture(returns, factor_returns)
 
 Empyrical downloads Fama-French risk factors from 1970 onward:
 
-> Note: requires optional dependency `pandas-datareader` - see installation instructions above.gst
+Requires optional dependency `pandas-datareader` - see installation instructions above.
 
 ```python
 import pandas as pd
