@@ -8,3 +8,5 @@
    stats
    perf_attrib
    utils
+
+   contributing

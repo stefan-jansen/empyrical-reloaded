@@ -1,39 +1,51 @@
 name: Test Wheels
 
-on:  workflow_dispatch
+on:
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Build distribution artifacts
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check --strict dist/*
+      - uses: actions/upload-artifact@v6
+        with:
+          name: empyrical-wheels
+          path: dist/*
+
   test_wheels:
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ 3.9, "3.10", "3.11", "3.12" ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
     steps:
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Checkout empyrical
-        uses: actions/checkout@v4
-
-#      - name: Install wheel & run tests
-#        run: |
-#          pip install -U pip wheel tox-gh-actions
-#          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple empyrical-reloaded[test]
-#          tox -p auto -q
-
-      - name: Unittests with tox & pytest
-        uses: nick-fields/retry@v3
+      - uses: actions/download-artifact@v7
         with:
-          timeout_minutes: 90
-          max_attempts: 3
-          retry_on: error
-          new_command_on_retry: |
-            python -m pip install -U pip wheel tox tox-gh-actions
-            python -m pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple empyrical-reloaded[test]
-            tox -p auto -q
-
-          command: tox
+          name: empyrical-wheels
+          path: dist
+      - name: Install built wheel and declared test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -c "import glob, subprocess, sys; wheel, = glob.glob('dist/*.whl'); subprocess.check_call([sys.executable, '-m', 'pip', 'install', wheel + '[test]'])"
+      - name: Test installed public package
+        run: |
+          python -c "from pathlib import Path; import empyrical; path = Path(empyrical.__file__).resolve(); print(path); assert Path('src/empyrical').resolve() not in path.parents"
+          python -m pytest -o pythonpath= tests
