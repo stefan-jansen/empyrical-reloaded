@@ -113,6 +113,17 @@ def roll(*args, **kwargs):
     return _roll_pandas(func, window, *args, **kwargs)
 
 
+def _paired_mask(returns, factor_returns):
+    """Select present pairs for one-dimensional return streams.
+
+    Multicolumn callers retain benchmark row selection: column-specific
+    missingness cannot be represented by a shared one-dimensional row mask.
+    """
+    if np.ndim(returns) != 1 or np.ndim(factor_returns) != 1:
+        return np.ones_like(factor_returns, dtype=bool)
+    return ~(pd.isnull(returns) | pd.isnull(factor_returns))
+
+
 def up(returns, factor_returns, **kwargs):
     """
     Calculates a given statistic filtering only positive factor return periods.
@@ -134,8 +145,9 @@ def up(returns, factor_returns, **kwargs):
     Same as the return of the function
     """
     func = kwargs.pop("function")
-    returns = returns[factor_returns > 0]
-    factor_returns = factor_returns[factor_returns > 0]
+    mask = _paired_mask(returns, factor_returns) & (factor_returns > 0)
+    returns = returns[mask]
+    factor_returns = factor_returns[mask]
     return func(returns, factor_returns, **kwargs)
 
 
@@ -160,8 +172,9 @@ def down(returns, factor_returns, **kwargs):
     Same as the return of the 'function'
     """
     func = kwargs.pop("function")
-    returns = returns[factor_returns < 0]
-    factor_returns = factor_returns[factor_returns < 0]
+    mask = _paired_mask(returns, factor_returns) & (factor_returns < 0)
+    returns = returns[mask]
+    factor_returns = factor_returns[mask]
     return func(returns, factor_returns, **kwargs)
 
 
