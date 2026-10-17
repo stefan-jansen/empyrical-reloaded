@@ -1619,7 +1619,9 @@ def gpd_risk_estimates(returns, var_p=0.01):
         * shape_param - a parameter (often denoted by xi, capturing the shape
           or type of the distribution)
         * var_estimate - an estimate for the VaR for the given percentile
-        * es_estimate - an estimate for the ES for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile.
+          Positive infinity when the fitted shape is at least one, because
+          the fitted tail has no finite mean.
 
     Note
     ----
@@ -1660,7 +1662,9 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
         * shape_param - a parameter (often denoted by xi, capturing the shape
           or type of the distribution)
         * var_estimate - an estimate for the VaR for the given percentile
-        * es_estimate - an estimate for the ES for the given percentile
+        * es_estimate - an estimate for the ES for the given percentile.
+          Positive infinity when the fitted shape is at least one, because
+          the fitted tail has no finite mean.
 
     Note
     ----
@@ -1726,13 +1730,13 @@ def gpd_risk_estimates_aligned(returns, var_p=0.01):
 
 
 def gpd_es_calculator(var_estimate, threshold, scale_param, shape_param):
-    result = 0
-    if (1 - shape_param) != 0:
-        # this formula is from Gilli and Kellezi pg. 8
-        var_ratio = var_estimate / (1 - shape_param)
-        param_ratio = (scale_param - (shape_param * threshold)) / (1 - shape_param)
-        result = var_ratio + param_ratio
-    return result
+    """Compute positive tail loss, which is infinite for shape at least one."""
+    if shape_param >= 1:
+        return np.inf
+    # this formula is from Gilli and Kellezi pg. 8
+    var_ratio = var_estimate / (1 - shape_param)
+    param_ratio = (scale_param - (shape_param * threshold)) / (1 - shape_param)
+    return var_ratio + param_ratio
 
 
 def gpd_var_calculator(
