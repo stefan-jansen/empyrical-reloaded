@@ -1,4 +1,5 @@
 from copy import copy
+import warnings
 from operator import attrgetter
 
 import numpy as np
@@ -1583,6 +1584,35 @@ class TestStats(BaseTestClass):
                 conditional_value_at_risk(returns, cutoff),
                 expected_cvar,
             )
+
+    def test_conditional_value_at_risk_ignores_nan(self):
+        conditional_value_at_risk = self.empyrical.conditional_value_at_risk
+
+        # Missing observations must not change the answer: counted in the
+        # cutoff index, they widened the averaged tail and pulled CVaR
+        # towards zero (issue #54).
+        returns = np.random.default_rng(5).normal(0.0004, 0.011, 1512)
+        positions = np.random.default_rng(5).integers(0, 1512, 40)
+        padded = np.insert(returns, positions, np.nan)
+
+        for cutoff in (0.01, 0.05, 0.20):
+            np.testing.assert_almost_equal(
+                conditional_value_at_risk(padded, cutoff),
+                conditional_value_at_risk(returns, cutoff),
+            )
+
+        assert np.isnan(conditional_value_at_risk(np.array([np.nan, np.nan])))
+
+    def test_conditional_value_at_risk_empty(self):
+        conditional_value_at_risk = self.empyrical.conditional_value_at_risk
+
+        # Empty input returns NaN directly rather than through the mean of an
+        # empty slice, so no RuntimeWarning is raised.
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            for empty in (np.array([]), pd.Series([], dtype=float), []):
+                for cutoff in (0, 0.05, 1):
+                    assert np.isnan(conditional_value_at_risk(empty, cutoff))
 
     @property
     def empyrical(self):
