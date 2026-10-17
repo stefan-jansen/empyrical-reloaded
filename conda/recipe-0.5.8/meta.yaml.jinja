@@ -1,0 +1,39 @@
+{% set name = "empyrical-reloaded" %}
+{% set version = "0.5.8" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  md5: b6db529711262a020c7d1085b591d69d
+
+
+build:
+  number: 0
+  skip: true # [py<37 or not x86_64]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python
+    - numpy >=1.9.2
+    - pandas >=1.0.0
+    - scipy >=0.15.1
+    - yfinance >=0.1.63
+    - pandas-datareader >=0.4
+
+test:
+  imports:
+    - empyrical
+
+about:
+  home: https://empyrical.ml4trading.io
+  summary: 'Common financial risk metrics'
+  license: Apache-2.0
+  license_file: LICENSE

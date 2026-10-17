@@ -16,9 +16,20 @@
 
 Common financial return and risk metrics in Python.
 
+## Maintenance and new projects
+
+We continue to maintain Empyrical Reloaded for bug, security, and compatibility fixes.
+Our new feature development focuses on [ML4T Diagnostic](https://github.com/ml4t/diagnostic),
+part of the [ML4T libraries](https://www.ml4trading.io/).
+For new projects, evaluate it through the [Diagnostic documentation](https://www.ml4trading.io/docs/diagnostic/)
+and [Empyrical migration guide](https://github.com/ml4t/diagnostic/blob/942f367f2f6aff269804d2600ba34814c661bf61/docs/user-guide/empyrical-migration.md),
+which includes a runnable metric comparison and explains differences in defaults and results.
+
 ## Installation
 
-empyrical requires Python 3.10+. You can install it using `pip`:
+Empyrical Reloaded supports Python 3.11 through 3.15. Python 3.9 and 3.10 are retired
+for this release; historical packages retain their original Python requirements.
+You can install it using `pip`:
 
 ```bash
 pip install empyrical-reloaded
@@ -30,11 +41,7 @@ or `conda` from the `conda-forge` channel
 conda install empyrical-reloaded -c conda-forge
 ```
 
-empyrical requires and installs the following packages while executing the above commands:
-
-- numpy>=1.23.5
-- pandas>=1.3.0
-- scipy>=0.15.1
+The installer provides NumPy, pandas, SciPy and the other declared runtime dependencies.
 
 > Note that Numpy>=2.0 requires pandas>=2.2.2. If you are using an older version of pandas, you may need to upgrade
 > accordingly, otherwise you may encounter compatibility issues.
@@ -45,8 +52,6 @@ and [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/) to
 access [Fama-French](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) risk factors and FRED
 treasury yields.
 
-> Note that `pandas-datareader` is not compatible with Python>=3.12.
-
 To install the optional dependencies, use:
 
 ```bash
@@ -56,13 +61,13 @@ pip install empyrical-reloaded[yfinance]
 or
 
 ```bash
-pip install empyrical-reloaded[datreader]
+pip install empyrical-reloaded[datareader]
 ```
 
 or
 
 ```bash
-pip install empyrical-reloaded[yfinance,datreader]
+pip install empyrical-reloaded[yfinance,datareader]
 ```
 
 ## Usage
@@ -237,8 +242,9 @@ Please [open an issue](https://github.com/stefan-jansen/empyrical-reloaded/issue
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits,
-and [open a pull request](https://github.com/stefan-jansen/empyrical-reloaded/compare/).
+Empyrical Reloaded accepts bug, security, and compatibility fixes. Read the
+[contribution guide](https://github.com/stefan-jansen/empyrical-reloaded/blob/main/CONTRIBUTING.md)
+for issue scope, regression evidence, review checks, and AI disclosure requirements.
 
 ## Testing
 

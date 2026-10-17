@@ -1,43 +1,35 @@
-Dear empyrical maintainers,
+<!-- Search existing issues first. Report one problem per issue.
+This library accepts bug, security and compatibility fixes; direct new feature
+requests to current ML4T libraries. Follow CONTRIBUTING.md and the shared private
+reporting process for suspected vulnerabilities. -->
 
-Before I tell you about my issue, let me describe my environment:
+## Environment
 
-# Environment
+- Empyrical Reloaded version:
+- Operating system:
+- Python version and bitness:
+- Installation method (pip, uv, conda, or other):
+- Relevant package versions (especially NumPy, pandas and SciPy):
 
-<details>
+## Problem
 
-* Operating System: (Windows Version or `$ uname --all`)
-* Python Version: `$ python --version`
-* Python Bitness: `$ python -c 'import math, sys;print(int(math.log(sys.maxsize + 1, 2) + 1))'`
-* How did you install empyrical: (`pip`, `conda`, or `other (please explain)`)
-* Python packages: `$ pip freeze` or `$ conda list`
+- Expected behavior:
+- Observed behavior:
 
-</details>
+## Complete reproduction
 
-Now that you know a little about me, let me tell you about the issue I am having:
+Include the smallest runnable public-API example or user workflow that reproduces
+this problem, with inputs and the observed output or traceback.
 
-# Description of Issue
+## Investigation
 
-* What did you expect to happen?
-* What happened instead?
+What have you tried? Link related issues or PRs and explain why this is a separate
+problem. Discuss substantial changes here before implementing them.
 
-Here is how you can reproduce this issue on your machine:
+## AI assistance
 
-## Reproduction Steps
+State whether AI tools helped prepare this report and which parts they helped with.
+Confirm that you ran the reproduction and can explain the evidence.
 
-1.
-2.
-3.
-
-...
-
-## What steps have you taken to resolve this already?
-
-...
-
-# Anything else?
-
-...
-
-Sincerely,
-`$ whoami`
+<!-- A fix should have a focused PR linked to this issue. Automated dependency
+updates and administrative metadata changes do not require a separate issue. -->

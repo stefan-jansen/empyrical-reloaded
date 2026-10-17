@@ -23,9 +23,8 @@ import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import as_strided
 from pandas.tseries.offsets import BDay
-from pytz import UTC
 
-try:  # incompatible with Python 3.12
+try:
     from pandas_datareader import data as web
 except ImportError:
     web = None
@@ -175,18 +174,12 @@ def _roll_ndarray(func, window, *args, **kwargs):
 
 
 def _roll_pandas(func, window, *args, **kwargs):
-    data = {}
-    index_values = []
+    data = []
     for i in range(window, len(args[0]) + 1):
         rets = [s.iloc[i - window : i] for s in args]
-        index_value = args[0].index[i - 1]
-        index_values.append(index_value)
-        data[index_value] = func(*rets, **kwargs)
-    return pd.Series(
-        data,
-        index=type(args[0].index)(index_values),
-        dtype=np.float64,
-    )
+        data.append(func(*rets, **kwargs))
+    index = args[0].index[window - 1 :]
+    return pd.Series(data, index=index, dtype=np.float64)
 
 
 def cache_dir(environ=environ):
@@ -256,11 +249,13 @@ def get_fama_french(
 ):
     """
     Retrieve Fama-French factors via pandas-datareader
+
     Parameters
     ----------
     start: str or datetime or Timestamp, start date
     end: str or datetime or Timestamp, end date
     datasets: list of factors (default is the five factors)
+
     Returns
     -------
     pandas.DataFrame
@@ -271,7 +266,7 @@ def get_fama_french(
 
     if not isinstance(start, datetime):
         start = pd.Timestamp(start).date()
-    if not isinstance(end, datetime):
+    if end is not None and not isinstance(end, datetime):
         end = pd.Timestamp(end).date()
 
     ff_function = partial(
@@ -284,6 +279,8 @@ def get_fama_french(
     df = [ff_function(dataset)[0] for dataset in datasets]
     df = pd.concat(df, axis=1).dropna().div(100).rename(columns=str.strip)
 
+    if isinstance(df.index, pd.PeriodIndex):
+        df.index = df.index.to_timestamp()
     df.index = df.index.tz_localize("utc")
     return df
 
@@ -293,6 +290,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
     Get returns from a cached file if the cache is recent enough,
     otherwise, try to retrieve via a provided update function and
     update the cache file.
+
     Parameters
     ----------
     filepath : str
@@ -303,6 +301,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
         Latest datetime required in csv file.
     **kwargs : Keyword arguments
         Optional keyword arguments will be passed to update_func()
+
     Returns
     -------
     pandas.DataFrame
@@ -327,9 +326,8 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
         if file_dt < latest_dt:
             update_cache = True
         else:
-            returns = pd.read_csv(filepath, index_col=0, parse_dates=True)
-            if returns.index.tz != UTC:
-                returns.index = returns.index.tz_localize("UTC")
+            returns = pd.read_csv(filepath, index_col=0)
+            returns.index = pd.to_datetime(returns.index, utc=True)
 
     if update_cache:
         returns = update_func(**kwargs)
@@ -365,6 +363,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
     Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
     Data is stored in HDF5 file. If the data is more than 2
     days old, redownload from Dartmouth.
+
     Returns
     -------
     five_factors : pd.DataFrame
@@ -439,15 +438,21 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
         Returns of symbol in requested period.
     """
 
+    if yf is None:
+        raise ImportError(
+            "Install empyrical-reloaded[yfinance] to fetch Yahoo Finance data"
+        )
+
     try:
 
-        px = yf.download(symbol, start=start, end=end)
+        px = yf.download(symbol, start=start, end=end, auto_adjust=False)
         rets = px[["Adj Close"]].pct_change().dropna()
     except Exception as e:
         warnings.warn(
             "Yahoo Finance read failed: {}".format(e),
             UserWarning,
         )
+        raise
 
     rets.index = rets.index.tz_localize("UTC")
     rets.columns = [symbol]
