@@ -39,12 +39,15 @@ jobs:
         uses: py-actions/flake8@v2
 
   tests:
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ "3.11", "3.12", "3.13" ]
+        python-version: [ "3.11", "3.12", "3.13", "3.14", "3.15" ]
     steps:
       - name: Checkout empyrical
         uses: actions/checkout@v6
@@ -59,7 +62,7 @@ jobs:
           python -VV
           python -m pip install --upgrade pip setuptools wheel
           pip install tox tox-gh-actions
-          pip install -e .[test]
+          pip install -e ".[test]"
 
       - name: Unittests with tox & pytest
         run: tox
@@ -68,6 +71,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         uses: codecov/codecov-action@v5
         with:
-          fail_ci_if_error: false
+          use_oidc: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+          fail_ci_if_error: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
           name: codecov-umbrella
           verbose: true
