@@ -10,3 +10,5 @@
    utils
 
    contributing
+   migration
+   migration-reference

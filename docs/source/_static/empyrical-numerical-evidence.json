@@ -1,0 +1,2849 @@
+{
+  "checked_at": "2026-10-17T14:31:04.002538+00:00",
+  "repositories": {
+    "empyrical": {
+      "head": "4ee3e80c6dacaf38b572e0e0e9f7c349713906c1"
+    },
+    "diagnostic": {
+      "head": "8faa03f5d8b72d44391451074da4c3f906f9d57b"
+    },
+    "engineer": {
+      "head": "83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3"
+    }
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "polars": "1.43.2",
+    "scipy": "1.18.0",
+    "ml4t-diagnostic": "0.1.9"
+  },
+  "scope": "Tiny direct public-API probes, not benchmarks, bootstrap, suites or full parity proof.",
+  "input_cases": {
+    "finite": [
+      0.03,
+      -0.02,
+      0.01,
+      -0.01,
+      0.02
+    ],
+    "one_nan": [
+      "NaN",
+      0.01,
+      -0.04,
+      0.05,
+      0.0
+    ],
+    "empty": [],
+    "all_nan": [
+      "NaN",
+      "NaN"
+    ],
+    "one": [
+      0.01
+    ],
+    "constant_positive": [
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "all_negative": [
+      -0.05,
+      -0.04,
+      -0.03,
+      -0.02
+    ],
+    "zero_left_tail": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.1
+    ],
+    "initial_loss": [
+      -0.2,
+      0.1,
+      0.01
+    ],
+    "tied_tail": [
+      -0.2,
+      -0.1,
+      -0.1,
+      0.1
+    ]
+  },
+  "results": [
+    {
+      "metric": "annual_return",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "successor": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.020097999999999974,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.02009799999999995,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 165.47102792771537,
+        "warnings": []
+      },
+      "successor": {
+        "value": 165.47102792771557,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 2.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 2.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.5555555555555551,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.5555555555555551,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.018000000000000002,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.018,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.02,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.02,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0003024172935866406,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0003074029161814803,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 4.593220484431883,
+        "warnings": []
+      },
+      "successor": {
+        "value": 4.593220484431883,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "finite",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 9.524704719832526,
+        "warnings": []
+      },
+      "successor": {
+        "value": 9.524704719832526,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.4672210229313136,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.4672210229313136,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.5868560300448483,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.5868560300448483,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.039999999999999925,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.040000000000000036,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 36.68052557328291,
+        "warnings": []
+      },
+      "successor": {
+        "value": 36.68052557328281,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.5,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.5,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.2941176470588232,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.2941176470588232,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.033999999999999996,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.04,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.04,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.16125144899746421,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.1202007584452513,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 2.1470342562616413,
+        "warnings": []
+      },
+      "successor": {
+        "value": 2.1470342562616413,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "one_nan",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 3.9686269665968865,
+        "warnings": []
+      },
+      "successor": {
+        "value": 3.968626966596887,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Degrees of freedom <= 0 for slice."
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Mean of empty slice",
+          "Mean of empty slice"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Mean of empty slice"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": [
+          "Mean of empty slice",
+          "invalid value encountered in scalar divide"
+        ]
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Mean of empty slice",
+          "Mean of empty slice"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "empty",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Degrees of freedom <= 0 for slice."
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "All-NaN slice encountered",
+          "All-NaN slice encountered"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "All-NaN slice encountered"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "All-NaN slice encountered",
+          "Mean of empty slice"
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": [
+          "One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements."
+        ]
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "all_nan",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 11.274002099240244,
+        "warnings": []
+      },
+      "successor": {
+        "value": 11.274002099240244,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": [
+          "Degrees of freedom <= 0 for slice."
+        ]
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "one",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "one",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "one",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 11.274002099240176,
+        "warnings": []
+      },
+      "successor": {
+        "value": 11.274002099240176,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.01,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.999965348985219,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "constant_positive",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.9998759671159707,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.9998759671159707,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.20493901531919198,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.20493901531919198,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.13305280000000025,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.1330528000000002,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -7.514881063126585,
+        "warnings": []
+      },
+      "successor": {
+        "value": -7.514881063126587,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.44329896907216504,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.44329896907216504,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.0485,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.0485,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.05,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.05,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.9776460005811071,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.9737300127952007,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -43.03719321703031,
+        "warnings": []
+      },
+      "successor": {
+        "value": -43.03719321703031,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "all_negative",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -15.121728296285003,
+        "warnings": []
+      },
+      "successor": {
+        "value": -15.121728296285006,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 120.95267530454869,
+        "warnings": []
+      },
+      "successor": {
+        "value": 120.95267530454869,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.709929573971954,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.709929573971954,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "+Inf",
+        "warnings": [
+          "divide by zero encountered in scalar divide"
+        ]
+      },
+      "successor": {
+        "value": "NaN",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.4999999999999999,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.5000000000000001,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 7.0992957397195395,
+        "warnings": []
+      },
+      "successor": {
+        "value": 7.0992957397195395,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "zero_left_tail",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "successor": {
+        "value": "+Inf",
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.99994993435007,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.99994993435007,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 2.443849422529956,
+        "warnings": []
+      },
+      "successor": {
+        "value": 2.443849422529956,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.2,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.19999999999999996,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -4.999749671750349,
+        "warnings": []
+      },
+      "successor": {
+        "value": -4.999749671750351,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.5499999999999999,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.5499999999999999,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.5083798882681564,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.5083798882681564,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.179,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.179,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.2,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.2,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.8202050413440065,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.8235228589252296,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -3.093480281683489,
+        "warnings": []
+      },
+      "successor": {
+        "value": -3.093480281683489,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "initial_loss",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -4.124318125460256,
+        "warnings": []
+      },
+      "successor": {
+        "value": -4.124318125460256,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.9999999994542867,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.9999999994542867,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.997498435543818,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.997498435543818,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.35199999999999987,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.35199999999999987,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -2.84090908935877,
+        "warnings": []
+      },
+      "successor": {
+        "value": -2.84090908935877,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "omega_ratio",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.omega_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.25,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.25,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "tail_ratio",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.tail_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.37837837837837807,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.37837837837837807,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.value_at_risk",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.185,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.185,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.conditional_var",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.2,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.2,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "stability_of_timeseries",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.stability_of_timeseries",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.457719470770398,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.47822284559217765,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -9.461834694681244,
+        "warnings": []
+      },
+      "successor": {
+        "value": -9.461834694681244,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "tied_tail",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -9.72111104761179,
+        "warnings": []
+      },
+      "successor": {
+        "value": -9.721111047611792,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "annualization_1",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.0058286643890854695,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0058286643890854695,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "annualization_1",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.02073644135332772,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.02073644135332772,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "annualization_1",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.2900121598709064,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.2900121598709068,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "periodic_rf_annualization_1",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sharpe_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 0.2845232650805432,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.2845232650805432,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "periodic_rf_annualization_1",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sortino_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 0.5864799543111614,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.5864799543111614,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "annualization_12",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.0722303532497861,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0722303532497861,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "annualization_12",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.07183313998427188,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.07183313998427188,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "annualization_12",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 3.5939075156625635,
+        "warnings": []
+      },
+      "successor": {
+        "value": 3.593907515662568,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "periodic_rf_annualization_12",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sharpe_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 0.9856175021097772,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.9856175021097772,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "periodic_rf_annualization_12",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sortino_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 2.0316261569752103,
+        "warnings": []
+      },
+      "successor": {
+        "value": 2.0316261569752108,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "annualization_52",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.3528461860357375,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.3528461860357375,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "annualization_52",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.14953260514014993,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.14953260514014993,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "annualization_52",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 17.556283512575277,
+        "warnings": []
+      },
+      "successor": {
+        "value": 17.5562835125753,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "periodic_rf_annualization_52",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sharpe_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 2.0517264426206623,
+        "warnings": []
+      },
+      "successor": {
+        "value": 2.0517264426206623,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "periodic_rf_annualization_52",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sortino_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 4.22916709460134,
+        "warnings": []
+      },
+      "successor": {
+        "value": 4.22916709460134,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "annualization_252",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "successor": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "annualization_252",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "annualization_252",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 165.47102792771537,
+        "warnings": []
+      },
+      "successor": {
+        "value": 165.47102792771557,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "periodic_rf_annualization_252",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sharpe_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 4.516666809691352,
+        "warnings": []
+      },
+      "successor": {
+        "value": 4.516666809691352,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "periodic_rf_annualization_252",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sortino_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 9.310080648191137,
+        "warnings": []
+      },
+      "successor": {
+        "value": 9.31008064819114,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "annualization_365",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 7.341861200917917,
+        "warnings": []
+      },
+      "successor": {
+        "value": 7.341861200917917,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "annualization_365",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 0.396169155790806,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.396169155790806,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "calmar_ratio",
+      "case": "annualization_365",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.calmar_ratio",
+      "adaptation": "annualization -> periods_per_year",
+      "empyrical": {
+        "value": 365.3030749785017,
+        "warnings": []
+      },
+      "successor": {
+        "value": 365.3030749785021,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "periodic_rf_annualization_365",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sharpe_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 5.435809346897108,
+        "warnings": []
+      },
+      "successor": {
+        "value": 5.435809346897108,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "periodic_rf_annualization_365",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.periodic_sortino_ratio",
+      "adaptation": "Use periodic API; preserve periodic rf/MAR and annualization override",
+      "empyrical": {
+        "value": 11.204683794521825,
+        "warnings": []
+      },
+      "successor": {
+        "value": 11.204683794521825,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "conditional_value_at_risk",
+      "case": "median_ties",
+      "destination": "diagnostic.portfolio.conditional_var",
+      "adaptation": "cutoff -> 1-confidence",
+      "empyrical": {
+        "value": -0.15000000000000002,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.13333333333333333,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "alpha_beta",
+      "case": "affine_geometric_vs_arithmetic",
+      "destination": "diagnostic.portfolio.alpha_beta",
+      "adaptation": "none",
+      "empyrical": {
+        "value": [
+          0.07851884740559223,
+          1.1999999999999997
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.07560000000000086,
+          1.1999999999999997
+        ],
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "alpha_beta",
+      "case": "affine_geometric_adapter",
+      "destination": "diagnostic.portfolio.alpha_beta",
+      "adaptation": "Compute periodic intercept with periods_per_year=1, compound alpha geometrically",
+      "empyrical": {
+        "value": [
+          0.07851884740559223,
+          1.1999999999999997
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.07851884740559223,
+          1.1999999999999997
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true,
+      "analytic_oracle": [
+        0.07851884740559223,
+        1.2
+      ],
+      "successor_matches_oracle": true
+    },
+    {
+      "metric": "excess_sharpe",
+      "case": "no_annualization",
+      "destination": "diagnostic.portfolio.information_ratio",
+      "adaptation": "periods_per_year=1",
+      "empyrical": {
+        "value": 0.2035641328043417,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.2035641328043417,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "up_down_capture_components",
+      "case": "geometric_return_vs_wealth_ratio",
+      "destination": "diagnostic.portfolio.up_down_capture",
+      "adaptation": "none",
+      "empyrical": {
+        "value": [
+          12.091480558477295,
+          1.0
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          1.0198019801980198,
+          1.0
+        ],
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "annual_return",
+      "case": "two_columns",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_return",
+      "adaptation": "none",
+      "empyrical": {
+        "value": {
+          "type": "Series",
+          "values": [
+            3.325636719291219,
+            1.1045166102305424
+          ],
+          "index": [
+            "a",
+            "b"
+          ]
+        },
+        "warnings": []
+      },
+      "successor": {
+        "value": 8.103374325571545,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "two_columns",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": [
+          0.32918080138428485,
+          0.16459040069214242
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.24663738564945908,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "two_columns",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sharpe_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": [
+          4.593220484431883,
+          4.593220484431883
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": 4.597843092659652,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "two_columns",
+      "destination": "ml4t.diagnostic.metrics.risk_adjusted.sortino_ratio",
+      "adaptation": "none",
+      "empyrical": {
+        "value": {
+          "type": "Series",
+          "values": [
+            9.524704719832526,
+            9.524704719832526
+          ],
+          "index": [
+            "a",
+            "b"
+          ]
+        },
+        "warnings": []
+      },
+      "successor": {
+        "value": 9.035928286568017,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "two_columns",
+      "destination": "ml4t.diagnostic.evaluation.portfolio_analysis.metrics.max_drawdown",
+      "adaptation": "none",
+      "empyrical": {
+        "value": {
+          "type": "Series",
+          "values": [
+            -0.020097999999999974,
+            -0.010024750000000103
+          ],
+          "index": [
+            "a",
+            "b"
+          ]
+        },
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.029921272574500057,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "value_at_risk",
+      "case": "engineer_default_quantile_interpolation",
+      "destination": "engineer.features.risk.value_at_risk",
+      "adaptation": "One full20-row rolling window",
+      "empyrical": {
+        "value": -0.18100000000000002,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.18000000000000002,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "downside_risk",
+      "case": "engineer_full_window_no_annualization",
+      "destination": "engineer.features.risk.downside_deviation",
+      "adaptation": "annualization=1; full window",
+      "empyrical": {
+        "value": 0.08774964387392123,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.08774964387392123,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "simple_returns",
+      "case": "engineer_price_expression",
+      "destination": "engineer.features.utils.arithmetic.returns",
+      "adaptation": "Drop first undefined output row",
+      "empyrical": {
+        "value": [
+          0.05,
+          -0.02857142857142857
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.050000000000000044,
+          -0.02857142857142858
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "explicit_override_precedes_period",
+      "destination": "diagnostic.portfolio.annual_return",
+      "adaptation": "Keep explicit12-period override",
+      "empyrical": {
+        "value": 0.0722303532497861,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.0722303532497861,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "non_gaussian_scaling_alpha_1_5",
+      "destination": "diagnostic.portfolio.annual_volatility",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.8273093290916311,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "non_gaussian_scaling_adapter",
+      "destination": "diagnostic.portfolio.annual_volatility",
+      "adaptation": "Compute unannualized sample volatility, scale by factor**(1/alpha)",
+      "empyrical": {
+        "value": 0.8273093290916311,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.8273093290916311,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "documented_portfolio_workflow_finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "successor": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_volatility",
+      "case": "documented_portfolio_workflow_finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "successor": {
+        "value": 0.32918080138428485,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "documented_portfolio_workflow_finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 4.593220484431883,
+        "warnings": []
+      },
+      "successor": {
+        "value": 4.593220484431883,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "sortino_ratio",
+      "case": "documented_portfolio_workflow_finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 9.524704719832526,
+        "warnings": []
+      },
+      "successor": {
+        "value": 9.524704719832526,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "max_drawdown",
+      "case": "documented_portfolio_workflow_finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": -0.020097999999999974,
+        "warnings": []
+      },
+      "successor": {
+        "value": -0.02009799999999995,
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "annual_return",
+      "case": "documented_portfolio_workflow_nan",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 1.4672210229313136,
+        "warnings": []
+      },
+      "successor": {
+        "error": "ValueError",
+        "message": "returns must contain finite returns; missing values are not zero returns",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "annual_return",
+      "case": "documented_portfolio_workflow_duplicate_dates",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "none",
+      "empyrical": {
+        "value": 3.325636719291219,
+        "warnings": []
+      },
+      "successor": {
+        "error": "ValueError",
+        "message": "dates must be nonmissing and unique",
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "drawdown_series",
+      "case": "finite",
+      "destination": "diagnostic.PortfolioAnalysis.compute_drawdown_analysis.underwater_curve",
+      "adaptation": "Extract underwater_curve; finite row inputs only",
+      "empyrical": {
+        "value": [
+          0.0,
+          -0.019999999999999882,
+          -0.01019999999999989,
+          -0.020097999999999974,
+          -0.0004999599999999056
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.0,
+          -0.019999999999999907,
+          -0.010199999999999876,
+          -0.02009799999999995,
+          -0.000499959999999966
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "drawdown_series",
+      "case": "initial_loss",
+      "destination": "diagnostic.PortfolioAnalysis.compute_drawdown_analysis.underwater_curve",
+      "adaptation": "Extract underwater_curve; finite row inputs only",
+      "empyrical": {
+        "value": [
+          -0.2,
+          -0.11999999999999986,
+          -0.11119999999999991
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          -0.19999999999999996,
+          -0.11999999999999988,
+          -0.11119999999999985
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_sharpe_ratio",
+      "case": "window_1_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_annual_volatility",
+      "case": "window_1_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_sharpe_ratio",
+      "case": "window_3_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          4.205259864302774,
+          -6.92820323027551,
+          6.92820323027551
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          4.205259864302774,
+          -6.92820323027551,
+          6.92820323027551
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_annual_volatility",
+      "case": "window_3_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          0.3994996871087636,
+          0.24248711305964282,
+          0.24248711305964282
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.3994996871087636,
+          0.24248711305964282,
+          0.24248711305964282
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_sharpe_ratio",
+      "case": "window_5_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          4.593220484431883
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          4.593220484431883
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_annual_volatility",
+      "case": "window_5_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          0.32918080138428485
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [
+          0.32918080138428485
+        ],
+        "warnings": []
+      },
+      "numerically_equal": true
+    },
+    {
+      "metric": "roll_sharpe_ratio",
+      "case": "window_6_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          4.593220484431883
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [],
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "roll_annual_volatility",
+      "case": "window_6_trimmed_warmup",
+      "destination": "diagnostic.PortfolioAnalysis.compute_rolling_metrics",
+      "adaptation": "Trim destination leading window-1 warmup rows; null becomes NaN",
+      "empyrical": {
+        "value": [
+          0.32918080138428485
+        ],
+        "warnings": []
+      },
+      "successor": {
+        "value": [],
+        "warnings": []
+      },
+      "numerically_equal": false
+    },
+    {
+      "metric": "sharpe_ratio",
+      "case": "irregular_dated_row_invariance",
+      "destination": "diagnostic.PortfolioAnalysis.compute_summary_stats",
+      "adaptation": "Explicit12 observation convention; do not infer missing sessions from timestamp gaps",
+      "empyrical": {
+        "value": 1.0023228835014681,
+        "warnings": []
+      },
+      "successor": {
+        "value": 1.0023228835014681,
+        "warnings": []
+      },
+      "numerically_equal": true
+    }
+  ],
+  "source_fingerprints": [
+    {
+      "repository": "empyrical",
+      "head": "4ee3e80c6dacaf38b572e0e0e9f7c349713906c1",
+      "path": "src/empyrical/stats.py",
+      "sha256": "f75c623acc9d3f3ff922f195bbff0fa53943490557e8b73c7718690ced4adeed",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "empyrical",
+      "head": "4ee3e80c6dacaf38b572e0e0e9f7c349713906c1",
+      "path": "src/empyrical/utils.py",
+      "sha256": "697ce178fb5b05dc3d7b6453df7f88486e2d4e5ec088d78b6b20d9559986885e",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "diagnostic",
+      "head": "8faa03f5d8b72d44391451074da4c3f906f9d57b",
+      "path": "src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py",
+      "sha256": "cf9823e7582acd23fde716edec1f78955a809fcbe70ab80b79ef4287db2bb6dc",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "diagnostic",
+      "head": "8faa03f5d8b72d44391451074da4c3f906f9d57b",
+      "path": "src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py",
+      "sha256": "a623b0a26a671c286f66469ba11eaa94466501757d6b40555c005020219c6904",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "diagnostic",
+      "head": "8faa03f5d8b72d44391451074da4c3f906f9d57b",
+      "path": "src/ml4t/diagnostic/evaluation/portfolio_analysis/inputs.py",
+      "sha256": "94d7dbd07da05e7cba687374a3e7e61731dfb90a3cf37386838b6432dcebbd77",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "diagnostic",
+      "head": "8faa03f5d8b72d44391451074da4c3f906f9d57b",
+      "path": "src/ml4t/diagnostic/metrics/risk_adjusted.py",
+      "sha256": "5ad4f2f4f3df058f7991347bde7299b50aac3c69d68b5d9b0bf4ff8fefa7ca7f",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "engineer",
+      "head": "83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3",
+      "path": "src/ml4t/engineer/features/risk.py",
+      "sha256": "ba31809ef06dc59539d92032d2b720f3248faac7601d3e627dfb145632f3fac7",
+      "matches_committed_revision": true
+    },
+    {
+      "repository": "engineer",
+      "head": "83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3",
+      "path": "src/ml4t/engineer/features/utils/arithmetic.py",
+      "sha256": "09b753ad119f16d6c1f1e7f3749c92fea8f6762a75c3fd75821e9b75138f401f",
+      "matches_committed_revision": true
+    }
+  ],
+  "session_date_boundaries": {
+    "undated_numeric_workflow": "Explicit row observations and periods_per_year; no fabricated dates",
+    "calendar_outputs_without_dates": {
+      "error": "ValueError",
+      "message": "dates are required for calendar tables and complete portfolio reports",
+      "warnings": []
+    },
+    "calendar_selection_policy": "Explicit calendar > declared feed metadata > NYSE; explicit None remains row mode, distinct from24/7. This probe does not qualify a destination calendar resolver."
+  }
+}
