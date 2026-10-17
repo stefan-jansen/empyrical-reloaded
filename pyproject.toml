@@ -15,22 +15,23 @@ maintainers = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Mathematics",
     "Operating System :: OS Independent"
 ]
 
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dynamic = ["version"]
 
 
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 
 dependencies = [
     # following pandas
@@ -53,14 +54,8 @@ repository = 'https://github.com/stefan-jansen/empyrical-reloaded'
 
 [build-system]
 requires = [
-    "setuptools>=54.0.0",
-    "setuptools_scm[toml]>=6.2",
-#    "wheel>=0.31.0",
-    #    "numpy>=2.0rc1; python_version>='3.9'",
-    #        "oldest-supported-numpy; python_version>='3.9'"
-#    "wheel>=0.31.0",
-    #    "numpy>=2.0rc1; python_version>='3.9'",
-    #        "oldest-supported-numpy; python_version>='3.9'"
+    "setuptools>=77.0.0",
+    "setuptools_scm>=8.0"
 ]
 build-backend = "setuptools.build_meta"
 
@@ -121,8 +116,9 @@ testpaths = 'tests'
 addopts = '-v'
 
 [tool.cibuildwheel]
+build = ["cp311-*", "cp312-*", "cp313-*", "cp314-*", "cp315-*"]
 test-extras = "test"
-test-command = "pytest -n 2 --reruns 5 {package}/tests"
+test-command = "python -m pytest -o pythonpath= {package}/tests"
 build-verbosity = 3
 
 [tool.cibuildwheel.macos]
@@ -135,7 +131,7 @@ skip = "*musllinux*"
 
 [tool.black]
 line-length = 88
-target-version = ['py39', 'py310', 'py311', 'py312']
+target-version = ['py311']
 exclude = '''
 (
     asv_bench/env
@@ -154,24 +150,28 @@ legacy_tox_ini = """
 [tox]
 
 envlist =
-    py310-pandas{15,20,21,22}-numpy1
     py311-pandas{15,20,21,22}-numpy1
     py312-pandas22-numpy1
-    py310-pandas222-numpy2{0,1,2}
     py311-pandas222-numpy2{0,1,2}
     py312-pandas222-numpy2{0,1,2}
     py313-pandas222-numpy2{1,2}
+    py311-latest
+    py312-latest
+    py313-latest
+    py314-latest
+    py315-latest
 
 isolated_build = True
-skip_missing_interpreters = True
+skip_missing_interpreters = False
 minversion = 3.23.0
 
 [gh-actions]
 python =
-    3.10: py310
     3.11: py311
     3.12: py312
     3.13: py313
+    3.14: py314
+    3.15: py315
 
 [testenv]
 usedevelop = True
