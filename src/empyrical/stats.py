@@ -39,6 +39,7 @@ from .utils import (
     _create_binary_vectorized_roll_function,
     _create_unary_vectorized_roll_function,
     down,
+    nanmax,
     nanmean,
     nanmin,
     nanstd,
@@ -608,6 +609,22 @@ def omega_ratio(
         return np.nan
 
 
+def _zero_dispersion_std(values, std):
+    """Return ``std`` with 0 where every present value of a column is equal.
+
+    The sample standard deviation of identical values is exactly zero, but
+    the floating-point mean they are centred on can differ from them in the
+    last bit, leaving a residue of about 1e-18. Dividing by that residue
+    turns an infinite ratio into an arbitrary finite number near 1e15.
+    Columns with fewer than two present values keep their undefined (NaN)
+    deviation.
+    """
+    values = np.asanyarray(values)
+    with np.errstate(invalid="ignore"):
+        constant = (nanmax(values, axis=0) == nanmin(values, axis=0)) & np.isfinite(std)
+    return np.where(constant, 0.0, std)
+
+
 def sharpe_ratio(returns, risk_free=0, period=DAILY, annualization=None, out=None):
     """
     Determines the Sharpe ratio of a strategy.
@@ -661,12 +678,16 @@ def sharpe_ratio(returns, risk_free=0, period=DAILY, annualization=None, out=Non
     returns_risk_adj = np.asanyarray(_adjust_returns(returns, risk_free))
     ann_factor = annualization_factor(period, annualization)
 
+    std = _zero_dispersion_std(
+        returns_risk_adj, nanstd(returns_risk_adj, ddof=1, axis=0)
+    )
+
     # Silence divide error warnings
     with np.errstate(divide="ignore", invalid="ignore"):
         np.multiply(
             np.divide(
                 nanmean(returns_risk_adj, axis=0),
-                nanstd(returns_risk_adj, ddof=1, axis=0),
+                std,
                 out=out,
             ),
             np.sqrt(ann_factor),
@@ -906,7 +927,9 @@ def excess_sharpe(returns, factor_returns, out=None):
         return out
 
     active_return = _adjust_returns(returns, factor_returns)
-    tracking_error = nanstd(active_return, ddof=1, axis=0)
+    tracking_error = _zero_dispersion_std(
+        active_return, nanstd(active_return, ddof=1, axis=0)
+    )
 
     # Leave an undefined (NaN) tracking error as NaN. Replacing it with 0
     # turns "not enough observations" into infinity.
