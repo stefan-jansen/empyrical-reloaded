@@ -26,7 +26,7 @@ jobs:
         run: tox
       - name: Create artifact probe
         run: python -c "from pathlib import Path; Path('probe.txt').write_text('empyrical-artifact-roundtrip\n')"
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: probe-${{ matrix.os }}-${{ matrix.python-version }}
           path: probe.txt

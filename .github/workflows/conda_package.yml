@@ -39,7 +39,7 @@ jobs:
         run: |
           mamba install -n recipe boa conda-verify anaconda-client
           conda mambabuild --output-folder . --python 3.11 conda/recipe
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: empyrical-conda
           path: noarch/*

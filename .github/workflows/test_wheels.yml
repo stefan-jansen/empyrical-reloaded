@@ -19,7 +19,7 @@ jobs:
           python -m pip install build twine
           python -m build
           python -m twine check --strict dist/*
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: empyrical-wheels
           path: dist/*
