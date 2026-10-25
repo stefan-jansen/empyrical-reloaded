@@ -24,9 +24,9 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup build environment
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           miniconda-version: latest
           auto-update-conda: true
@@ -39,7 +39,7 @@ jobs:
         run: |
           mamba install -n recipe boa conda-verify anaconda-client
           conda mambabuild --output-folder . --python 3.11 conda/recipe
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: empyrical-conda
           path: noarch/*
