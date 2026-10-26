@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Utilities &#8212; empyrical 0.5.7+0.g19ade20.dirty documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+    <title>Utilities &#8212; empyrical 0.7.1 documentation</title>
+
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
 
   <link rel="stylesheet"
@@ -22,24 +22,38 @@
 
 
 
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css?v=c4c5097c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
+    <script src="_static/documentation_options.js?v=1027fec7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://empyrical.ml4trading.io/utils.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
     <link rel="prev" title="Performance Attribution" href="perf_attrib.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="en">
+
+
+    <!-- Google Analytics -->
+
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-74956955-3', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
 
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -87,6 +101,24 @@
  </a>
 </li>
 
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="contributing.html">
+  Contributing
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="migration.html">
+  Migrating selected metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="migration-reference.html">
+  Capability reference
+ </a>
+</li>
+
 
     <li class="nav-item">
         <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
@@ -106,7 +138,7 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/stefan-jansen/emyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
+          <a class="nav-link" href="https://github.com/stefan-jansen/empyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
             <span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label>
           </a>
@@ -149,8 +181,130 @@
 
               <div class="toc-item">
 
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.data_path">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     data_path()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.default_returns_func">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     default_returns_func()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.down">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     down()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.ensure_directory">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     ensure_directory()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.get_fama_french">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_fama_french()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.get_returns_cached">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_returns_cached()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.get_symbol_returns_from_yahoo">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_symbol_returns_from_yahoo()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.get_treasury_yield">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_treasury_yield()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.get_utc_timestamp">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_utc_timestamp()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.load_portfolio_risk_factors">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     load_portfolio_risk_factors()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.roll">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     roll()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.rolling_window">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     rolling_window()
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empyrical.utils.up">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     up()
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
 
 </nav>
               </div>
@@ -159,7 +313,7 @@
 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/main/docs/source/utils.rst">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.1/docs/source/utils.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -178,22 +332,22 @@
 
               <div>
 
-  <div class="section" id="utilities">
-<span id="utils"></span><h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+  <section id="utilities">
+<span id="utils"></span><h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h1>
 <p>The module <a class="reference internal" href="#module-empyrical.utils" title="empyrical.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">empyrical.utils</span></code></a> contains various helper functions, e.g. to source risk factor and
-return data using <cite>pandas-datareader and `yfinance</cite>.</p>
+return data using <code class="docutils literal notranslate"><span class="pre">pandas-datareader</span></code> and <code class="docutils literal notranslate"><span class="pre">yfinance</span></code>.</p>
 <span class="target" id="module-empyrical.utils"></span><dl class="py function">
-<dt id="empyrical.utils.data_path">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">data_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.data_path" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.data_path">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.data_path" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.default_returns_func">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">default_returns_func</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.default_returns_func" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.default_returns_func">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">default_returns_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.default_returns_func" title="Link to this definition">¶</a></dt>
 <dd><p>Gets returns for a symbol.
 Queries Yahoo Finance. Attempts to cache SPY.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>symbol</strong><span class="classifier">str</span></dt><dd><p>Ticker symbol, e.g. APPL.</p>
 </dd>
@@ -205,7 +359,7 @@ Defaults to latest date available.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt>pd.Series</dt><dd><dl class="simple">
 <dt>Daily returns for the symbol.</dt><dd><ul class="simple">
@@ -220,11 +374,11 @@ Defaults to latest date available.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.down">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">down</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.down" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.down">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">down</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.down" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates a given statistic filtering only negative factor return periods.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
 - See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
@@ -237,7 +391,7 @@ Defaults to latest date available.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt>Same as the return of the ‘function’</dt><dd></dd>
 </dl>
@@ -246,57 +400,68 @@ Defaults to latest date available.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.ensure_directory">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">ensure_directory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.ensure_directory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.ensure_directory">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">ensure_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.ensure_directory" title="Link to this definition">¶</a></dt>
 <dd><p>Ensure that a directory named “path” exists.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.get_fama_french">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_fama_french</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_fama_french" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve Fama-French factors via pandas-datareader
-Returns
-——-
-pandas.DataFrame</p>
-<blockquote>
-<div><p>Percent change of Fama-French factors</p>
-</div></blockquote>
+<dt class="sig sig-object py" id="empyrical.utils.get_fama_french">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">get_fama_french</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1-1-1970'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('F-F_Research_Data_Factors_daily',</span> <span class="pre">'F-F_Momentum_Factor_daily')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_fama_french" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve Fama-French factors via pandas-datareader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>start: str or datetime or Timestamp, start date</strong></dt><dd></dd>
+<dt><strong>end: str or datetime or Timestamp, end date</strong></dt><dd></dd>
+<dt><strong>datasets: list of factors (default is the five factors)</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Percent change of Fama-French factors</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.get_returns_cached">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_returns_cached</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_returns_cached" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.get_returns_cached">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">get_returns_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_returns_cached" title="Link to this definition">¶</a></dt>
 <dd><p>Get returns from a cached file if the cache is recent enough,
 otherwise, try to retrieve via a provided update function and
-update the cache file.
-Parameters
-———-
-filepath : str</p>
-<blockquote>
-<div><p>Path to cached csv file</p>
-</div></blockquote>
-<dl class="simple">
-<dt>update_func<span class="classifier">function</span></dt><dd><p>Function to call in case cache is not up-to-date.</p>
+update the cache file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filepath</strong><span class="classifier">str</span></dt><dd><p>Path to cached csv file</p>
 </dd>
-<dt>latest_dt<span class="classifier">pd.Timestamp (tz=UTC)</span></dt><dd><p>Latest datetime required in csv file.</p>
+<dt><strong>update_func</strong><span class="classifier">function</span></dt><dd><p>Function to call in case cache is not up-to-date.</p>
 </dd>
-<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs<span class="classifier">Keyword arguments</span></dt><dd><p>Optional keyword arguments will be passed to update_func()</p>
+<dt><strong>latest_dt</strong><span class="classifier">pd.Timestamp (tz=UTC)</span></dt><dd><p>Latest datetime required in csv file.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">Keyword arguments</span></dt><dd><p>Optional keyword arguments will be passed to update_func()</p>
 </dd>
 </dl>
-<dl class="simple">
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
 <dt>pandas.DataFrame</dt><dd><p>DataFrame containing returns</p>
 </dd>
 </dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.get_symbol_returns_from_yahoo">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_symbol_returns_from_yahoo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_symbol_returns_from_yahoo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.get_symbol_returns_from_yahoo">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">get_symbol_returns_from_yahoo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_symbol_returns_from_yahoo" title="Link to this definition">¶</a></dt>
 <dd><p>Wrapper for pandas.io.data.get_data_yahoo().
 Retrieves prices for symbol from yahoo and computes returns
 based on adjusted closing prices.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>symbol</strong><span class="classifier">str</span></dt><dd><p>Yahoo symbol name to load, e.g. ‘SPY’</p>
 </dd>
@@ -306,7 +471,7 @@ based on adjusted closing prices.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt>pandas.DataFrame</dt><dd><p>Returns of symbol in requested period.</p>
 </dd>
@@ -316,11 +481,11 @@ based on adjusted closing prices.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.get_treasury_yield">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_treasury_yield</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3MO'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_treasury_yield" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.get_treasury_yield">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">get_treasury_yield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3MO'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_treasury_yield" title="Link to this definition">¶</a></dt>
 <dd><p>Load treasury yields from FRED.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>start</strong><span class="classifier">date, optional</span></dt><dd><p>Earliest date to fetch data for.
 Defaults to earliest date available.</p>
@@ -340,18 +505,18 @@ Defaults to latest date available.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.get_utc_timestamp">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">get_utc_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_utc_timestamp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.get_utc_timestamp">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">get_utc_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.get_utc_timestamp" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the Timestamp/DatetimeIndex
 with either localized or converted to UTC.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>dt</strong><span class="classifier">Timestamp/DatetimeIndex</span></dt><dd><p>the date(s) to be converted</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt>same type as input</dt><dd><p>date(s) converted to UTC</p>
 </dd>
@@ -361,25 +526,27 @@ with either localized or converted to UTC.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.load_portfolio_risk_factors">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">load_portfolio_risk_factors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.load_portfolio_risk_factors" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.load_portfolio_risk_factors">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">load_portfolio_risk_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.load_portfolio_risk_factors" title="Link to this definition">¶</a></dt>
 <dd><p>Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
 Data is stored in HDF5 file. If the data is more than 2
-days old, redownload from Dartmouth.
-Returns
-——-
-five_factors : pd.DataFrame</p>
-<blockquote>
-<div><p>Risk factors timeseries.</p>
-</div></blockquote>
+days old, redownload from Dartmouth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>five_factors</strong><span class="classifier">pd.DataFrame</span></dt><dd><p>Risk factors timeseries.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.roll">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">roll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.roll" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.roll">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.roll" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates a given statistic across a rolling time period.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
 - See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
@@ -394,7 +561,7 @@ five_factors : pd.DataFrame</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
 <dt>np.ndarray, pd.Series</dt><dd><p>depends on input type
 ndarray(s) ==&gt; ndarray
@@ -408,8 +575,8 @@ window.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.rolling_window">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">rolling_window</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.rolling_window" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.rolling_window">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">rolling_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.rolling_window" title="Link to this definition">¶</a></dt>
 <dd><p>Restride an array of shape</p>
 <blockquote>
 <div><p>(X_0, … X_N)</p>
@@ -423,7 +590,7 @@ window.</p>
 <div><p>result[i] = array[length * i:length * (i + 1)]</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>array</strong><span class="classifier">np.ndarray</span></dt><dd><p>The base array.</p>
 </dd>
@@ -437,7 +604,7 @@ values in the returned array.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt><strong>out</strong><span class="classifier">np.ndarray</span></dt><dd></dd>
 </dl>
@@ -446,11 +613,11 @@ values in the returned array.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="empyrical.utils.up">
-<code class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></code><code class="sig-name descname"><span class="pre">up</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.up" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="empyrical.utils.up">
+<span class="sig-prename descclassname"><span class="pre">empyrical.utils.</span></span><span class="sig-name descname"><span class="pre">up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_returns</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.utils.up" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates a given statistic filtering only positive factor return periods.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
 - See full explanation in <a class="reference internal" href="stats.html#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
@@ -463,7 +630,7 @@ values in the returned array.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt>Same as the return of the function</dt><dd></dd>
 </dl>
@@ -471,17 +638,29 @@ values in the returned array.</p>
 </dl>
 </dd></dl>
 
+</section>
+
+
+              </div>
+
+
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="perf_attrib.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Performance Attribution</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="contributing.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contributing</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-
-
-              </div>
-
-
-              <div class='prev-next-bottom'>
-
-    <a class='left-prev' id="prev-link" href="perf_attrib.html" title="previous page">Performance Attribution</a>
-
-              </div>
 
           </main>
 
@@ -489,31 +668,19 @@ values in the returned array.</p>
       </div>
     </div>
 
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
-
-
-
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-74956955-3', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    <footer class="footer mt-5 mt-md-0">
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
   <div class="container">
 
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright 2016, Quantopian, Inc..<br/>
+    &copy; Copyright 2016, Quantopian, Inc..<br>
 </p>
     </div>
 
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 9.1.0.<br>
 </p>
     </div>
 

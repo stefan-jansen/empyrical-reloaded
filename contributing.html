@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contributing &#8212; empyrical 0.7.1 documentation</title>
+
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css?v=c4c5097c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script src="_static/documentation_options.js?v=1027fec7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://empyrical.ml4trading.io/contributing.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Migrating selected metrics" href="migration.html" />
+    <link rel="prev" title="Utilities" href="utils.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+
+
+    <!-- Google Analytics -->
+
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-74956955-3', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="index.html">
+<p class="title">empyrical</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="stats.html">
+  Performance &amp; Risk Metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="perf_attrib.html">
+  Performance Attribution
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="utils.html">
+  Utilities
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Contributing
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="migration.html">
+  Migrating selected metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="migration-reference.html">
+  Capability reference
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/empyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-problem-per-issue-and-pull-request">
+   One problem per issue and pull request
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#verification">
+   Verification
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ai-assistance-and-accountability">
+   AI assistance and accountability
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.1/docs/source/contributing.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h1>
+<p>Empyrical Reloaded accepts bug, security, and compatibility fixes. Direct new feature
+requests to the current ML4T libraries. The <a class="reference external" href="https://github.com/ml4t/ecosystem/blob/main/CONTRIBUTING.md">shared contribution guide</a>
+describes repository ownership and reporting requirements; the requirements below
+apply to contributions here.</p>
+<section id="one-problem-per-issue-and-pull-request">
+<h2>One problem per issue and pull request<a class="headerlink" href="#one-problem-per-issue-and-pull-request" title="Link to this heading">¶</a></h2>
+<p>Search existing issues before opening one. Include the package version, environment,
+expected and observed behavior, and a small, complete reproduction for a bug.
+Discuss substantial changes in the owning issue before implementing them. Follow
+the shared guide’s private reporting process for suspected vulnerabilities.</p>
+<p>Use <a class="reference external" href="https://guides.github.com/introduction/flow/">GitHub Flow</a>: create a branch,
+commit the change, and <a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/compare/">open a focused pull request</a>
+with a closing reference such as <code class="docutils literal notranslate"><span class="pre">Closes</span> <span class="pre">#123</span></code>. Keep unrelated fixes, refactors,
+and formatting changes separate. Automated dependency updates and administrative
+metadata changes do not require a separate issue.</p>
+<p>For a bug fix, include a regression through the public API or affected workflow that
+fails on the relevant base revision and passes with the fix. Report both revisions,
+commands, and results. Correct verified numerical defects even when existing outputs
+change. Agree on changes to intended definitions, annualization, sign conventions,
+or defaults in the owning issue, and document their compatibility impact.</p>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading">¶</a></h2>
+<p>Run the relevant native checks and report their results, including existing failures.
+The test entry point is <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">--extra</span> <span class="pre">test</span> <span class="pre">pytest</span> <span class="pre">tests/</span></code>; the CI version matrix
+and tox configuration are defined in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and <code class="docutils literal notranslate"><span class="pre">.github/workflows/ci_tests.yml</span></code>.
+CI also checks flake8 and Black 24.4.2. Match those checks rather than introducing
+another formatter or test matrix in a focused fix.</p>
+<p>For documentation changes, run <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">--extra</span> <span class="pre">doc</span> <span class="pre">make</span> <span class="pre">-C</span> <span class="pre">docs</span> <span class="pre">html</span></code> and inspect
+the affected output. Preserve the existing README and Sphinx API documentation.
+A documentation-only change does not require an artificial numerical regression.
+Report missing dependency or runner evidence explicitly rather than claiming a pass.</p>
+</section>
+<section id="ai-assistance-and-accountability">
+<h2>AI assistance and accountability<a class="headerlink" href="#ai-assistance-and-accountability" title="Link to this heading">¶</a></h2>
+<p>Disclose whether you used AI tools and which parts they helped produce. Review and
+test the submission yourself, and be able to explain the code, evidence, and review
+responses. An automated reply does not replace understanding a review question.</p>
+<p>Wait for feedback on your first focused contribution before opening a large series
+of similar PRs. Maintainers may ask for bundled changes to be split or incomplete
+submissions to be completed, or close them pending a focused resubmission.</p>
+</section>
+</section>
+
+
+              </div>
+
+
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="utils.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Utilities</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="migration.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Migrating selected metrics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 9.1.0.<br>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>

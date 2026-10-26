@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Capability reference &#8212; empyrical 0.7.1 documentation</title>
+
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css?v=c4c5097c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script src="_static/documentation_options.js?v=1027fec7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://empyrical.ml4trading.io/migration-reference.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Migrating selected metrics" href="migration.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+
+
+    <!-- Google Analytics -->
+
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-74956955-3', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="index.html">
+<p class="title">empyrical</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="stats.html">
+  Performance &amp; Risk Metrics
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="perf_attrib.html">
+  Performance Attribution
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="utils.html">
+  Utilities
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="contributing.html">
+  Contributing
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="migration.html">
+  Migrating selected metrics
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Capability reference
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/empyrical-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+
+<nav id="bd-toc-nav">
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.1/docs/source/migration-reference.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <section id="capability-reference">
+<h1>Capability reference<a class="headerlink" href="#capability-reference" title="Link to this heading">¶</a></h1>
+<p>This is a historical, source-pinned assessment. Its classifications predate
+later successor implementations. Use Diagnostic’s maintained
+<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/main/docs/user-guide/empyrical-migration.md">Empyrical migration guide</a>
+for current routes and release requirements; the counts below do not establish
+current coverage or a complete-replacement recommendation.</p>
+<p>This reference covers 82 capabilities. Thirty-nine have partial destination
+coverage and 43 have no verified equivalent. Aliases and small public helpers
+are included; the counts do not measure the proportion of a user’s analytical
+workload. No capability is marked complete without its relevant API, numerical
+and workflow contracts being qualified.</p>
+<p>Source and test links are pinned. Test links identify navigation targets; they
+do not assert that every linked test was executed in this assessment. The
+recorded numerical comparison contains 169 shared-input cases, of which 143
+match values and shapes within rtol=1e-10 and atol=1e-12, including equal NaNs.
+An equal case does not establish complete contract coverage.</p>
+<p>Use <a class="reference internal" href="migration.html"><span class="doc">Migrating selected metrics</span></a> for the runnable columnwise recipe. This page is a lookup
+reference, not a replacement implementation. The
+<a class="reference download internal" download="" href="_downloads/15d26fc1e42b139d36381128d6705190/empyrical-successor-coverage.json"><code class="xref download docutils literal notranslate"><span class="pre">machine-readable</span> <span class="pre">coverage</span></code></a>
+retains the same classification and precise source/test links.
+The <a class="reference download internal" download="" href="_downloads/0118f432917cf921da8451b1e03bc71f/empyrical-numerical-evidence.json"><code class="xref download docutils literal notranslate"><span class="pre">shared-input</span> <span class="pre">numerical</span> <span class="pre">evidence</span></code></a>
+records inputs, package versions, pinned source fingerprints and every result.</p>
+<table class="table">
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 23.0%" />
+<col style="width: 9.0%" />
+<col style="width: 52.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Empyrical capability</p></th>
+<th class="head"><p>Existing destination</p></th>
+<th class="head"><p>Coverage</p></th>
+<th class="head"><p>Migration requirement</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L50">annualization_factor</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Documented period constants and explicit scale can be passed as periods_per_year/annualization_factor. No verified public resolver preserves Empyrical’s period validation and explicit-override precedence.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L88">simple_returns</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L50">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/utils/arithmetic.py#L12">returns</a> (<a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/tests/test_api_bar_grid.py#L66">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Polars expression accepts a column name and retains a leading null; Empyrical accepts array/Series/DataFrame and drops the first row. Float-price probe matches after trimming. Integer precision needs PR88’s exact-difference contract.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L117">cum_returns</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L107">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No standalone equivalent verified. Preserve starting_value=0 (fractional gain) versus nonzero wealth base, neutral treatment of NaN, per-column labels, empty inputs and out identity. NumPy recipes are possible adapters, not existing successor implementations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L180">cum_returns_final</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L137">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No standalone equivalent verified. Preserve starting_value=0 (fractional gain) versus nonzero wealth base, neutral treatment of NaN, per-column labels, empty inputs and out identity. NumPy recipes are possible adapters, not existing successor implementations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L216">aggregate_returns</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_iso_week.py#L23">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L762">PortfolioAnalysis.compute_monthly_returns</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L793">PortfolioAnalysis.compute_annual_returns</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_input_contract.py#L22">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Month/year reporting exists; generic weekly ISO-year, monthly, quarterly and yearly compounding with Empyrical labels has not been numerically qualified. Preserve sparse dates/timezones and distinguish civil grouping from exchange sessions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L257">drawdown_series</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_drawdown_shape.py#L9">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L579">PortfolioAnalysis.compute_drawdown_analysis</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L781">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Extract underwater_curve. Finite/initial-loss probes match. Constructor rejects NaN and duplicate dates; preserve labels, out identity, empty and total-loss behavior in a compatibility wrapper.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L320">max_drawdown</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L204">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L144">max_drawdown</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L213">maximum_drawdown</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L225">maximum_drawdown</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L163">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic scalar kernel matches tested finite, missing and degenerate one-dimensional cases. Risk-adjusted API returns a dict, Engineer takes prices and returns expressions; DataFrame flattening, labels and out require adapters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L362">roll_max_drawdown</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1198">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L365">annual_return</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L243">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L162">annual_return</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L194">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>annualization -&gt; periods_per_year; cagr is a legacy alias. Tested one-dimensional scalar cases match, including NaN length convention. High-level constructor rejects NaN. Columnwise DataFrame and empty/type/default contracts remain adapter requirements.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L407">cagr</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1105">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L162">annual_return</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L194">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>annualization -&gt; periods_per_year; cagr is a legacy alias. Tested one-dimensional scalar cases match, including NaN length convention. High-level constructor rejects NaN. Columnwise DataFrame and empty/type/default contracts remain adapter requirements.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L441">roll_cagr</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L388">PortfolioAnalysis.compute_rolling_metrics</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L712">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related returns output exists with n-row padded warmup; Empyrical usually trims warmup. Sharpe/volatility window1/3/n/&gt;n probes record actual results; returns is compounded window return, not automatically annualized CAGR. Beta alignment/missingness and output labels require qualification. Preserve explicit observation counts and annualization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L444">annual_volatility</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L260">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L191">annual_volatility</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L220">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Sample standard deviation and ordinary scale match tested one-dimensional cases. Levy alpha parameter is absent; unannualized result times factor**(1/alpha) was verified for alpha=1.5. Preserve axis, output buffer and fractional scale.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L496">roll_annual_volatility</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L388">PortfolioAnalysis.compute_rolling_metrics</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L712">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related volatility output exists with n-row padded warmup; Empyrical usually trims warmup. Sharpe/volatility window1/3/n/&gt;n probes record actual results; returns is compounded window return, not automatically annualized CAGR. Beta alignment/missingness and output labels require qualification. Preserve explicit observation counts and annualization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L501">calmar_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L278">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L68">calmar_ratio</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L324">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Tested scalar cases and explicit scales match. DataFrame, empty, invalid returns and annualization type contracts require compatibility qualification.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L550">omega_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L301">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L92">omega_ratio</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L89">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>No-loss denominator differs: Empyrical NaN versus Diagnostic +Inf. Preserve periodic risk_free subtraction and geometric conversion of annual required_return using annualization; do not silently convert both as annual rates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L606">sharpe_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L340">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L99">periodic_sharpe_ratio</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L36">sharpe_ratio</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L539">risk_adjusted_returns</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_metrics.py#L181">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Use Diagnostic periodic API for Empyrical’s per-observation risk_free; ordinary Diagnostic API takes annual rf. Periodic adapters match 1/12/52/252/365 scales in executed probes. Preserve sample ddof=1, columnwise outputs and out. Engineer epsilon and annual-rf convention differ.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L677">roll_sharpe_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1221">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L388">PortfolioAnalysis.compute_rolling_metrics</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L712">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related sharpe output exists with n-row padded warmup; Empyrical usually trims warmup. Sharpe/volatility window1/3/n/&gt;n probes record actual results; returns is compounded window return, not automatically annualized CAGR. Beta alignment/missingness and output labels require qualification. Preserve explicit observation counts and annualization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L680">sortino_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_sortino_labels.py#L7">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L326">periodic_sortino_ratio</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L284">sortino_ratio</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L539">risk_adjusted_returns</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_metrics.py#L359">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Use periodic API for per-observation required_return/MAR. Tested periodic cases/scales match; preserve all-observation downside denominator, optional precomputed _downside_risk, axis/out and nonfinite behavior.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L767">roll_sortino_ratio</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L770">downside_risk</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_downside_alignment.py#L7">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L359">downside_deviation</a> (<a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/tests/features/test_low_coverage_boost.py#L769">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Engineer full-window result matches Empyrical annualization=1 in one probe. Add explicit factor**0.5, per-observation MAR, vector/column and out adapter; rolling expression minimum window and warmup differ.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L854">roll_downside_risk</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L858">roll_downsize_risk</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L867">excess_sharpe</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_excess_sharpe.py#L7">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L315">information_ratio</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L711">information_ratio</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L404">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic periods_per_year=1 matches tested finite active returns. Empyrical is unannualized; preserve dated outer alignment, paired NaNs, ddof, zero tracking error, labels/out. Engineer returns a rolling expression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L920">roll_excess_sharpe</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L923">alpha_beta</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L780">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L979">roll_alpha_beta</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1300">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1002">alpha_beta_aligned</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1067">roll_alpha_beta_aligned</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1072">alpha</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L798">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1135">roll_alpha</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1138">alpha_aligned</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_alpha_labels.py#L9">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1228">roll_alpha_aligned</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1231">beta</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L961">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1265">roll_beta</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L388">PortfolioAnalysis.compute_rolling_metrics</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L712">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related beta output exists with n-row padded warmup; Empyrical usually trims warmup. Sharpe/volatility window1/3/n/&gt;n probes record actual results; returns is compounded window return, not automatically annualized CAGR. Beta alignment/missingness and output labels require qualification. Preserve explicit observation counts and annualization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1268">beta_aligned</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/94345f90b7b92ecc300541184a1bc23fb560f55a/src/ml4t/diagnostic/signal/factor_regression.py#L222">signal.compute_factor_alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic uses arithmetic annual alpha; Empyrical compounds periodic intercept geometrically. Verified adapter requests periods_per_year=1 then compounds (1+a)**factor-1. Extract alpha/beta as needed. Implement dated alignment separately from aligned row API, pairwise missingness, constant benchmark, risk_free and axis/out. Existing factor-panel regression compounds alpha but fixes its benchmark to the same asset universe; reuse its method without claiming arbitrary-benchmark compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1384">roll_beta_aligned</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/analysis.py#L388">PortfolioAnalysis.compute_rolling_metrics</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L712">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related beta output exists with n-row padded warmup; Empyrical usually trims warmup. Sharpe/volatility window1/3/n/&gt;n probes record actual results; returns is compounded window return, not automatically annualized CAGR. Beta alignment/missingness and output labels require qualification. Preserve explicit observation counts and annualization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1387">stability_of_timeseries</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1073">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L243">stability_of_timeseries</a></p></td>
+<td><p>partial</p></td>
+<td><p>Empyrical regresses cumulative log returns; Diagnostic regresses wealth. Finite and constant-positive probes differ. Provide explicit legacy logarithmic definition rather than relabel wealth R-squared.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1416">tail_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1090">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L121">tail_ratio</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L409">tail_ratio</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L138">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Empyrical abs(p95)/abs(p5); Diagnostic p95/abs(p5) changes sign for entirely negative returns. Zero denominator gives Inf versus NaN. Engineer rolling expression uses epsilon. Preserve quantile interpolation, NaN omission and undefined outcomes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1445">capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1239">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L351">up_down_capture</a></p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic returns up/down components based on cumulative wealth ratios; Empyrical ratios annualized geometric returns on selected benchmark signs and up_down_capture divides those components. Finite probe differs by more than tolerance. No equivalent behavior can be claimed from the shared name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1480">beta_fragility_heuristic</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_fragility_pairs.py#L26">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified implementation in either successor. Preserve minimum three usable pairs, corrected order-statistic interpolation, middle weights and NaN output. Equal-factor ordering remains an explicit unresolved definition decision; do not encode PR57 wholesale.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1516">beta_fragility_heuristic_aligned</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified implementation in either successor. Preserve minimum three usable pairs, corrected order-statistic interpolation, middle weights and NaN output. Equal-factor ordering remains an explicit unresolved definition decision; do not encode PR57 wholesale.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1594">gpd_risk_estimates</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_gpd_probability.py#L9">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1635">gpd_risk_estimates_aligned</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1185">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1723">gpd_es_calculator</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1733">gpd_var_calculator</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1745">gpd_loglikelihood_minimizer_aligned</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1764">gpd_loglikelihood_factory</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1768">gpd_loglikelihood</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1775">gpd_loglikelihood_scale_and_shape_factory</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1785">gpd_loglikelihood_scale_and_shape</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1797">gpd_loglikelihood_scale_only_factory</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1802">gpd_loglikelihood_scale_only</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No verified generalized-Pareto tail estimator/helpers in successors. Preserve five returned estimates (threshold, scale, shape, VaR, ES), loss sign, optimizer failures, small samples, nonpositive scale, shape-zero limit and parameter validity. Low-level public-module helpers also require replacement or documented retention.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1811">up_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1498">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L351">up_down_capture</a></p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic returns up/down components based on cumulative wealth ratios; Empyrical ratios annualized geometric returns on selected benchmark signs and up_down_capture divides those components. Finite probe differs by more than tolerance. No equivalent behavior can be claimed from the shared name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1845">down_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1257">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L351">up_down_capture</a></p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic returns up/down components based on cumulative wealth ratios; Empyrical ratios annualized geometric returns on selected benchmark signs and up_down_capture divides those components. Finite probe differs by more than tolerance. No equivalent behavior can be claimed from the shared name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1879">up_down_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1480">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L351">up_down_capture</a></p></td>
+<td><p>partial</p></td>
+<td><p>Diagnostic returns up/down components based on cumulative wealth ratios; Empyrical ratios annualized geometric returns on selected benchmark signs and up_down_capture divides those components. Finite probe differs by more than tolerance. No equivalent behavior can be claimed from the shared name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1911">batting_average</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1815">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Directional prediction hit_rate is not benchmark-relative batting average. Required tuple covers overall/up/down outperformance with paired missingness and dated alignment; use PR92 regression cases.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1956">up_alpha_beta</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1463">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>No direct conditional API verified; select benchmark &gt;0 or &lt;0 using paired aligned observations, then use corrected geometric-alpha adapter. Preserve empty sign subsets and row-versus-date alignment.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1974">down_alpha_beta</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1442">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L271">alpha_beta</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/validation/test_pyfolio_comparison.py#L378">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>No direct conditional API verified; select benchmark &gt;0 or &lt;0 using paired aligned observations, then use corrected geometric-alpha adapter. Preserve empty sign subsets and row-versus-date alignment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L1990">roll_up_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1419">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L2014">roll_down_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1385">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L2038">roll_up_down_capture</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1356">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No matching rolling family verified. Compose only after scalar definition and alignment are fixed; preserve output shape/labels, duplicate dates, out identity and NaNs. Historical misspelling roll_downsize_risk is a deprecated alias. Overlong-window behavior remains a separate explicit contract question.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L2068">value_at_risk</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_empty_var.py#L8">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L208">value_at_risk</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L51">value_at_risk</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L242">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>cutoff -&gt; 1-confidence. Diagnostic omits NaN while legacy VaR currently propagates it; Engineer historical quantile defaults nearest, versus Empyrical linear (verified -.18 versus -.181). Preserve signed return quantile, cutoff bounds, axis and degeneracy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L2090">conditional_value_at_risk</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1526">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L225">conditional_var</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L136">conditional_value_at_risk</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L263">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>cutoff -&gt; 1-confidence. Legacy tail uses floor((n-1)*cutoff)+1 order statistics; Diagnostic percentile-threshold selection includes all cutoff ties (verified -.15 versus -.133333). PR56 independently repairs NaN/empty handling, not tie definition. Freeze the intended release contract before adapter acceptance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L73">roll</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_rolling_window_offset.py#L7">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No generic public callable rolling/sign-filter/strided-window utility verified. Need explicit positive windows, row pairing, labels, duplicate timestamps, mutability and overlong-window contract. Reuse verified duplicate-index fixes; do not infer schedule semantics.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L116">up</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1662">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No generic public callable rolling/sign-filter/strided-window utility verified. Need explicit positive windows, row pairing, labels, duplicate timestamps, mutability and overlong-window contract. Reuse verified duplicate-index fixes; do not infer schedule semantics.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L142">down</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L1649">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No generic public callable rolling/sign-filter/strided-window utility verified. Need explicit positive windows, row pairing, labels, duplicate timestamps, mutability and overlong-window contract. Reuse verified duplicate-index fixes; do not infer schedule semantics.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L185">cache_dir</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Compatibility utility rather than analytical metric. Standard-library/pandas replacement or small documented wrapper is sufficient after verifying environment override, path/error behavior, timezone conversion and warning stacklevel. No existing successor drop-in verified.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L198">data_path</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Compatibility utility rather than analytical metric. Standard-library/pandas replacement or small documented wrapper is sufficient after verifying environment override, path/error behavior, timezone conversion and warning stacklevel. No existing successor drop-in verified.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L202">ensure_directory</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Compatibility utility rather than analytical metric. Standard-library/pandas replacement or small documented wrapper is sufficient after verifying environment override, path/error behavior, timezone conversion and warning stacklevel. No existing successor drop-in verified.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L214">get_utc_timestamp</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Compatibility utility rather than analytical metric. Standard-library/pandas replacement or small documented wrapper is sufficient after verifying environment override, path/error behavior, timezone conversion and warning stacklevel. No existing successor drop-in verified.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L245">get_fama_french</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_fama_french.py#L12">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/factor/data.py#L131">FactorData.from_fama_french</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_factor_data.py#L201">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related provider workflow exists but schema/units are unqualified: FactorData keeps RF separately and Polars timestamps; Empyrical uses UTC pandas frames and Mkt-RF/SMB/HML/RF plus momentum columns (four risk factors and RF), despite stale five-factor wording in its docstring. Verify actual provider values, RF percent conversion, bounds and cache behavior before recommending adapter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L288">get_returns_cached</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_return_cache.py#L12">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No equivalent destination-owned public provider/cache workflow verified. Retain Empyrical, or qualify ML4T-Data integration separately with exact Yahoo adjustment, FRED units, optional dependency, default-end and UTC-cache behavior. PR110 fixes the reproduced pandas3 self-cache failure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L361">load_portfolio_risk_factors</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/factor/data.py#L131">FactorData.from_fama_french</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_factor_data.py#L201">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Related provider workflow exists but schema/units are unqualified: FactorData keeps RF separately and Polars timestamps; Empyrical uses UTC pandas frames and Mkt-RF/SMB/HML/RF plus momentum columns (four risk factors and RF), despite stale five-factor wording in its docstring. Verify actual provider values, RF percent conversion, bounds and cache behavior before recommending adapter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L391">get_treasury_yield</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No equivalent destination-owned public provider/cache workflow verified. Retain Empyrical, or qualify ML4T-Data integration separately with exact Yahoo adjustment, FRED units, optional dependency, default-end and UTC-cache behavior. PR110 fixes the reproduced pandas3 self-cache failure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L420">get_symbol_returns_from_yahoo</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_yahoo_errors.py#L8">test</a>)</p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No equivalent destination-owned public provider/cache workflow verified. Retain Empyrical, or qualify ML4T-Data integration separately with exact Yahoo adjustment, FRED units, optional dependency, default-end and UTC-cache behavior. PR110 fixes the reproduced pandas3 self-cache failure.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L462">default_returns_func</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No equivalent destination-owned public provider/cache workflow verified. Retain Empyrical, or qualify ML4T-Data integration separately with exact Yahoo adjustment, FRED units, optional dependency, default-end and UTC-cache behavior. PR110 fixes the reproduced pandas3 self-cache failure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L510">rolling_window</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>No generic public callable rolling/sign-filter/strided-window utility verified. Need explicit positive windows, row pairing, labels, duplicate timestamps, mutability and overlong-window contract. Reuse verified duplicate-index fixes; do not infer schedule semantics.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/perf_attrib.py#L5">perf_attrib</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_perf_attrib.py#L13">test</a>)</p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/factor/attribution.py#L25">compute_return_attribution</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_factor_attribution.py#L30">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Empyrical multiplies supplied holdings by supplied asset-factor loadings and decomposes factor/common/specific/tilt/timing returns. Diagnostic estimates lagged rolling betas from portfolio returns and FactorData, with warmup. This is a related workflow, not coverage of supplied holdings/exposures. Preserve date/ticker alignment, cash, factor units and common+specific=total.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/perf_attrib.py#L139">compute_exposures</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/factor/attribution.py#L25">compute_return_attribution</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_factor_attribution.py#L30">test</a>)</p></td>
+<td><p>partial</p></td>
+<td><p>Empyrical multiplies supplied holdings by supplied asset-factor loadings and decomposes factor/common/specific/tilt/timing returns. Diagnostic estimates lagged rolling betas from portfolio returns and FactorData, with warmup. This is a related workflow, not coverage of supplied holdings/exposures. Preserve date/ticker alignment, cash, factor units and common+specific=total.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/deprecate.py#L21">deprecated</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Compatibility utility rather than analytical metric. Standard-library/pandas replacement or small documented wrapper is sufficient after verifying environment override, path/error behavior, timezone conversion and warning stacklevel. No existing successor drop-in verified.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/periods.py#L1">period constants and metric registries</a></p></td>
+<td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L162">annual_return</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L191">annual_volatility</a></p></td>
+<td><p>partial</p></td>
+<td><p>Retain DAILY/WEEKLY/MONTHLY/QUARTERLY/YEARLY, 252/52/12/4/1 scales and SIMPLE_STAT_FUNCS/FACTOR_STAT_FUNCS iteration order where used. Successors accept explicit numeric scales, not these registries. A 252 convention alone is not a defect.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/utils.py#L241">provider default end-date boundary (_1_bday_ago)</a></p></td>
+<td><p>None verified</p></td>
+<td><p>missing</p></td>
+<td><p>Legacy pandas BDay counts weekdays, not NYSE holidays. Do not describe it as exchange-session-aware. Destination time-aware wrappers must preserve explicit calendar &gt; declared metadata &gt; NYSE; explicit None is row mode, not a 24/7 schedule. Session labels, timestamp instants, DST and annualization overrides require separate acceptance tests; no calendar implementation change is authorized by this assessment.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+              </div>
+
+
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="migration.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Migrating selected metrics</p>
+        </div>
+    </a>
+</div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 9.1.0.<br>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>

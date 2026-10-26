@@ -1,0 +1,9 @@
+{
+  "library": "empyrical-reloaded",
+  "version": "0.7.1",
+  "source_commit": "da72bf31fc05f51c166a81291f0632160be8e12e",
+  "source_tree": "9c5a3683cb4390127af66ed0abbba9ef69cfb2f2",
+  "expected_release_tag": "0.7.1",
+  "package_wheel_sha256": "dbf03bd32224f790661bc43663e99cec9619cafd23b4e8c7482dde4489093f30",
+  "site": "https://empyrical.ml4trading.io/"
+}
