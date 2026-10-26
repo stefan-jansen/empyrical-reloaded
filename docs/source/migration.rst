@@ -1,12 +1,19 @@
 Migrating selected metrics
 ==========================
 
+Start with Diagnostic's maintained
+`Empyrical migration guide <https://github.com/ml4t/diagnostic/blob/main/docs/user-guide/empyrical-migration.md>`_
+for current workflow and release requirements. This page preserves an earlier
+source-pinned comparison; its destination gaps and environment requirements are
+historical findings, not a current successor coverage assessment. Source-only
+APIs are not necessarily available in the published package.
+
 Move one calculation at a time and compare its input and output contracts.
 Empyrical remains available for workflows without verified successor coverage.
 ML4T Diagnostic is the actively developed successor for portfolio analysis;
 ML4T Engineer provides feature expressions. Neither is an Empyrical drop-in API.
 
-The :doc:`migration-reference` records every owned public function, generated
+The historical :doc:`migration-reference` records every owned public function, generated
 rolling wrapper, metric registry and observable provider-date boundary. Related
 names count as partial coverage until their relevant contracts are qualified.
 No complete-replacement recommendation follows from this guide.

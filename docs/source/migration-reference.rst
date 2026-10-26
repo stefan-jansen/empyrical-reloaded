@@ -1,6 +1,12 @@
 Capability reference
 ====================
 
+This is a historical, source-pinned assessment. Its classifications predate
+later successor implementations. Use Diagnostic's maintained
+`Empyrical migration guide <https://github.com/ml4t/diagnostic/blob/main/docs/user-guide/empyrical-migration.md>`_
+for current routes and release requirements; the counts below do not establish
+current coverage or a complete-replacement recommendation.
+
 This reference covers 82 capabilities. Thirty-nine have partial destination
 coverage and 43 have no verified equivalent. Aliases and small public helpers
 are included; the counts do not measure the proportion of a user's analytical
