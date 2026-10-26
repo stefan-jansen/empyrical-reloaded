@@ -21,12 +21,18 @@ Common financial return and risk metrics in Python.
 We continue to maintain Empyrical Reloaded for bug, security, and compatibility fixes.
 Our new feature development focuses on [ML4T Diagnostic](https://github.com/ml4t/diagnostic),
 part of the [ML4T libraries](https://www.ml4trading.io/).
-For new projects, evaluate it through the [Diagnostic documentation](https://www.ml4trading.io/docs/diagnostic/)
-and [Empyrical migration guide](https://github.com/ml4t/diagnostic/blob/942f367f2f6aff269804d2600ba34814c661bf61/docs/user-guide/empyrical-migration.md),
-which includes a runnable metric comparison and explains differences in defaults and results.
-The [source migration recipe](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration.rst)
-and [capability reference](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration-reference.rst)
-identify tested versions, adapters and remaining gaps.
+For new projects, start with Diagnostic's maintained
+[Empyrical migration guide](https://github.com/ml4t/diagnostic/blob/main/docs/user-guide/empyrical-migration.md)
+and [published documentation](https://www.ml4trading.io/docs/diagnostic/).
+Check each recipe's package and release requirements before using APIs documented in source.
+Keep annualization, periodic versus annual rates, missing-value policies and return/loss signs
+explicit; similarly named metrics need not have equivalent behavior.
+
+The [historical ten-metric comparison](https://github.com/ml4t/diagnostic/blob/942f367f2f6aff269804d2600ba34814c661bf61/docs/user-guide/empyrical-migration.md),
+[frozen source migration recipe](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration.rst)
+and [frozen capability reference](https://github.com/stefan-jansen/empyrical-reloaded/blob/130cadc471925d3e1160157ca5d5b33cb02ebbc4/docs/source/migration-reference.rst)
+retain earlier tested versions and findings. They do not describe current successor coverage
+or establish complete replacement of Empyrical.
 
 ## Installation
 
