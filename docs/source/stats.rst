@@ -7,7 +7,7 @@ The module :mod:`empyrical.stats` includes various return and risk metrics, such
 computation of returns and volatility, alpha and beta, Value at Risk, and Sharpe or Sortino ratios.
 
 Omega zero-downside results in 0.7.2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``omega_ratio`` now returns positive infinity when its adjusted returns have
 positive upside and zero downside, provided the nonmissing adjusted returns are
