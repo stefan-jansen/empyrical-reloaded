@@ -610,12 +610,13 @@ def omega_ratio(
 
     returns_less_thresh = returns - risk_free - return_threshold
 
-    numer = sum(returns_less_thresh[returns_less_thresh > 0.0])
+    gains = returns_less_thresh[returns_less_thresh > 0.0]
+    numer = sum(gains)
     denom = -1.0 * sum(returns_less_thresh[returns_less_thresh < 0.0])
 
     if denom > 0.0:
         return numer / denom
-    elif numer > 0.0 and not np.isinf(returns_less_thresh).any():
+    elif numer > 0.0 and all(np.isfinite(gain) for gain in gains):
         return np.inf
     else:
         return np.nan

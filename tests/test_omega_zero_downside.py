@@ -90,3 +90,20 @@ def test_omega_retains_other_threshold_and_missingness_results(
     )
 
     np.testing.assert_allclose(empyrical.omega_ratio(returns, **kwargs), expected)
+
+
+@pytest.mark.parametrize("as_series", [False, True], ids=["array", "series"])
+@pytest.mark.parametrize(
+    "values, expected",
+    [
+        pytest.param([0.01, 0.02, 0.03], np.inf, id="numeric-object-gains"),
+        pytest.param([np.nan, 0.01, 0.02], np.inf, id="numeric-object-missing"),
+        pytest.param([np.inf, 0.01], np.nan, id="numeric-object-infinite-input"),
+    ],
+)
+def test_omega_accepts_numeric_values_stored_as_objects(values, expected, as_series):
+    returns = (
+        pd.Series(values, dtype=object) if as_series else np.array(values, dtype=object)
+    )
+
+    np.testing.assert_allclose(empyrical.omega_ratio(returns), expected)
