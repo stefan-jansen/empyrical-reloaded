@@ -323,7 +323,7 @@ class TestStats(BaseTestClass):
             ("mixed_returns", "0.0", 10.0, 0.83354263497557934),
             ("mixed_returns", "0.0", -10.0, np.nan),
             ("mixed_returns", "flat_line_1", 0.0, 0.8125),
-            ("positive_returns", "0.01", 0.0, np.nan),
+            ("positive_returns", "0.01", 0.0, np.inf),
             ("positive_returns", "0.011", 0.0, 1.125),
             ("positive_returns", "0.02", 0.0, 0.0),
             ("negative_returns", "0.01", 0.0, 0.0),
