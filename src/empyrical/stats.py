@@ -567,7 +567,8 @@ def omega_ratio(
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     risk_free : int, float
-        Constant risk-free return throughout the period
+        Constant risk-free return per observation, subtracted without
+        annualization.
     required_return : float, optional
         Minimum acceptance return of the investor. Threshold over which to
         consider positive vs negative returns. It will be converted to a
@@ -581,6 +582,15 @@ def omega_ratio(
     Returns
     -------
     omega_ratio : float
+        Ratio of summed gains to summed shortfalls relative to the adjusted
+        threshold. Returns positive infinity when upside is positive, downside
+        is zero and all nonmissing adjusted returns are finite. Returns nan
+        when both sums are zero or there are fewer than two input observations.
+        Missing adjusted returns are omitted from both sums.
+
+    .. versionchanged:: 0.7.2
+       Positive finite upside without downside returns positive infinity
+       instead of nan. Zero-upside/zero-downside inputs still return nan.
 
     Note
     -----
@@ -605,6 +615,8 @@ def omega_ratio(
 
     if denom > 0.0:
         return numer / denom
+    elif numer > 0.0 and not np.isinf(returns_less_thresh).any():
+        return np.inf
     else:
         return np.nan
 

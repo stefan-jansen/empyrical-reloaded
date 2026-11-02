@@ -88,6 +88,11 @@ wealth ratios in the compared destination API. Tail-ratio signs, VaR missingness
 CVaR cutoff ties and no-loss Omega results also differ. The reference identifies
 the exact implementations and tests; these are not rounding discrepancies.
 
+The no-loss Omega difference above describes the pinned historical comparison.
+Empyrical 0.7.2 returns positive infinity for positive finite adjusted upside with
+zero downside; zero-upside/zero-downside inputs remain NaN. See :doc:`stats` for
+the compatibility change. The historical evidence files remain unchanged.
+
 Keep Empyrical for unqualified GPD estimation, beta fragility, benchmark batting
 average, complete rolling families, supplied-holdings attribution and provider
 workflows. Retention avoids losing a calculation while an explicit successor
