@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Performance &amp; Risk Metrics &#8212; empyrical 0.7.1 documentation</title>
+    <title>Performance &amp; Risk Metrics &#8212; empyrical 0.7.2 documentation</title>
 
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -28,13 +28,12 @@
 
   <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script src="_static/documentation_options.js?v=1027fec7"></script>
+    <script src="_static/documentation_options.js?v=3096642c"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="canonical" href="https://empyrical.ml4trading.io/stats.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Performance Attribution" href="perf_attrib.html" />
@@ -188,463 +187,470 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.aggregate_returns">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     aggregate_returns()
-    </span>
-   </code>
+  <a class="reference internal nav-link" href="#omega-zero-downside-results-in-0-7-2">
+   Omega zero-downside results in 0.7.2
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.alpha">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     alpha()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.alpha_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     alpha_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.alpha_beta">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     alpha_beta()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.alpha_beta_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     alpha_beta_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.annual_return">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     annual_return()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.annual_volatility">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     annual_volatility()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.annualization_factor">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     annualization_factor()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.batting_average">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     batting_average()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.beta">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     beta()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.beta_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     beta_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.beta_fragility_heuristic">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     beta_fragility_heuristic()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.beta_fragility_heuristic_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     beta_fragility_heuristic_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.cagr">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     cagr()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.calmar_ratio">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     calmar_ratio()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.conditional_value_at_risk">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     conditional_value_at_risk()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.cum_returns">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     cum_returns()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.cum_returns_final">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     cum_returns_final()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.down_alpha_beta">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     down_alpha_beta()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.down_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     down_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.downside_risk">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     downside_risk()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.drawdown_series">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     drawdown_series()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.excess_sharpe">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     excess_sharpe()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_es_calculator">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_es_calculator()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_factory">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_factory()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_minimizer_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_minimizer_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_scale_and_shape()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape_factory">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_scale_and_shape_factory()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_only">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_scale_only()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_only_factory">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_loglikelihood_scale_only_factory()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_risk_estimates">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_risk_estimates()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_risk_estimates_aligned">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_risk_estimates_aligned()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.gpd_var_calculator">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gpd_var_calculator()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.max_drawdown">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     max_drawdown()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.omega_ratio">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     omega_ratio()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.roll_alpha_beta">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     roll_alpha_beta()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.roll_down_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     roll_down_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.roll_downsize_risk">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     roll_downsize_risk()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.roll_up_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     roll_up_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.roll_up_down_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     roll_up_down_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.sharpe_ratio">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     sharpe_ratio()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.simple_returns">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     simple_returns()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.sortino_ratio">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     sortino_ratio()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.stability_of_timeseries">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     stability_of_timeseries()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.tail_ratio">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     tail_ratio()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.up_alpha_beta">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     up_alpha_beta()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.up_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     up_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.up_down_capture">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     up_down_capture()
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empyrical.stats.value_at_risk">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     value_at_risk()
-    </span>
-   </code>
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.aggregate_returns">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       aggregate_returns()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.alpha">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       alpha()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.alpha_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       alpha_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.alpha_beta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       alpha_beta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.alpha_beta_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       alpha_beta_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.annual_return">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       annual_return()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.annual_volatility">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       annual_volatility()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.annualization_factor">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       annualization_factor()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.batting_average">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       batting_average()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.beta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       beta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.beta_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       beta_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.beta_fragility_heuristic">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       beta_fragility_heuristic()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.beta_fragility_heuristic_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       beta_fragility_heuristic_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.cagr">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       cagr()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.calmar_ratio">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       calmar_ratio()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.conditional_value_at_risk">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       conditional_value_at_risk()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.cum_returns">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       cum_returns()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.cum_returns_final">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       cum_returns_final()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.down_alpha_beta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       down_alpha_beta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.down_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       down_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.downside_risk">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       downside_risk()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.drawdown_series">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       drawdown_series()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.excess_sharpe">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       excess_sharpe()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_es_calculator">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_es_calculator()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_factory">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_factory()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_minimizer_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_minimizer_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_scale_and_shape()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_and_shape_factory">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_scale_and_shape_factory()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_only">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_scale_only()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_loglikelihood_scale_only_factory">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_loglikelihood_scale_only_factory()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_risk_estimates">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_risk_estimates()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_risk_estimates_aligned">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_risk_estimates_aligned()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.gpd_var_calculator">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gpd_var_calculator()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.max_drawdown">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       max_drawdown()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.omega_ratio">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       omega_ratio()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.roll_alpha_beta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       roll_alpha_beta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.roll_down_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       roll_down_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.roll_downsize_risk">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       roll_downsize_risk()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.roll_up_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       roll_up_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.roll_up_down_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       roll_up_down_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.sharpe_ratio">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       sharpe_ratio()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.simple_returns">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       simple_returns()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.sortino_ratio">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       sortino_ratio()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.stability_of_timeseries">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       stability_of_timeseries()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.tail_ratio">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       tail_ratio()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.up_alpha_beta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       up_alpha_beta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.up_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       up_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.up_down_capture">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       up_down_capture()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#empyrical.stats.value_at_risk">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       value_at_risk()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -655,7 +661,7 @@
 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.1/docs/source/stats.rst">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.2/docs/source/stats.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -678,6 +684,22 @@
 <span id="stats"></span><h1>Performance &amp; Risk Metrics<a class="headerlink" href="#performance-risk-metrics" title="Link to this heading">¶</a></h1>
 <p>The module <a class="reference internal" href="#module-empyrical.stats" title="empyrical.stats"><code class="xref py py-mod docutils literal notranslate"><span class="pre">empyrical.stats</span></code></a> includes various return and risk metrics, such as the
 computation of returns and volatility, alpha and beta, Value at Risk, and Sharpe or Sortino ratios.</p>
+<section id="omega-zero-downside-results-in-0-7-2">
+<h2>Omega zero-downside results in 0.7.2<a class="headerlink" href="#omega-zero-downside-results-in-0-7-2" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">omega_ratio</span></code> now returns positive infinity when its adjusted returns have
+positive upside and zero downside, provided the nonmissing adjusted returns are
+finite. For example, returns <code class="docutils literal notranslate"><span class="pre">[0.01,</span> <span class="pre">0.02,</span> <span class="pre">0.03]</span></code> at the default threshold produce
+<code class="docutils literal notranslate"><span class="pre">inf</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">nan</span></code> returned by 0.7.1 and earlier. This intentionally
+changes the historical, explicitly tested convention to represent an unbounded
+gain-to-shortfall ratio. Code that used <code class="docutils literal notranslate"><span class="pre">isnan</span></code> to identify no-loss samples
+should distinguish <code class="docutils literal notranslate"><span class="pre">isposinf</span></code> from undefined results.</p>
+<p>When every adjusted return equals the threshold, or every observation is missing,
+both sums are zero and the result remains <code class="docutils literal notranslate"><span class="pre">nan</span></code>. Loss-only samples still return
+zero. The risk-free rate remains periodic; only <code class="docutils literal notranslate"><span class="pre">required_return</span></code> is converted
+geometrically using <code class="docutils literal notranslate"><span class="pre">annualization</span></code>, unless <code class="docutils literal notranslate"><span class="pre">annualization=1</span></code>. Missing adjusted
+returns are omitted and the existing minimum of two input rows is unchanged.
+Inputs with infinite adjusted returns retain their previous behavior; this change
+does not introduce general input validation or change Calmar’s no-drawdown result.</p>
 <span class="target" id="module-empyrical.stats"></span><dl class="py function">
 <dt class="sig sig-object py" id="empyrical.stats.aggregate_returns">
 <span class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></span><span class="sig-name descname"><span class="pre">aggregate_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.aggregate_returns" title="Link to this definition">¶</a></dt>
@@ -1622,13 +1644,14 @@ If not passed, a new array will be created.</p>
 <dt class="sig sig-object py" id="empyrical.stats.omega_ratio">
 <span class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></span><span class="sig-name descname"><span class="pre">omega_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">252</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.omega_ratio" title="Link to this definition">¶</a></dt>
 <dd><p>Determines the Omega ratio of a strategy.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
 - See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
 </dd>
-<dt><strong>risk_free</strong><span class="classifier">int, float</span></dt><dd><p>Constant risk-free return throughout the period</p>
+<dt><strong>risk_free</strong><span class="classifier">int, float</span></dt><dd><p>Constant risk-free return per observation, subtracted without
+annualization.</p>
 </dd>
 <dt><strong>required_return</strong><span class="classifier">float, optional</span></dt><dd><p>Minimum acceptance return of the investor. Threshold over which to
 consider positive vs negative returns. It will be converted to a
@@ -1643,8 +1666,17 @@ value. Enter 1 if no time period conversion is necessary.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>omega_ratio</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>omega_ratio</strong><span class="classifier">float</span></dt><dd><p>Ratio of summed gains to summed shortfalls relative to the adjusted
+threshold. Returns positive infinity when upside is positive, downside
+is zero and all nonmissing adjusted returns are finite. Returns nan
+when both sums are zero or there are fewer than two input observations.
+Missing adjusted returns are omitted from both sums.</p>
+</dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.7.2: </span>Positive finite upside without downside returns positive infinity
+instead of nan. Zero-upside/zero-downside inputs still return nan.</p>
+</div>
 </dd>
 </dl>
 </dd></dl>
@@ -2016,6 +2048,7 @@ returns. Defaults to 0.05.</p>
 </dl>
 </dd></dl>
 
+</section>
 </section>
 
 

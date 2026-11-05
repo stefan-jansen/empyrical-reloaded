@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Capability reference &#8212; empyrical 0.7.1 documentation</title>
+    <title>Capability reference &#8212; empyrical 0.7.2 documentation</title>
 
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -28,13 +28,12 @@
 
   <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script src="_static/documentation_options.js?v=1027fec7"></script>
+    <script src="_static/documentation_options.js?v=3096642c"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="canonical" href="https://empyrical.ml4trading.io/migration-reference.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Migrating selected metrics" href="migration.html" />
@@ -190,7 +189,7 @@
 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.1/docs/source/migration-reference.rst">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.2/docs/source/migration-reference.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -320,7 +319,7 @@ records inputs, package versions, pinned source fingerprints and every result.</
 <tr class="row-even"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L550">omega_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L301">test</a>)</p></td>
 <td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/evaluation/portfolio_analysis/metrics.py#L92">omega_ratio</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_portfolio_analysis.py#L89">test</a>)</p></td>
 <td><p>partial</p></td>
-<td><p>No-loss denominator differs: Empyrical NaN versus Diagnostic +Inf. Preserve periodic risk_free subtraction and geometric conversion of annual required_return using annualization; do not silently convert both as annual rates.</p></td>
+<td><p>At the pinned revisions, the no-loss denominator differs: Empyrical NaN versus Diagnostic +Inf. Empyrical 0.7.2 returns +Inf for positive finite adjusted upside with zero downside; zero/zero remains NaN. Preserve periodic risk_free subtraction and geometric conversion of annual required_return using annualization; do not silently convert both as annual rates.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/src/empyrical/stats.py#L606">sharpe_ratio</a> (<a class="reference external" href="https://github.com/stefan-jansen/empyrical-reloaded/blob/4ee3e80c6dacaf38b572e0e0e9f7c349713906c1/tests/test_stats.py#L340">test</a>)</p></td>
 <td><p><a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L99">periodic_sharpe_ratio</a>; <a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/src/ml4t/diagnostic/metrics/risk_adjusted.py#L36">sharpe_ratio</a>; <a class="reference external" href="https://github.com/ml4t/engineer/blob/83b7d0d4e0e79bc36bb5044c7ac9aa63ca0e69b3/src/ml4t/engineer/features/risk.py#L539">risk_adjusted_returns</a> (<a class="reference external" href="https://github.com/ml4t/diagnostic/blob/8faa03f5d8b72d44391451074da4c3f906f9d57b/tests/test_evaluation/test_metrics.py#L181">test</a>)</p></td>
