@@ -2125,7 +2125,9 @@ def value_at_risk(returns, cutoff=0.05):
     Parameters
     ----------
     returns : pandas.Series or 1-D numpy.array
-        Non-cumulative daily returns.
+        Non-cumulative daily returns. NaN values are omitted, so the result is
+        the same as for the returns with the NaNs removed, as in
+        :func:`conditional_value_at_risk`.
     cutoff : float, optional
         Decimal representing the percentage cutoff for the bottom percentile of
         returns. Defaults to 0.05.
@@ -2133,9 +2135,13 @@ def value_at_risk(returns, cutoff=0.05):
     Returns
     -------
     VaR : float
-        The VaR value.
+        The VaR value. NaN if ``returns`` is empty or contains only NaN.
     """
-    if np.size(returns) < 1:
+    # Missing observations are excluded, as in conditional_value_at_risk.
+    # np.percentile would otherwise return NaN for a single missing value.
+    returns = np.asarray(returns, dtype=float)
+    returns = returns[~np.isnan(returns)]
+    if returns.size < 1:
         return np.nan
     return np.percentile(returns, 100 * cutoff)
 
