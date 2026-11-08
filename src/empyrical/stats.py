@@ -2139,8 +2139,10 @@ def value_at_risk(returns, cutoff=0.05):
         The VaR value. NaN if ``returns`` is empty or all observations are
         missing.
     """
-    if isinstance(returns, pd.Series) and isinstance(
-        returns.dtype, pd.api.extensions.ExtensionDtype
+    if (
+        isinstance(returns, pd.Series)
+        and isinstance(returns.dtype, pd.api.extensions.ExtensionDtype)
+        and returns.hasnans
     ):
         values = returns.to_numpy(na_value=np.nan)
     else:

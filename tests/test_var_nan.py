@@ -86,6 +86,13 @@ def test_value_at_risk_preserves_nullable_float32_pct_change_precision():
     assert actual == expected
 
 
+@pytest.mark.parametrize("dtype", ["category", pd.SparseDtype(np.int64, 0)])
+def test_value_at_risk_keeps_clean_integer_extension_series(dtype):
+    returns = pd.Series([-2, -1, 4], dtype=dtype)
+
+    assert empyrical.value_at_risk(returns, cutoff=0.5) == -1
+
+
 def test_value_at_risk_omits_nan_from_numeric_object_storage():
     returns = np.array([-0.25, np.nan, 0.25], dtype=object)
 
