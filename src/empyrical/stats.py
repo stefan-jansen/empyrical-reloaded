@@ -2125,25 +2125,33 @@ def value_at_risk(returns, cutoff=0.05):
     Parameters
     ----------
     returns : pandas.Series or 1-D numpy.array
-        Non-cumulative daily returns. NaN values are omitted, so the result is
-        the same as for the returns with the NaNs removed, as in
-        :func:`conditional_value_at_risk`.
+        Non-cumulative daily returns. NaNs are omitted, as in
+        :func:`conditional_value_at_risk`. Missing values in pandas nullable
+        Series are also omitted. The percentile uses NumPy's usual dtype rules.
     cutoff : float, optional
         Decimal representing the percentage cutoff for the bottom percentile of
-        returns. Defaults to 0.05.
+        returns. Defaults to 0.05. For a nonempty sample, the cutoff must be in
+        the interval [0, 1].
 
     Returns
     -------
     VaR : float
-        The VaR value. NaN if ``returns`` is empty or contains only NaN.
+        The VaR value. NaN if ``returns`` is empty or all observations are
+        missing.
     """
-    # Missing observations are excluded, as in conditional_value_at_risk.
-    # np.percentile would otherwise return NaN for a single missing value.
-    returns = np.asarray(returns, dtype=float)
-    returns = returns[~np.isnan(returns)]
-    if returns.size < 1:
+    values = np.asarray(returns)
+    if not values.size:
         return np.nan
-    return np.percentile(returns, 100 * cutoff)
+    if (
+        values.dtype == object
+        and isinstance(returns, pd.Series)
+        and isinstance(returns.dtype, pd.api.extensions.ExtensionDtype)
+    ):
+        values = returns.to_numpy(na_value=np.nan)
+    # NaNs compare unequal to themselves, including in numeric object arrays.
+    observed = values[values == values]
+    # Keep NumPy's cutoff validation for nonempty samples with no observations.
+    return np.percentile(observed if observed.size else values, 100 * cutoff)
 
 
 def conditional_value_at_risk(returns, cutoff=0.05):
