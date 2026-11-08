@@ -75,6 +75,17 @@ def test_value_at_risk_omits_nullable_pct_change_missing_value():
     assert empyrical.value_at_risk(returns, cutoff=0.25) == -0.03125
 
 
+def test_value_at_risk_preserves_nullable_float32_pct_change_precision():
+    returns = pd.Series([100, 70, 77, 92], dtype="Float32").pct_change()
+    assert pd.isna(returns.iloc[0])
+    expected = np.percentile(np.asarray(returns.iloc[1:]), 5)
+
+    actual = empyrical.value_at_risk(returns)
+
+    assert actual.dtype == expected.dtype
+    assert actual == expected
+
+
 def test_value_at_risk_omits_nan_from_numeric_object_storage():
     returns = np.array([-0.25, np.nan, 0.25], dtype=object)
 

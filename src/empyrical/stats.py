@@ -2139,15 +2139,14 @@ def value_at_risk(returns, cutoff=0.05):
         The VaR value. NaN if ``returns`` is empty or all observations are
         missing.
     """
-    values = np.asarray(returns)
-    if not values.size:
-        return np.nan
-    if (
-        values.dtype == object
-        and isinstance(returns, pd.Series)
-        and isinstance(returns.dtype, pd.api.extensions.ExtensionDtype)
+    if isinstance(returns, pd.Series) and isinstance(
+        returns.dtype, pd.api.extensions.ExtensionDtype
     ):
         values = returns.to_numpy(na_value=np.nan)
+    else:
+        values = np.asarray(returns)
+    if not values.size:
+        return np.nan
     # NaNs compare unequal to themselves, including in numeric object arrays.
     observed = values[values == values]
     # Keep NumPy's cutoff validation for nonempty samples with no observations.
