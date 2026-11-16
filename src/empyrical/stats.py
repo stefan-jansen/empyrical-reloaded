@@ -370,8 +370,7 @@ roll_max_drawdown = _create_unary_vectorized_roll_function(max_drawdown)
 
 def annual_return(returns, period=DAILY, annualization=None):
     """
-    Determines the mean annual growth rate of returns. This is equivilent
-    to the compound annual growth rate.
+    Compute the compound annual growth rate of periodic returns.
 
     Parameters
     ----------
@@ -395,7 +394,23 @@ def annual_return(returns, period=DAILY, annualization=None):
     Returns
     -------
     annual_return : float
-        Annual Return as CAGR (Compounded Annual Growth Rate).
+        Compound annual growth rate.
+
+    Notes
+    -----
+    Each input row counts as one period, including rows with NaN returns.
+    NaNs contribute no growth to the compounded ending value. The calculation
+    uses the number of rows and the annualization factor to determine the
+    elapsed years. It does not inspect timestamps or count dates absent
+    from the input.
+
+    Keep NaN rows for periods that should count toward the elapsed time.
+    Drop rows that are not part of the measurement period, such as the
+    first row from a price series' ``pct_change()`` when it only marks the
+    starting price. Dropping a row shortens the annualization horizon.
+
+    A nonempty series of only NaNs returns 0.0 by this convention. An
+    empty series returns NaN.
 
     """
 
@@ -412,13 +427,15 @@ def annual_return(returns, period=DAILY, annualization=None):
 
 def cagr(returns, period=DAILY, annualization=None):
     """
-    Compute compound annual growth rate. Alias function for
-    :func:`~empyrical.stats.annual_return`
+    Compute compound annual growth rate, as in
+    :func:`~empyrical.stats.annual_return`.
+
+    NaN returns count as elapsed periods and contribute no growth.
 
     Parameters
     ----------
     returns : pd.Series or np.ndarray
-        Daily returns of the strategy, noncumulative.
+        Periodic returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
     period : str, optional
         Defines the periodicity of the 'returns' data for purposes of
