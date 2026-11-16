@@ -1,13 +1,13 @@
 {
   "library": "empyrical-reloaded",
-  "version": "0.7.2",
-  "source_commit": "c39874ae704977564d8cb67d052a6e490e86c900",
-  "source_tree": "3915cb16882defc993cdecd6ba9624037c7b57e2",
-  "expected_release_tag": "0.7.2",
-  "build_input_wheel_sha256": "50b478af157bbb68ebe3845c4327063b7e168f03c2f12e0d57de9bf78ae5cc59",
+  "version": "0.7.3",
+  "source_commit": "438b60963df69450d593e8928fe55f4e4d260440",
+  "source_tree": "62884093af350536d66a2d78bf01de0aa816943f",
+  "expected_release_tag": "0.7.3",
+  "build_input_wheel_sha256": "42a6ff066733ce56e8358edab45e9c459b8c9c49359a4c5ae88e79d602fab4b3",
   "site": "https://empyrical.ml4trading.io/",
   "published_artifacts_sha256": {
-    "empyrical_reloaded-0.7.2-py3-none-any.whl": "57dc32962aba79bc12022d2246fbe6b79b43ee3b0d2ac65babd9c8f3f6cbd0b2",
-    "empyrical_reloaded-0.7.2.tar.gz": "439c6a9842cbba092f2471d7d21b143cf1e94f775c261e529edb6e3b89370ae9"
+    "empyrical_reloaded-0.7.3-py3-none-any.whl": "5d2f7d47b8c0963f2c07cbf5161fe39690fcf535830fbb86334173d52f9dc802",
+    "empyrical_reloaded-0.7.3.tar.gz": "97ea2f7db105ab31b4d1d3eba455591e58d9274488ae5ff7f41e84669cc1ecd5"
   }
 }

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Performance &amp; Risk Metrics &#8212; empyrical 0.7.2 documentation</title>
+    <title>Performance &amp; Risk Metrics &#8212; empyrical 0.7.3 documentation</title>
 
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -28,7 +28,7 @@
 
   <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script src="_static/documentation_options.js?v=3096642c"></script>
+    <script src="_static/documentation_options.js?v=99d6104a"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -661,7 +661,7 @@
 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/0.7.2/docs/source/stats.rst">
+    <a href="https://github.com/stefan-jansen/empyrical-reloaded/edit/main/docs/source/stats.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -920,8 +920,7 @@ If not passed, a new array will be created.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="empyrical.stats.annual_return">
 <span class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></span><span class="sig-name descname"><span class="pre">annual_return</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.annual_return" title="Link to this definition">¶</a></dt>
-<dd><p>Determines the mean annual growth rate of returns. This is equivilent
-to the compound annual growth rate.</p>
+<dd><p>Compute the compound annual growth rate of periodic returns.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
@@ -945,11 +944,23 @@ returns into annual returns. Value should be the annual frequency of
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>annual_return</strong><span class="classifier">float</span></dt><dd><p>Annual Return as CAGR (Compounded Annual Growth Rate).</p>
+<dt><strong>annual_return</strong><span class="classifier">float</span></dt><dd><p>Compound annual growth rate.</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>Each input row counts as one period, including rows with NaN returns.
+NaNs contribute no growth to the compounded ending value. The calculation
+uses the number of rows and the annualization factor to determine the
+elapsed years. It does not inspect timestamps or count dates absent
+from the input.</p>
+<p>Keep NaN rows for periods that should count toward the elapsed time.
+Drop rows that are not part of the measurement period, such as the
+first row from a price series’ <code class="docutils literal notranslate"><span class="pre">pct_change()</span></code> when it only marks the
+starting price. Dropping a row shortens the annualization horizon.</p>
+<p>A nonempty series of only NaNs returns 0.0 by this convention. An
+empty series returns NaN.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1163,12 +1174,13 @@ computed. Usually a benchmark such as the market.
 <dl class="py function">
 <dt class="sig sig-object py" id="empyrical.stats.cagr">
 <span class="sig-prename descclassname"><span class="pre">empyrical.stats.</span></span><span class="sig-name descname"><span class="pre">cagr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annualization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.stats.cagr" title="Link to this definition">¶</a></dt>
-<dd><p>Compute compound annual growth rate. Alias function for
-<a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a></p>
+<dd><p>Compute compound annual growth rate, as in
+<a class="reference internal" href="#empyrical.stats.annual_return" title="empyrical.stats.annual_return"><code class="xref py py-func docutils literal notranslate"><span class="pre">annual_return()</span></code></a>.</p>
+<p>NaN returns count as elapsed periods and contribute no growth.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Daily returns of the strategy, noncumulative.
+<dt><strong>returns</strong><span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>Periodic returns of the strategy, noncumulative.
 - See full explanation in <a class="reference internal" href="#empyrical.stats.cum_returns" title="empyrical.stats.cum_returns"><code class="xref py py-func docutils literal notranslate"><span class="pre">cum_returns()</span></code></a>.</p>
 </dd>
 <dt><strong>period</strong><span class="classifier">str, optional</span></dt><dd><p>Defines the periodicity of the ‘returns’ data for purposes of
@@ -2032,16 +2044,20 @@ Defaults are:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>returns</strong><span class="classifier">pandas.Series or 1-D numpy.array</span></dt><dd><p>Non-cumulative daily returns.</p>
+<dt><strong>returns</strong><span class="classifier">pandas.Series or 1-D numpy.array</span></dt><dd><p>Non-cumulative daily returns. NaNs are omitted, as in
+<a class="reference internal" href="#empyrical.stats.conditional_value_at_risk" title="empyrical.stats.conditional_value_at_risk"><code class="xref py py-func docutils literal notranslate"><span class="pre">conditional_value_at_risk()</span></code></a>. Missing values in pandas nullable
+Series are also omitted. The percentile uses NumPy’s usual dtype rules.</p>
 </dd>
 <dt><strong>cutoff</strong><span class="classifier">float, optional</span></dt><dd><p>Decimal representing the percentage cutoff for the bottom percentile of
-returns. Defaults to 0.05.</p>
+returns. Defaults to 0.05. For a nonempty sample, the cutoff must be in
+the interval [0, 1].</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>VaR</strong><span class="classifier">float</span></dt><dd><p>The VaR value.</p>
+<dt><strong>VaR</strong><span class="classifier">float</span></dt><dd><p>The VaR value. NaN if <code class="docutils literal notranslate"><span class="pre">returns</span></code> is empty or all observations are
+missing.</p>
 </dd>
 </dl>
 </dd>
@@ -2091,7 +2107,7 @@ returns. Defaults to 0.05.</p>
 
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 9.1.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 9.2.0.<br>
 </p>
     </div>
 
