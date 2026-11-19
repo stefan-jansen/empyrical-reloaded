@@ -1190,7 +1190,42 @@ def alpha(
     )
 
 
-roll_alpha = _create_binary_vectorized_roll_function(alpha)
+def roll_alpha(returns, factor_returns, window=10, out=None, **kwargs):
+    """
+    Computes annualized alpha over a rolling window.
+
+    Parameters
+    ----------
+    returns : pd.Series or np.ndarray
+        Daily returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    factor_returns : pd.Series or np.ndarray
+        Daily noncumulative returns of the factor to which alpha is
+        computed. Usually a benchmark such as the market.
+        - This is in the same style as returns.
+    window : int, optional
+        Size of the rolling window in terms of the periodicity of the data.
+        Defaults to 10.
+    out : array-like, optional
+        Array to use as output buffer.
+        If not passed, a new array will be created.
+    **kwargs
+        Forwarded to :func:`~empyrical.alpha`.
+
+    Returns
+    -------
+    roll_alpha : pd.Series or np.ndarray
+        Rolling annualized alpha.
+    """
+    returns, factor_returns = _aligned_series(returns, factor_returns)
+
+    return roll_alpha_aligned(
+        returns,
+        factor_returns,
+        window=window,
+        out=out,
+        **kwargs,
+    )
 
 
 def alpha_aligned(
@@ -1320,7 +1355,42 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     )
 
 
-roll_beta = _create_binary_vectorized_roll_function(beta)
+def roll_beta(returns, factor_returns, window=10, out=None, **kwargs):
+    """
+    Computes beta over a rolling window.
+
+    Parameters
+    ----------
+    returns : pd.Series or np.ndarray
+        Daily returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    factor_returns : pd.Series or np.ndarray
+        Daily noncumulative returns of the factor to which beta is
+        computed. Usually a benchmark such as the market.
+        - This is in the same style as returns.
+    window : int, optional
+        Size of the rolling window in terms of the periodicity of the data.
+        Defaults to 10.
+    out : array-like, optional
+        Array to use as output buffer.
+        If not passed, a new array will be created.
+    **kwargs
+        Forwarded to :func:`~empyrical.beta`.
+
+    Returns
+    -------
+    roll_beta : pd.Series or np.ndarray
+        Rolling beta.
+    """
+    returns, factor_returns = _aligned_series(returns, factor_returns)
+
+    return roll_beta_aligned(
+        returns,
+        factor_returns,
+        window=window,
+        out=out,
+        **kwargs,
+    )
 
 
 def beta_aligned(returns, factor_returns, risk_free=0.0, out=None):
