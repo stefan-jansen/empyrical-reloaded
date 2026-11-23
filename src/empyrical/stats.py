@@ -1190,16 +1190,16 @@ def alpha(
     )
 
 
-def roll_alpha(returns, factor_returns, window=10, out=None, **kwargs):
+def roll_alpha(lhs, rhs, window=10, out=None, **kwargs):
     """
     Computes annualized alpha over a rolling window.
 
     Parameters
     ----------
-    returns : pd.Series or np.ndarray
+    lhs : pd.Series or np.ndarray
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
-    factor_returns : pd.Series or np.ndarray
+    rhs : pd.Series or np.ndarray
         Daily noncumulative returns of the factor to which alpha is
         computed. Usually a benchmark such as the market.
         - This is in the same style as returns.
@@ -1216,8 +1216,22 @@ def roll_alpha(returns, factor_returns, window=10, out=None, **kwargs):
     -------
     roll_alpha : pd.Series or np.ndarray
         Rolling annualized alpha.
+
+    Notes
+    -----
+    Series are aligned on the union of their labels before windows are formed,
+    using the same pandas concatenation order as :func:`roll_alpha_beta`.
+    Each result is indexed by the final row of its aligned window. Unmatched
+    labels remain missing and still occupy a row in the window.
+
+    A window contains at most `window` aligned rows. If fewer rows exist, the
+    entire aligned input forms one window. Estimates use paired non-missing
+    observations and require at least two pairs with nonzero factor variance.
+    There is no `min_periods` parameter. Identical duplicate indexes retain
+    their row order; ambiguous duplicate-label reindexing raises ValueError.
+    Same-length ndarray inputs retain positional pairing and ndarray output.
     """
-    returns, factor_returns = _aligned_series(returns, factor_returns)
+    returns, factor_returns = _aligned_series(lhs, rhs)
 
     return roll_alpha_aligned(
         returns,
@@ -1355,16 +1369,16 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     )
 
 
-def roll_beta(returns, factor_returns, window=10, out=None, **kwargs):
+def roll_beta(lhs, rhs, window=10, out=None, **kwargs):
     """
     Computes beta over a rolling window.
 
     Parameters
     ----------
-    returns : pd.Series or np.ndarray
+    lhs : pd.Series or np.ndarray
         Daily returns of the strategy, noncumulative.
         - See full explanation in :func:`~empyrical.stats.cum_returns`.
-    factor_returns : pd.Series or np.ndarray
+    rhs : pd.Series or np.ndarray
         Daily noncumulative returns of the factor to which beta is
         computed. Usually a benchmark such as the market.
         - This is in the same style as returns.
@@ -1381,8 +1395,22 @@ def roll_beta(returns, factor_returns, window=10, out=None, **kwargs):
     -------
     roll_beta : pd.Series or np.ndarray
         Rolling beta.
+
+    Notes
+    -----
+    Series are aligned on the union of their labels before windows are formed,
+    using the same pandas concatenation order as :func:`roll_alpha_beta`.
+    Each result is indexed by the final row of its aligned window. Unmatched
+    labels remain missing and still occupy a row in the window.
+
+    A window contains at most `window` aligned rows. If fewer rows exist, the
+    entire aligned input forms one window. Estimates use paired non-missing
+    observations and require at least two pairs with nonzero factor variance.
+    There is no `min_periods` parameter. Identical duplicate indexes retain
+    their row order; ambiguous duplicate-label reindexing raises ValueError.
+    Same-length ndarray inputs retain positional pairing and ndarray output.
     """
-    returns, factor_returns = _aligned_series(returns, factor_returns)
+    returns, factor_returns = _aligned_series(lhs, rhs)
 
     return roll_beta_aligned(
         returns,
