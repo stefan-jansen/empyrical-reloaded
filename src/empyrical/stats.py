@@ -1228,7 +1228,9 @@ def roll_alpha(lhs, rhs, window=10, out=None, **kwargs):
     entire aligned input forms one window. Estimates use paired non-missing
     observations and require at least two pairs with nonzero factor variance.
     There is no `min_periods` parameter. Identical duplicate indexes retain
-    their row order; ambiguous duplicate-label reindexing raises ValueError.
+    their row order. Other duplicate-label handling follows the installed
+    pandas version, as in :func:`alpha_beta`; inputs that pandas cannot
+    reindex raise ValueError.
     Same-length ndarray inputs retain positional pairing and ndarray output.
     """
     returns, factor_returns = _aligned_series(lhs, rhs)
@@ -1407,7 +1409,9 @@ def roll_beta(lhs, rhs, window=10, out=None, **kwargs):
     entire aligned input forms one window. Estimates use paired non-missing
     observations and require at least two pairs with nonzero factor variance.
     There is no `min_periods` parameter. Identical duplicate indexes retain
-    their row order; ambiguous duplicate-label reindexing raises ValueError.
+    their row order. Other duplicate-label handling follows the installed
+    pandas version, as in :func:`alpha_beta`; inputs that pandas cannot
+    reindex raise ValueError.
     Same-length ndarray inputs retain positional pairing and ndarray output.
     """
     returns, factor_returns = _aligned_series(lhs, rhs)

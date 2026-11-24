@@ -176,7 +176,7 @@ def test_rolling_pairs_labels_before_windows_not_positions(
 )
 def test_ambiguous_duplicate_labels_rejected_instead_of_silent_pairing(api):
     a = pd.Series([0.02, -0.04, 0.06], index=[1, 1, 2])
-    b = pd.Series([0.01, 0.03], index=[1, 2])
+    b = pd.Series([0.01, 0.03, -0.02], index=[1, 2, 2])
     with pytest.raises(ValueError, match="duplicate"):
         getattr(empyrical, api)(
             a, b, **({"window": 2} if api.startswith("roll") else {})
@@ -314,3 +314,27 @@ def test_datetime_alignment_returns_union_window_end_labels(metric):
     pd.testing.assert_index_equal(result.index, dates[2:])
     expected = 1.001**12 - 1 if metric == "alpha" else 2.0
     np.testing.assert_allclose(result, expected, rtol=1e-10, atol=1e-12)
+
+
+@pytest.mark.parametrize("metric", ["alpha", "beta"])
+def test_unique_to_duplicate_alignment_preserves_supported_pandas_behavior(metric):
+    returns = pd.Series([0.021, 0.021, 0.061], index=[1, 1, 2])
+    factor = pd.Series([0.01, 0.03], index=[1, 2])
+    kwargs = {"annualization": 12} if metric == "alpha" else {}
+    scalar = getattr(empyrical, metric)
+    rolling = getattr(empyrical, "roll_" + metric)
+    try:
+        total = scalar(returns, factor, **kwargs)
+    except ValueError:
+        with pytest.raises(ValueError, match="duplicate"):
+            rolling(returns, factor, window=2, **kwargs)
+    else:
+        expected = 1.001**12 - 1 if metric == "alpha" else 2.0
+        assert total == pytest.approx(expected, abs=1e-12)
+        result = rolling(returns, factor, window=2, **kwargs)
+        pd.testing.assert_series_equal(
+            result,
+            pd.Series([np.nan, expected], index=[1, 2]),
+            atol=1e-12,
+            rtol=1e-10,
+        )
