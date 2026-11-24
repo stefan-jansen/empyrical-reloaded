@@ -2180,6 +2180,7 @@ def roll_up_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
+    returns, factor_returns = _aligned_series(returns, factor_returns)
     return roll(returns, factor_returns, window=window, function=up_capture, **kwargs)
 
 
@@ -2204,6 +2205,7 @@ def roll_down_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
+    returns, factor_returns = _aligned_series(returns, factor_returns)
     return roll(returns, factor_returns, window=window, function=down_capture, **kwargs)
 
 
@@ -2228,6 +2230,7 @@ def roll_up_down_capture(returns, factor_returns, window=10, **kwargs):
         Size of the rolling window in terms of the periodicity of the data.
         - eg window = 60, periodicity=DAILY, represents a rolling 60 day window
     """
+    returns, factor_returns = _aligned_series(returns, factor_returns)
     return roll(
         returns,
         factor_returns,
