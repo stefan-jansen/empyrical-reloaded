@@ -117,3 +117,23 @@ def test_roll_capture_aligns_series():
         empyrical.roll_up_down_capture(returns, factor, window=3),
         empyrical.roll_up_down_capture(aligned_returns, aligned_factor, window=3),
     )
+
+
+@pytest.mark.parametrize("direction", [empyrical.utils.up, empyrical.utils.down])
+@pytest.mark.parametrize("option", ["predicate", "kwargs"])
+def test_up_down_callbacks_receive_keywords_without_internal_helper_collisions(
+    direction, option
+):
+    returns = np.array([0.02, -0.02])
+    factor = np.array([0.01, -0.01])
+
+    def callback(selected_returns, selected_factor, **options):
+        return selected_returns, selected_factor, options
+
+    actual_returns, actual_factor, options = direction(
+        returns, factor, function=callback, **{option: "callback-option"}
+    )
+    selected = 0 if direction is empyrical.utils.up else 1
+    np.testing.assert_array_equal(actual_returns, returns[[selected]])
+    np.testing.assert_array_equal(actual_factor, factor[[selected]])
+    assert options == {option: "callback-option"}
