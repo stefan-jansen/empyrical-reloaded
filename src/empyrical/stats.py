@@ -1190,7 +1190,58 @@ def alpha(
     )
 
 
-roll_alpha = _create_binary_vectorized_roll_function(alpha)
+def roll_alpha(lhs, rhs, window=10, out=None, **kwargs):
+    """
+    Computes annualized alpha over a rolling window.
+
+    Parameters
+    ----------
+    lhs : pd.Series or np.ndarray
+        Daily returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    rhs : pd.Series or np.ndarray
+        Daily noncumulative returns of the factor to which alpha is
+        computed. Usually a benchmark such as the market.
+        - This is in the same style as returns.
+    window : int, optional
+        Size of the rolling window in terms of the periodicity of the data.
+        Defaults to 10.
+    out : array-like, optional
+        Array to use as output buffer.
+        If not passed, a new array will be created.
+    **kwargs
+        Forwarded to :func:`~empyrical.alpha`.
+
+    Returns
+    -------
+    roll_alpha : pd.Series or np.ndarray
+        Rolling annualized alpha.
+
+    Notes
+    -----
+    Series are aligned on the union of their labels before windows are formed,
+    using the same pandas concatenation order as :func:`roll_alpha_beta`.
+    Each result is indexed by the final row of its aligned window. Unmatched
+    labels remain missing and still occupy a row in the window.
+
+    A window contains at most `window` aligned rows. If fewer rows exist, the
+    entire aligned input forms one window. Estimates use paired non-missing
+    observations and require at least two pairs with nonzero factor variance.
+    There is no `min_periods` parameter. Identical duplicate indexes retain
+    their row order. Other duplicate-label handling follows the installed
+    pandas version, as in :func:`alpha_beta`; inputs that pandas cannot
+    reindex raise ValueError.
+    Same-length ndarray inputs retain positional pairing and ndarray output.
+    """
+    returns, factor_returns = _aligned_series(lhs, rhs)
+
+    return roll_alpha_aligned(
+        returns,
+        factor_returns,
+        window=window,
+        out=out,
+        **kwargs,
+    )
 
 
 def alpha_aligned(
@@ -1320,7 +1371,58 @@ def beta(returns, factor_returns, risk_free=0.0, out=None):
     )
 
 
-roll_beta = _create_binary_vectorized_roll_function(beta)
+def roll_beta(lhs, rhs, window=10, out=None, **kwargs):
+    """
+    Computes beta over a rolling window.
+
+    Parameters
+    ----------
+    lhs : pd.Series or np.ndarray
+        Daily returns of the strategy, noncumulative.
+        - See full explanation in :func:`~empyrical.stats.cum_returns`.
+    rhs : pd.Series or np.ndarray
+        Daily noncumulative returns of the factor to which beta is
+        computed. Usually a benchmark such as the market.
+        - This is in the same style as returns.
+    window : int, optional
+        Size of the rolling window in terms of the periodicity of the data.
+        Defaults to 10.
+    out : array-like, optional
+        Array to use as output buffer.
+        If not passed, a new array will be created.
+    **kwargs
+        Forwarded to :func:`~empyrical.beta`.
+
+    Returns
+    -------
+    roll_beta : pd.Series or np.ndarray
+        Rolling beta.
+
+    Notes
+    -----
+    Series are aligned on the union of their labels before windows are formed,
+    using the same pandas concatenation order as :func:`roll_alpha_beta`.
+    Each result is indexed by the final row of its aligned window. Unmatched
+    labels remain missing and still occupy a row in the window.
+
+    A window contains at most `window` aligned rows. If fewer rows exist, the
+    entire aligned input forms one window. Estimates use paired non-missing
+    observations and require at least two pairs with nonzero factor variance.
+    There is no `min_periods` parameter. Identical duplicate indexes retain
+    their row order. Other duplicate-label handling follows the installed
+    pandas version, as in :func:`alpha_beta`; inputs that pandas cannot
+    reindex raise ValueError.
+    Same-length ndarray inputs retain positional pairing and ndarray output.
+    """
+    returns, factor_returns = _aligned_series(lhs, rhs)
+
+    return roll_beta_aligned(
+        returns,
+        factor_returns,
+        window=window,
+        out=out,
+        **kwargs,
+    )
 
 
 def beta_aligned(returns, factor_returns, risk_free=0.0, out=None):
