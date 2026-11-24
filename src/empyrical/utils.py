@@ -133,7 +133,7 @@ def _align_filter_inputs(returns, factor_returns):
     return returns, factor_returns
 
 
-def _apply_factor_filter(returns, factor_returns, predicate, **kwargs):
+def _apply_factor_filter(returns, factor_returns, predicate, kwargs):
     """Filter aligned returns and factor_returns with a factor predicate."""
     func = kwargs.pop("function")
     returns, factor_returns = _align_filter_inputs(returns, factor_returns)
@@ -163,7 +163,7 @@ def up(returns, factor_returns, **kwargs):
     -------
     Same as the return of the function
     """
-    return _apply_factor_filter(returns, factor_returns, lambda f: f > 0, **kwargs)
+    return _apply_factor_filter(returns, factor_returns, lambda f: f > 0, kwargs)
 
 
 def down(returns, factor_returns, **kwargs):
@@ -186,7 +186,7 @@ def down(returns, factor_returns, **kwargs):
     -------
     Same as the return of the 'function'
     """
-    return _apply_factor_filter(returns, factor_returns, lambda f: f < 0, **kwargs)
+    return _apply_factor_filter(returns, factor_returns, lambda f: f < 0, kwargs)
 
 
 def _roll_ndarray(func, window, *args, **kwargs):
