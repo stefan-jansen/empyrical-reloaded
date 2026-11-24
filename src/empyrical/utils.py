@@ -124,6 +124,25 @@ def _paired_mask(returns, factor_returns):
     return ~(pd.isnull(returns) | pd.isnull(factor_returns))
 
 
+def _align_filter_inputs(returns, factor_returns):
+    """Align pandas return streams so masks index identical labels."""
+    if isinstance(returns, pd.Series) and isinstance(factor_returns, pd.Series):
+        returns, factor_returns = _aligned_series(returns, factor_returns)
+    elif isinstance(returns, pd.DataFrame) and isinstance(factor_returns, pd.Series):
+        returns, factor_returns = returns.align(factor_returns, join="outer", axis=0)
+    return returns, factor_returns
+
+
+def _apply_factor_filter(returns, factor_returns, predicate, **kwargs):
+    """Filter aligned returns and factor_returns with a factor predicate."""
+    func = kwargs.pop("function")
+    returns, factor_returns = _align_filter_inputs(returns, factor_returns)
+    mask = _paired_mask(returns, factor_returns) & predicate(factor_returns)
+    returns = returns[mask]
+    factor_returns = factor_returns[mask]
+    return func(returns, factor_returns, **kwargs)
+
+
 def up(returns, factor_returns, **kwargs):
     """
     Calculates a given statistic filtering only positive factor return periods.
@@ -144,11 +163,7 @@ def up(returns, factor_returns, **kwargs):
     -------
     Same as the return of the function
     """
-    func = kwargs.pop("function")
-    mask = _paired_mask(returns, factor_returns) & (factor_returns > 0)
-    returns = returns[mask]
-    factor_returns = factor_returns[mask]
-    return func(returns, factor_returns, **kwargs)
+    return _apply_factor_filter(returns, factor_returns, lambda f: f > 0, **kwargs)
 
 
 def down(returns, factor_returns, **kwargs):
@@ -171,11 +186,7 @@ def down(returns, factor_returns, **kwargs):
     -------
     Same as the return of the 'function'
     """
-    func = kwargs.pop("function")
-    mask = _paired_mask(returns, factor_returns) & (factor_returns < 0)
-    returns = returns[mask]
-    factor_returns = factor_returns[mask]
-    return func(returns, factor_returns, **kwargs)
+    return _apply_factor_filter(returns, factor_returns, lambda f: f < 0, **kwargs)
 
 
 def _roll_ndarray(func, window, *args, **kwargs):
